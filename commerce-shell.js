@@ -88,6 +88,7 @@
                             <label>Data da entrega<input id="order-date" type="date" required></label>
                             <label>Horário desejado<select id="order-time" required>
                                 <option value="">Selecione o horário</option>
+                                <option value="08:00">08:00</option><option value="08:30">08:30</option>
                                 <option value="09:00">09:00</option><option value="09:30">09:30</option>
                                 <option value="10:00">10:00</option><option value="10:30">10:30</option>
                                 <option value="11:00">11:00</option><option value="11:30">11:30</option>
@@ -98,12 +99,10 @@
                                 <option value="16:00">16:00</option><option value="16:30">16:30</option>
                                 <option value="17:00">17:00</option><option value="17:30">17:30</option>
                                 <option value="18:00">18:00</option><option value="18:30">18:30</option>
-                                <option value="19:00">19:00</option><option value="19:30">19:30</option>
-                                <option value="20:00">20:00</option><option value="20:30">20:30</option>
-                                <option value="21:00">21:00</option>
+                                <option value="19:00">19:00</option>
                             </select></label>
                         </div>
-                        <small class="delivery-schedule-note"><i class="fa-regular fa-clock" aria-hidden="true"></i> Horários entre 9h e 21h. As opções respeitam automaticamente o prazo de preparo.</small>
+                        <small class="delivery-schedule-note"><i class="fa-regular fa-clock" aria-hidden="true"></i> Terça a sábado, das 8h às 19h; domingo, das 8h às 15h. Segunda-feira não há atendimento.</small>
                         <label class="order-address-field">Endereço de entrega<textarea id="order-address" rows="2" maxlength="180" placeholder="Rua, número, bairro e referência" required></textarea></label>
                         <label>Forma de pagamento<select id="order-payment" required>
                             <option value="">Selecione</option><option value="Pix">Pix</option><option value="Cartão">Cartão</option><option value="Dinheiro">Dinheiro</option>

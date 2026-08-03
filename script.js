@@ -34,6 +34,7 @@ const productDetailIngredients = document.querySelector('#product-detail-ingredi
 const productVariants = document.querySelector('#product-variants');
 const cakeSizeInputs = [...document.querySelectorAll('input[name="cake-size"]')];
 const cakeFinishInputs = [...document.querySelectorAll('input[name="cake-finish"]')];
+const cakeFinishFieldset = cakeFinishInputs[0]?.closest('fieldset');
 const productNotes = document.querySelector('#product-notes');
 const productNotesCount = document.querySelector('#product-notes-count');
 const detailQuantityValue = document.querySelector('#detail-quantity-value');
@@ -51,57 +52,93 @@ const scrollToTop = document.querySelector('#scroll-to-top');
 const PRODUCTS = {
     'bolo-chocolatudo': {
         name: 'Bolo Chocolatudo',
-        price: 40.0,
+        price: 28,
         category: 'highlights',
+        defaultFinish: 'cobertura',
         leadTimeHours: 20,
         image: 'imagens mms/bolo chocolatudo.png',
         description: 'Bolo de chocolate intenso, recheado e coberto com brigadeiro cremoso preparado com chocolate belga.',
         ingredients: ['Massa de chocolate', 'Chocolate belga', 'Leite condensado', 'Granulado de chocolate'],
+        pricing: {
+            pequeno: { cobertura: 28 },
+            medio: { cobertura: 40 },
+            grande: { cobertura: 55 },
+        },
     },
     'bolo-baunilha-com-ninho': {
         name: 'Bolo Baunilha com Ninho',
-        price: 159.9,
+        price: 28,
         category: 'highlights',
+        defaultFinish: 'cobertura',
         leadTimeHours: 20,
         image: 'imagens mms/bolo baunilha com ninho.png',
         description: 'Massa leve com recheio cremoso de leite Ninho, finalizada com baunilha e creme delicado.',
         ingredients: ['Massa branca', 'Leite Ninho', 'Baunilha', 'Creme de leite'],
+        pricing: {
+            pequeno: { cobertura: 28 },
+            medio: { cobertura: 40 },
+            grande: { cobertura: 55 },
+        },
     },
-    'ninho-nutella': {
-        name: 'Ninho com Nutella',
-        price: 159.9,
+    'nuvem-de-limao': {
+        name: 'Nuvem de Limão',
+        price: 28,
         category: 'highlights',
+        defaultFinish: 'cobertura',
         leadTimeHours: 20,
-        image: 'assets/cake-3-premium.webp',
-        description: 'Combinação equilibrada de creme de leite Ninho com Nutella, coberta por raspas de chocolate branco.',
-        ingredients: ['Massa branca', 'Leite Ninho', 'Nutella', 'Chocolate branco'],
+        image: 'assets/nuvem de limao.png',
+        description: 'Bolo macio de limão com cobertura cremosa e delicada, equilibrando frescor, doçura e um toque cítrico.',
+        ingredients: ['Limão', 'Farinha de trigo', 'Leite', 'Cobertura cremosa'],
+        pricing: {
+            pequeno: { cobertura: 28 },
+            medio: { cobertura: 40 },
+            grande: { cobertura: 55 },
+        },
     },
     'bolo-chocolate-cremoso-50%': {
         name: 'Bolo Chocolate Cremoso 50%',
-        price: 139.9,
+        price: 28,
         category: 'highlights',
+        defaultFinish: 'cobertura',
         leadTimeHours: 20,
         image: 'imagens mms/bolo-chocolate-cremoso-50.webp',
         description: 'Bolo de chocolate macio com recheio cremoso, ganache brilhante e brigadeiros artesanais.',
         ingredients: ['Massa de chocolate', 'Ganache', 'Brigadeiro cremoso', 'Cacau'],
+        pricing: {
+            pequeno: { cobertura: 28 },
+            medio: { cobertura: 40 },
+            grande: { cobertura: 55 },
+        },
     },
-    'red-velvet': {
-        name: 'Red Velvet com Frutas Vermelhas',
-        price: 169.9,
+    'chocolate-majestoso': {
+        name: 'Chocolate Majestoso',
+        price: 28,
         category: 'highlights',
+        defaultFinish: 'cobertura',
         leadTimeHours: 20,
-        image: 'assets/cake-5-red-velvet.webp',
-        description: 'Clássico Red Velvet com creme suave e frutas vermelhas frescas, equilibrando doçura e acidez.',
-        ingredients: ['Massa Red Velvet', 'Cream cheese', 'Morangos', 'Framboesas e mirtilos'],
+        image: 'assets/chocolate majestoso.png',
+        description: 'Bolo de chocolate com cobertura cremosa, calda generosa e granulado, feito para quem deseja sabor intenso.',
+        ingredients: ['Massa de chocolate', 'Chocolate', 'Leite condensado', 'Granulado'],
+        pricing: {
+            pequeno: { cobertura: 28 },
+            medio: { cobertura: 40 },
+            grande: { cobertura: 55 },
+        },
     },
     'doce-leite-nozes': {
         name: 'Doce de Leite com Nozes',
-        price: 164.9,
+        price: 28,
         category: 'highlights',
+        defaultFinish: 'cobertura',
         leadTimeHours: 20,
         image: 'assets/cake-6-doce-leite-nozes.webp',
         description: 'Massa de baunilha com doce de leite cremoso, cobertura caramelizada e nozes selecionadas.',
         ingredients: ['Massa de baunilha', 'Doce de leite', 'Nozes', 'Creme de leite'],
+        pricing: {
+            pequeno: { cobertura: 28 },
+            medio: { cobertura: 40 },
+            grande: { cobertura: 55 },
+        },
     },
     'bolo-baunilha': {
         name: 'Bolo de Baunilha',
@@ -213,13 +250,13 @@ const PRODUCTS = {
         description: 'Massa vermelha aveludada, creme suave e frutas frescas em uma composição elegante e marcante.',
         ingredients: ['Massa Red Velvet', 'Creme suave', 'Frutas vermelhas', 'Baunilha'],
     },
-    'brownie-premium': {
-        name: 'Brownie Belga',
-        price: 12,
+    'pote-chocolate-ninho': {
+        name: 'Bolo de Pote de Chocolate com Ninho',
+        price: 10,
         category: 'sweets',
-        image: 'assets/doce-brownie-belga-premium.webp',
-        description: 'Brownie denso e úmido, preparado com chocolate belga e finalizado com uma casquinha delicada.',
-        ingredients: ['Chocolate belga', 'Cacau', 'Manteiga', 'Ovos'],
+        image: 'assets/bolo de pote chocolate com ninho.png',
+        description: 'Camadas de massa de chocolate e creme de leite Ninho, montadas no pote para uma sobremesa cremosa e equilibrada.',
+        ingredients: ['Massa de chocolate', 'Leite Ninho', 'Leite condensado', 'Creme de leite'],
     },
     'brigadeiro-gourmet': {
         name: 'Caixa de Brigadeiros Gourmet',
@@ -500,7 +537,7 @@ function getProductUnitPrice(productId, options = cartOptions[productId]) {
     }
 
     const size = options?.size || 'pequeno';
-    const finish = options?.finish || 'simples';
+    const finish = options?.finish || product.defaultFinish || 'simples';
     return product.pricing[size]?.[finish] ?? product.price;
 }
 
@@ -550,13 +587,28 @@ function alignToAvailableDeliverySlot(date) {
     aligned.setSeconds(0, 0);
     aligned.setMinutes(Math.ceil(aligned.getMinutes() / 30) * 30);
 
-    if (aligned.getHours() < 9) {
-        aligned.setHours(9, 0, 0, 0);
-    }
+    while (true) {
+        const day = aligned.getDay();
+        const isClosed = day === 1;
+        const closingHour = day === 0 ? 15 : 19;
 
-    if (aligned.getHours() > 21 || (aligned.getHours() === 21 && aligned.getMinutes() > 0)) {
-        aligned.setDate(aligned.getDate() + 1);
-        aligned.setHours(9, 0, 0, 0);
+        if (isClosed) {
+            aligned.setDate(aligned.getDate() + 1);
+            aligned.setHours(8, 0, 0, 0);
+            continue;
+        }
+
+        if (aligned.getHours() < 8) {
+            aligned.setHours(8, 0, 0, 0);
+        }
+
+        if (aligned.getHours() > closingHour || (aligned.getHours() === closingHour && aligned.getMinutes() > 0)) {
+            aligned.setDate(aligned.getDate() + 1);
+            aligned.setHours(8, 0, 0, 0);
+            continue;
+        }
+
+        break;
     }
 
     return aligned;
@@ -587,7 +639,13 @@ function updateDeliveryConstraints(items) {
             return;
         }
 
-        option.disabled = new Date(`${orderDate.value}T${option.value}`) < minimum;
+        const slot = new Date(`${orderDate.value}T${option.value}`);
+        const day = slot.getDay();
+        const closingHour = day === 0 ? 15 : 19;
+        option.disabled = day === 1
+            || slot.getHours() > closingHour
+            || (slot.getHours() === closingHour && slot.getMinutes() > 0)
+            || slot < minimum;
     });
 
     if (orderTime.selectedOptions[0]?.disabled) {
@@ -597,8 +655,15 @@ function updateDeliveryConstraints(items) {
     const chosenDate = orderDate.value && orderTime.value
         ? new Date(`${orderDate.value}T${orderTime.value}`)
         : null;
-    const dateIsValid = !orderDate.value || orderDate.value >= minimumDate;
-    const timeIsValid = !chosenDate || chosenDate >= minimum;
+    const selectedDay = chosenDate?.getDay();
+    const selectedClosingHour = selectedDay === 0 ? 15 : 19;
+    const dateIsValid = !orderDate.value
+        || (orderDate.value >= minimumDate && new Date(`${orderDate.value}T12:00`).getDay() !== 1);
+    const timeIsValid = !chosenDate
+        || (chosenDate >= minimum
+            && chosenDate.getHours() >= 8
+            && chosenDate.getHours() <= selectedClosingHour
+            && !(chosenDate.getHours() === selectedClosingHour && chosenDate.getMinutes() > 0));
     const isValid = dateIsValid && timeIsValid;
     const errorMessage = 'Escolha uma data e um horário disponíveis para os produtos do carrinho.';
 
@@ -737,7 +802,9 @@ function getSelectedDetailOptions() {
 
     return {
         size: cakeSizeInputs.find((input) => input.checked)?.value || 'pequeno',
-        finish: cakeFinishInputs.find((input) => input.checked)?.value || 'simples',
+        finish: PRODUCTS[detailProductId].defaultFinish
+            || cakeFinishInputs.find((input) => input.checked)?.value
+            || 'simples',
     };
 }
 
@@ -759,7 +826,7 @@ function openProductDetail(productId, trigger) {
     detailProductId = productId;
     setDetailQuantity(1);
     detailOptions = product.pricing
-        ? { ...(cartOptions[productId] || { size: 'pequeno', finish: 'simples' }) }
+        ? { ...(cartOptions[productId] || { size: 'pequeno', finish: product.defaultFinish || 'simples' }) }
         : null;
 
     if (productDetailImage) {
@@ -791,6 +858,10 @@ function openProductDetail(productId, trigger) {
 
     if (productVariants) {
         productVariants.hidden = !product.pricing;
+    }
+
+    if (cakeFinishFieldset) {
+        cakeFinishFieldset.hidden = Boolean(product.defaultFinish);
     }
 
     if (product.pricing) {
