@@ -118,7 +118,7 @@
                     <div><span id="shipping-label">Taxa de entrega</span><strong id="cart-shipping">A confirmar</strong></div>
                     <small id="shipping-note">O valor será confirmado pela MMS conforme o endereço e a disponibilidade de entrega.</small>
                     <div class="cart-total"><span>Total</span><strong id="cart-total">R$ 0,00</strong></div>
-                    <a class="cart-checkout" id="cart-checkout" href="https://wa.me/5581981908099" target="_blank" rel="noopener noreferrer" aria-disabled="true">
+                    <a class="cart-checkout" id="cart-checkout" href="https://wa.me/558186801803" target="_blank" rel="noopener noreferrer" aria-disabled="true">
                         FINALIZAR PELO WHATSAPP <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
                     </a>
                 </div>

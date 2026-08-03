@@ -17,4 +17,4 @@ Projeto de site para a confeitaria MMS Confeitaria, com foco em bolos caseiros, 
 
 ## Contato
 
-- WhatsApp: +55 81 98190-8099
+- WhatsApp: +55 81 8680-1803

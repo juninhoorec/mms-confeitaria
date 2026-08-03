@@ -932,7 +932,7 @@ function updateCheckoutLink(items, subtotal, shipping, total) {
     if (items.length === 0) {
         cartCheckout.setAttribute('aria-disabled', 'true');
         cartCheckout.dataset.ready = 'false';
-        cartCheckout.href = 'https://wa.me/5581981908099';
+        cartCheckout.href = 'https://wa.me/558186801803';
         return;
     }
 
@@ -967,7 +967,7 @@ function updateCheckoutLink(items, subtotal, shipping, total) {
         `TOTAL: ${currency.format(total)}`,
     ].join('\n');
 
-    cartCheckout.href = `https://wa.me/5581981908099?text=${encodeURIComponent(message)}`;
+    cartCheckout.href = `https://wa.me/558186801803?text=${encodeURIComponent(message)}`;
 }
 
 function escapeHTML(value) {
@@ -1458,13 +1458,6 @@ document.querySelectorAll('.btn-fav').forEach((button) => {
 
 syncProductCards();
 
-/* Aprimoramentos progressivos dos contatos compartilhados entre as páginas. */
-document.querySelectorAll('.social-links a[href="#"]').forEach((link) => {
-    link.removeAttribute('href');
-    link.setAttribute('aria-disabled', 'true');
-    link.setAttribute('title', 'Instagram oficial em atualização');
-});
-
 document.querySelectorAll('.contact-list li').forEach((item) => {
     const text = item.querySelector('span');
 
@@ -1475,8 +1468,8 @@ document.querySelectorAll('.contact-list li').forEach((item) => {
     const value = text.textContent.trim();
     let href = '';
 
-    if (value.includes('(81) 98190-8099')) {
-        href = 'tel:+5581981908099';
+    if (value.includes('(81) 8680-1803')) {
+        href = 'tel:+558186801803';
     } else if (value.includes('@')) {
         href = `mailto:${value}`;
     }
