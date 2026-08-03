@@ -1,0 +1,1340 @@
+.internal-page {
+    background: var(--cream);
+    color: var(--brown);
+}
+
+.internal-main {
+    padding-top: 0;
+}
+
+.page-hero {
+    position: relative;
+    min-height: min(46rem, 82svh);
+    overflow: hidden;
+    display: grid;
+    align-items: end;
+    color: #fff;
+    background-color: #1b0e08;
+    background-position: center;
+    background-size: cover;
+}
+
+.page-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(90deg, rgba(18, 8, 4, .88) 0%, rgba(18, 8, 4, .64) 46%, rgba(18, 8, 4, .15) 100%),
+        linear-gradient(0deg, rgba(18, 8, 4, .62), transparent 54%);
+}
+
+.page-hero-content {
+    position: relative;
+    z-index: 1;
+    width: min(calc(100% - 2rem), 70rem);
+    margin: 0 auto;
+    padding: clamp(7rem, 19vh, 12rem) 0 clamp(4rem, 10vh, 7rem);
+}
+
+.page-kicker {
+    color: var(--hero-gold);
+    font-size: .68rem;
+    font-weight: 700;
+    letter-spacing: .28em;
+}
+
+.page-hero h1 {
+    max-width: 13ch;
+    margin-top: .8rem;
+    font-family: var(--serif);
+    font-size: clamp(3.2rem, 13vw, 7.6rem);
+    font-weight: 400;
+    letter-spacing: -.045em;
+    line-height: .86;
+}
+
+.page-hero p {
+    max-width: 35rem;
+    margin-top: 1.35rem;
+    color: rgba(255, 255, 255, .88);
+    font-size: clamp(.95rem, 3vw, 1.12rem);
+    font-weight: 500;
+    line-height: 1.7;
+}
+
+.page-hero-actions {
+    margin-top: 1.6rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: .7rem;
+}
+
+.page-button {
+    min-height: 3rem;
+    padding: .8rem 1.15rem;
+    border: 1px solid rgba(255, 255, 255, .7);
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .65rem;
+    color: #fff;
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .06em;
+    transition: transform .22s ease, background-color .22s ease, color .22s ease;
+}
+
+.page-button-primary {
+    border-color: var(--cream);
+    background: var(--cream);
+    color: var(--brown);
+}
+
+.page-button:hover {
+    transform: translateY(-2px);
+}
+
+.highlights-page .page-hero {
+    background-image: url('assets/hero-wide-final.webp');
+    background-position: center;
+    background-size: cover;
+}
+
+.house-page .page-hero {
+    background-image: url('assets/hero-bolos-caseiros-premium.webp');
+    background-position: center;
+    background-size: cover;
+}
+
+.sweets-page .page-hero {
+    background-image: url('assets/hero-doces-premium.webp');
+    background-position: center;
+    background-size: cover;
+}
+
+.about-page .page-hero {
+    background-image: url('assets/hero-sobre-nos-premium.webp');
+    background-position: center;
+    background-size: cover;
+}
+
+.editorial-intro,
+.catalog-section,
+.story-split,
+.value-section,
+.page-cta {
+    width: min(calc(100% - 2rem), 70rem);
+    margin-inline: auto;
+}
+
+.editorial-intro {
+    padding: clamp(4rem, 10vw, 7rem) 0;
+    display: grid;
+    gap: 1.5rem;
+}
+
+.editorial-intro h2,
+.story-copy h2,
+.value-section h2,
+.page-cta h2 {
+    max-width: 17ch;
+    font-family: var(--serif);
+    font-size: clamp(2.4rem, 8vw, 4.8rem);
+    font-weight: 400;
+    letter-spacing: -.035em;
+    line-height: .95;
+}
+
+.internal-page .editorial-intro h2,
+.internal-page .story-copy h2,
+.internal-page .value-section h2 {
+    font-size: clamp(2.3rem, 5vw, 3.8rem);
+    line-height: .98;
+}
+
+.editorial-intro p,
+.story-copy p,
+.page-cta p {
+    max-width: 39rem;
+    color: #594238;
+    font-size: clamp(.92rem, 2.7vw, 1.05rem);
+    font-weight: 500;
+    line-height: 1.75;
+}
+
+.catalog-section {
+    padding-bottom: clamp(4.5rem, 11vw, 8rem);
+}
+
+.catalog-heading {
+    margin-bottom: 1.6rem;
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.catalog-heading h2 {
+    font-family: var(--serif);
+    font-size: clamp(2.2rem, 7vw, 4rem);
+    font-weight: 400;
+    letter-spacing: -.03em;
+    line-height: 1;
+}
+
+.page-products-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
+}
+
+.page-products-grid .product-card {
+    background: rgba(255, 255, 255, .44);
+}
+
+.page-products-grid .product-img {
+    aspect-ratio: 1.18 / 1;
+}
+
+.story-band {
+    padding: clamp(4rem, 10vw, 8rem) 0;
+    background: #e4d6cc;
+}
+
+.story-split {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.story-media {
+    min-height: 24rem;
+    overflow: hidden;
+    border-radius: clamp(1rem, 3vw, 1.5rem);
+    box-shadow: 0 1.5rem 3rem rgba(42, 24, 15, .14);
+}
+
+.story-media img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.story-media-table {
+    background: #f7eee8;
+}
+
+.story-media-table img {
+    object-fit: contain;
+}
+
+.story-copy {
+    align-self: center;
+}
+
+.story-copy .section-tag {
+    margin-bottom: .8rem;
+}
+
+.story-copy p {
+    margin-top: 1rem;
+}
+
+.detail-list {
+    margin-top: 1.5rem;
+    display: grid;
+    gap: .8rem;
+    list-style: none;
+}
+
+.detail-list li {
+    padding: .85rem 0;
+    border-bottom: 1px solid rgba(112, 68, 44, .2);
+    display: flex;
+    align-items: center;
+    gap: .7rem;
+    color: #402b21;
+    font-size: .88rem;
+    font-weight: 600;
+}
+
+.detail-list i {
+    color: var(--brown-soft);
+}
+
+.value-section {
+    padding: clamp(4.5rem, 11vw, 8rem) 0;
+}
+
+.values-grid {
+    margin-top: 2rem;
+    display: grid;
+    gap: 1rem;
+}
+
+.value-card {
+    padding: clamp(1.3rem, 4vw, 2rem);
+    border: 1px solid rgba(112, 68, 44, .15);
+    border-radius: 1rem;
+    background: rgba(255, 255, 255, .35);
+    box-shadow: var(--shadow-card);
+}
+
+.value-card i {
+    color: var(--brown-soft);
+    font-size: 1.45rem;
+}
+
+.value-card h3 {
+    margin-top: 1rem;
+    font-family: var(--serif);
+    font-size: 1.65rem;
+    font-weight: 500;
+}
+
+.value-card p {
+    margin-top: .55rem;
+    color: #624b3f;
+    font-size: .85rem;
+    font-weight: 500;
+    line-height: 1.65;
+}
+
+.page-cta-wrap {
+    padding: 0 1rem clamp(4rem, 10vw, 7rem);
+}
+
+.about-testimonials {
+    padding-top: var(--page-space);
+    padding-bottom: var(--page-space);
+}
+
+.about-testimonials .testimonials-header,
+.about-testimonials .testimonials-grid {
+    width: min(100%, 68rem);
+    margin-inline: auto;
+}
+
+.about-testimonials .testimonials-grid {
+    margin-top: 1.75rem;
+}
+
+.about-testimonials .testimonial-card {
+    min-height: 12rem;
+}
+
+.page-cta {
+    position: relative;
+    overflow: hidden;
+    padding: clamp(2.2rem, 7vw, 4.5rem);
+    border-radius: clamp(1rem, 3vw, 1.5rem);
+    background:
+        radial-gradient(circle at 90% 20%, rgba(188, 130, 95, .22), transparent 20rem),
+        var(--brown);
+    color: #fff;
+}
+
+.page-cta p {
+    margin-top: 1rem;
+    color: rgba(255, 255, 255, .78);
+}
+
+.page-cta .page-button {
+    margin-top: 1.4rem;
+}
+
+.internal-page .footer {
+    position: relative;
+}
+
+@media (min-width: 600px) {
+    .page-products-grid,
+    .values-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 768px) {
+    .editorial-intro {
+        grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+        align-items: start;
+        gap: 4rem;
+    }
+
+    .story-split {
+        grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
+        gap: clamp(2rem, 6vw, 5rem);
+    }
+
+    .story-band.is-reversed .story-media {
+        order: 2;
+    }
+
+    .values-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .about-testimonials .testimonials-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .about-testimonials .testimonial-card:last-child {
+        grid-column: auto;
+    }
+}
+
+@media (min-width: 1024px) {
+    .page-products-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1.25rem;
+    }
+
+    .page-products-grid .product-info {
+        min-height: 6rem;
+    }
+
+    .about-testimonials {
+        padding-inline: clamp(1rem, 5vw, 4rem);
+    }
+
+    .about-testimonials .testimonials-header,
+    .about-testimonials .testimonials-grid {
+        width: min(100%, 68rem);
+        margin-inline: auto;
+    }
+
+    .about-testimonials .testimonials-grid {
+        margin-top: 1.75rem;
+    }
+
+    .about-testimonials .testimonial-card {
+        min-height: 12rem;
+        padding: 1.4rem;
+    }
+
+    .about-testimonials .testimonial-card p {
+        font-size: .95rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .page-hero {
+        background-attachment: scroll;
+    }
+}
+
+/* Ritmo editorial e superfícies compartilhadas — padrão ZFD Premium. */
+.internal-page,
+.internal-main {
+    background: var(--mms-surface-premium, #f1e7df);
+}
+
+.internal-main {
+    position: relative;
+    overflow: hidden;
+}
+
+
+.page-hero {
+    min-height: clamp(32rem, 70svh, 42rem);
+}
+
+.page-hero-content {
+    padding-top: clamp(7rem, 15vh, 9.5rem);
+    padding-bottom: clamp(3.25rem, 7vh, 4.75rem);
+}
+
+.editorial-intro,
+.catalog-section,
+.story-band,
+.value-section,
+.about-testimonials,
+.page-cta-wrap {
+    position: relative;
+    background: transparent;
+}
+
+.editorial-intro {
+    padding: clamp(3rem, 6vw, 4.5rem) 0;
+}
+
+.catalog-section {
+    padding-bottom: clamp(3.25rem, 6vw, 4.75rem);
+}
+
+.story-band {
+    padding: clamp(3.25rem, 6vw, 4.75rem) 0;
+    border-block: 1px solid rgba(112, 68, 44, .07);
+    background: rgba(255, 252, 248, .18);
+}
+
+.value-section {
+    padding: clamp(3.25rem, 6vw, 4.75rem) 0;
+}
+
+.page-products-grid {
+    gap: clamp(.9rem, 2vw, 1.15rem);
+}
+
+.page-products-grid .product-card,
+.internal-page .product-info {
+    background: rgba(249, 243, 238, .88);
+}
+
+.page-products-grid .product-card {
+    border: 1px solid rgba(112, 68, 44, .1);
+    box-shadow: 0 .75rem 1.7rem rgba(59, 35, 24, .07);
+}
+
+.about-testimonials {
+    padding: clamp(3rem, 6vw, 4.5rem) clamp(1rem, 4vw, 3rem);
+}
+
+.about-testimonials .testimonials-grid {
+    margin-top: 1.35rem;
+    gap: 1rem;
+}
+
+.about-testimonials .testimonial-card {
+    min-height: 10.5rem;
+    padding: 1.3rem;
+}
+
+.page-cta-wrap {
+    padding: 0 1rem clamp(3rem, 6vw, 4.5rem);
+}
+
+.page-cta {
+    padding: clamp(2rem, 3.6vw, 2.75rem);
+    background:
+        radial-gradient(circle at 90% 18%, rgba(216, 167, 133, .18), transparent 19rem),
+        linear-gradient(135deg, #57372a, #3f281f);
+    box-shadow: 0 1.25rem 2.8rem rgba(52, 29, 19, .14);
+}
+
+.page-cta h2 {
+    max-width: 20ch;
+    font-size: clamp(2.25rem, 4.8vw, 3.45rem);
+}
+
+.internal-page .footer {
+    margin-top: 0;
+}
+
+@media (max-width: 767px) {
+    .page-hero {
+        min-height: clamp(31rem, 72svh, 38rem);
+    }
+
+    .page-hero-content {
+        padding-top: 7rem;
+        padding-bottom: 3rem;
+    }
+
+    .editorial-intro,
+    .value-section {
+        padding-block: 2.75rem;
+    }
+
+    .catalog-section {
+        padding-bottom: 3rem;
+    }
+
+    .story-band {
+        padding-block: 3rem;
+    }
+
+    .about-testimonials {
+        padding-block: 2.75rem;
+    }
+
+    .editorial-intro::after,
+    .catalog-section::before,
+    .story-band::after,
+    .page-cta-wrap::before {
+        width: 8.5rem;
+        opacity: .12;
+    }
+}
+
+@media (min-width: 1024px) {
+    .story-media {
+        min-height: 21rem;
+    }
+
+    .about-testimonials .testimonial-card {
+        min-height: 10.5rem;
+        padding: 1.3rem;
+    }
+}
+@media (min-width: 768px) {
+    .story-media {
+        position: relative;
+        aspect-ratio: 4 / 3;
+        min-height: 24rem;
+    }
+
+    .story-media img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+/* Cards internos alinhados ao padrao compacto de "Nossos Destaques". */
+.page-products-grid .product-img {
+    aspect-ratio: 1.68 / 1;
+}
+
+.page-products-grid .product-info {
+    min-height: 0;
+}
+
+/* Ramos botanicos preenchem os respiros das paginas internas. */
+.internal-main > :not(.page-hero) {
+    isolation: isolate;
+}
+
+.internal-main > :not(.page-hero) > * {
+    position: relative;
+    z-index: 2;
+}
+
+.editorial-intro::before,
+.editorial-intro::after,
+.catalog-section::before,
+.story-band::after,
+.value-section::before,
+.about-testimonials::after,
+.page-cta-wrap::before {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    width: clamp(12rem, 24vw, 20rem);
+    aspect-ratio: 3 / 2;
+    background: url('assets/botanical-branch-v2.png') center / contain no-repeat;
+    opacity: .42;
+    filter: sepia(.22) brightness(.78) contrast(1.12);
+    pointer-events: none;
+}
+
+.editorial-intro::before {
+    top: 50%;
+    left: clamp(.5rem, 3vw, 2.5rem);
+    transform: translateY(-50%);
+}
+
+.editorial-intro::after {
+    right: clamp(.5rem, 3vw, 2.5rem);
+    bottom: .25rem;
+    background-image: url('assets/botanical-branch.png');
+    transform: scaleX(-1) rotate(-7deg);
+}
+
+.editorial-intro.decorative-intro {
+    width: 100%;
+    min-height: clamp(10rem, 17vw, 14rem);
+    padding: 0;
+}
+
+.catalog-section::before {
+    top: 2.5rem;
+    right: clamp(.25rem, 2vw, 1.5rem);
+    transform: rotate(8deg);
+}
+
+.story-band::after {
+    right: clamp(.25rem, 2vw, 1.5rem);
+    bottom: .75rem;
+    background-image: url('assets/botanical-branch.png');
+    transform: scaleX(-1) rotate(-8deg);
+}
+
+.value-section::before,
+.page-cta-wrap::before {
+    top: 12%;
+    left: clamp(.25rem, 2vw, 1.5rem);
+    transform: rotate(-8deg);
+}
+
+.about-testimonials::after {
+    right: clamp(.25rem, 2vw, 1.5rem);
+    bottom: .75rem;
+    transform: scaleX(-1);
+}
+
+@media (min-width: 1024px) {
+    .page-products-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: .875rem;
+    }
+
+    .page-products-grid .product-info {
+        padding: 10px 12px 11px;
+    }
+
+    .page-products-grid .product-info h3,
+    .page-products-grid .product-price {
+        font-size: 11px;
+    }
+
+    .page-products-grid .product-price {
+        margin-top: 3px;
+    }
+
+    .page-products-grid .btn-add {
+        right: 7px;
+        bottom: 7px;
+        width: 28px;
+        min-height: 28px;
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 767px) {
+    .editorial-intro::before,
+    .editorial-intro::after,
+    .catalog-section::before,
+    .story-band::after,
+    .value-section::before,
+    .about-testimonials::after,
+    .page-cta-wrap::before {
+        width: 8.5rem;
+        opacity: .34;
+    }
+
+    .editorial-intro.decorative-intro {
+        min-height: 9rem;
+    }
+
+    .editorial-intro::before {
+        left: -.75rem;
+    }
+
+    .editorial-intro::after {
+        right: -.75rem;
+    }
+
+    .catalog-section::before,
+    .story-band::after,
+    .about-testimonials::after {
+        right: -.75rem;
+    }
+
+    .value-section::before,
+    .page-cta-wrap::before {
+        left: -.75rem;
+    }
+}
+/* Composicao final dos ramos: somente em areas de respiro. */
+.catalog-section::before,
+.story-band::after,
+.value-section::before,
+.about-testimonials::after,
+.page-cta-wrap::before {
+    content: none;
+}
+
+.editorial-intro {
+    overflow: hidden;
+}
+
+.editorial-intro.decorative-intro {
+    width: 100%;
+    min-height: clamp(6.5rem, 9vw, 8.5rem);
+}
+
+.editorial-intro.decorative-intro::before,
+.editorial-intro.decorative-intro::after {
+    content: '';
+    top: 50%;
+    bottom: auto;
+    width: clamp(8.5rem, 15vw, 12rem);
+    opacity: .28;
+    filter: sepia(.18) brightness(.82) contrast(1.08);
+}
+
+.editorial-intro.decorative-intro::before {
+    left: clamp(.5rem, 5vw, 4rem);
+    transform: translateY(-50%) rotate(-8deg);
+}
+
+.editorial-intro.decorative-intro::after {
+    right: clamp(.5rem, 5vw, 4rem);
+    background-image: url('assets/botanical-branch.png');
+    transform: translateY(-50%) scaleX(-1) rotate(-8deg);
+}
+
+.editorial-intro:not(.decorative-intro)::before {
+    left: auto;
+    right: clamp(.5rem, 4vw, 3rem);
+    top: 50%;
+    width: clamp(9rem, 16vw, 12rem);
+    opacity: .24;
+    transform: translateY(-50%) scaleX(-1);
+}
+
+.editorial-intro:not(.decorative-intro)::after {
+    content: none;
+}
+
+@media (max-width: 767px) {
+    .editorial-intro.decorative-intro {
+        min-height: 6rem;
+    }
+
+    .editorial-intro.decorative-intro::before,
+    .editorial-intro.decorative-intro::after {
+        width: 7rem;
+        opacity: .24;
+    }
+
+    .editorial-intro.decorative-intro::before {
+        left: -.75rem;
+    }
+
+    .editorial-intro.decorative-intro::after {
+        right: -.75rem;
+    }
+
+    .editorial-intro:not(.decorative-intro)::before {
+        right: -1.5rem;
+        width: 8rem;
+        opacity: .2;
+    }
+}
+/* Ramos laterais organicos alinhados a composicao da pagina principal. */
+.editorial-intro {
+    width: 100%;
+    max-width: none;
+    padding-inline: max(1rem, calc((100vw - 70rem) / 2));
+}
+
+.editorial-intro.decorative-intro {
+    min-height: clamp(7rem, 10vw, 9rem);
+    padding-inline: 0;
+}
+
+.editorial-intro.decorative-intro::before,
+.editorial-intro.decorative-intro::after {
+    top: 50%;
+    width: clamp(14rem, 23vw, 20rem);
+    opacity: .46;
+    filter: sepia(.16) brightness(.76) contrast(1.14);
+}
+
+.editorial-intro.decorative-intro::before {
+    left: clamp(-8rem, -7vw, -5.5rem);
+    transform: translateY(-50%) rotate(-7deg);
+}
+
+.editorial-intro.decorative-intro::after {
+    right: clamp(-8rem, -7vw, -5.5rem);
+    transform: translateY(-50%) scaleX(-1) rotate(-7deg);
+}
+
+.editorial-intro:not(.decorative-intro)::before {
+    right: clamp(-8rem, -7vw, -5.5rem);
+    width: clamp(15rem, 24vw, 21rem);
+    opacity: .44;
+    filter: sepia(.16) brightness(.76) contrast(1.14);
+    transform: translateY(-50%) scaleX(-1) rotate(-5deg);
+}
+
+@media (max-width: 767px) {
+    .editorial-intro {
+        padding-inline: 1rem;
+    }
+
+    .editorial-intro.decorative-intro {
+        min-height: 6.5rem;
+        padding-inline: 0;
+    }
+
+    .editorial-intro.decorative-intro::before,
+    .editorial-intro.decorative-intro::after {
+        width: 10rem;
+        opacity: .38;
+    }
+
+    .editorial-intro.decorative-intro::before {
+        left: -5rem;
+    }
+
+    .editorial-intro.decorative-intro::after {
+        right: -5rem;
+    }
+
+    .editorial-intro:not(.decorative-intro)::before {
+        right: -5.5rem;
+        width: 11rem;
+        opacity: .34;
+    }
+}
+/* Composicoes botanicas individuais por pagina interna. */
+.highlights-page .editorial-intro.decorative-intro::before {
+    left: -6rem;
+    transform-origin: left center;
+    top: 64%;
+    width: clamp(15rem, 24vw, 20rem);
+    background-image: url('assets/botanical-branch-v2.png');
+    transform: translateY(-50%) rotate(12deg);
+}
+
+.highlights-page .editorial-intro.decorative-intro::after {
+    right: -4.5rem;
+    transform-origin: right center;
+    top: 42%;
+    width: clamp(14rem, 22vw, 19rem);
+    background-image: url('assets/botanical-branch.png');
+    transform: translateY(-50%) scaleX(-1) rotate(32deg);
+}
+
+.house-page .editorial-intro.decorative-intro::before {
+    left: -5.75rem;
+    transform-origin: left center;
+    top: 34%;
+    width: clamp(14rem, 22vw, 18rem);
+    background-image: url('assets/botanical-branch.png');
+    transform: translateY(-50%) rotate(-12deg);
+}
+
+.house-page .editorial-intro.decorative-intro::after {
+    right: -6.75rem;
+    transform-origin: right center;
+    top: 66%;
+    width: clamp(16rem, 25vw, 21rem);
+    background-image: url('assets/botanical-branch-v2.png');
+    transform: translateY(-50%) scaleX(-1) rotate(54deg);
+}
+
+.sweets-page .editorial-intro.decorative-intro::before {
+    left: -6.5rem;
+    transform-origin: left center;
+    top: 70%;
+    width: clamp(15rem, 23vw, 19rem);
+    background-image: url('assets/botanical-branch-v2.png');
+    transform: translateY(-50%) rotate(-24deg);
+}
+
+.sweets-page .editorial-intro.decorative-intro::after {
+    top: -2.5rem;
+    transform-origin: top center;
+    right: clamp(2rem, 8vw, 7rem);
+    width: clamp(14rem, 21vw, 18rem);
+    background-image: url('assets/botanical-branch.png');
+    transform: rotate(-10deg);
+}
+
+.about-page .editorial-intro:not(.decorative-intro)::before {
+    right: -7rem;
+    transform-origin: right center;
+    top: 60%;
+    width: clamp(18rem, 28vw, 24rem);
+    background-image: url('assets/botanical-branch-v2.png');
+    transform: translateY(-50%) scaleX(-1) rotate(18deg);
+}
+
+@media (max-width: 767px) {
+    .highlights-page .editorial-intro.decorative-intro::before {
+        left: -5.25rem;
+        top: 68%;
+        transform: translateY(-50%) rotate(14deg);
+    }
+
+    .highlights-page .editorial-intro.decorative-intro::after {
+        right: -5.5rem;
+        top: 36%;
+        transform: translateY(-50%) scaleX(-1) rotate(34deg);
+    }
+
+    .house-page .editorial-intro.decorative-intro::before {
+        left: -5.5rem;
+        top: 30%;
+    }
+
+    .house-page .editorial-intro.decorative-intro::after {
+        right: -6.25rem;
+        top: 72%;
+        transform: translateY(-50%) scaleX(-1) rotate(50deg);
+    }
+
+    .sweets-page .editorial-intro.decorative-intro::before {
+        left: -5.75rem;
+        top: 72%;
+    }
+
+    .sweets-page .editorial-intro.decorative-intro::after {
+        top: -2rem;
+        right: -.5rem;
+        width: 9rem;
+    }
+
+    .about-page .editorial-intro:not(.decorative-intro)::before {
+        right: -7rem;
+        top: 66%;
+        width: 13rem;
+        opacity: .32;
+    }
+}
+/* Sistema botanico final: quatro pontos organicos por pagina. */
+.internal-page .story-band,
+.internal-page .value-section,
+.internal-page .page-cta-wrap {
+    overflow: hidden;
+}
+
+.highlights-page .editorial-intro.decorative-intro::before {
+    left: -6.25rem;
+    top: 68%;
+    width: clamp(14rem, 22vw, 18rem);
+    transform: translateY(-50%) rotate(10deg);
+}
+
+.highlights-page .editorial-intro.decorative-intro::after {
+    right: -6rem;
+    top: 32%;
+    width: clamp(13rem, 20vw, 17rem);
+    transform: translateY(-50%) scaleX(-1) rotate(42deg);
+}
+
+.highlights-page .story-band::after {
+    content: '';
+    top: .4rem;
+    right: -6.5rem;
+    bottom: auto;
+    width: clamp(10rem, 14vw, 13rem);
+    background-image: url('assets/botanical-branch-v2.png');
+    opacity: .4;
+    transform-origin: right center;
+    transform: scaleX(-1) rotate(18deg);
+}
+
+.highlights-page .page-cta-wrap::before {
+    content: '';
+    top: auto;
+    left: -6rem;
+    bottom: -1.75rem;
+    width: clamp(10rem, 14vw, 13rem);
+    background-image: url('assets/botanical-branch.png');
+    opacity: .38;
+    transform-origin: left center;
+    transform: rotate(-18deg);
+}
+
+.house-page .editorial-intro.decorative-intro::before {
+    left: -5.5rem;
+    top: 30%;
+    width: clamp(13rem, 20vw, 17rem);
+    transform: translateY(-50%) rotate(-10deg);
+}
+
+.house-page .editorial-intro.decorative-intro::after {
+    right: -6.5rem;
+    top: 72%;
+    width: clamp(14rem, 22vw, 18rem);
+    transform: translateY(-50%) scaleX(-1) rotate(28deg);
+}
+
+.house-page .story-band::after {
+    content: '';
+    top: .25rem;
+    left: -6.25rem;
+    right: auto;
+    bottom: auto;
+    width: clamp(10rem, 14vw, 13rem);
+    background-image: url('assets/botanical-branch-v2.png');
+    opacity: .4;
+    transform-origin: left center;
+    transform: rotate(24deg);
+}
+
+.house-page .page-cta-wrap::before {
+    content: '';
+    top: auto;
+    right: -6.25rem;
+    bottom: -1.5rem;
+    left: auto;
+    width: clamp(10rem, 14vw, 13rem);
+    background-image: url('assets/botanical-branch.png');
+    opacity: .38;
+    transform-origin: right center;
+    transform: scaleX(-1) rotate(22deg);
+}
+
+.sweets-page .editorial-intro.decorative-intro::before {
+    left: -6.5rem;
+    top: 74%;
+    width: clamp(14rem, 22vw, 18rem);
+    transform: translateY(-50%) rotate(-20deg);
+}
+
+.sweets-page .editorial-intro.decorative-intro::after {
+    top: 28%;
+    right: -5.75rem;
+    width: clamp(13rem, 20vw, 17rem);
+    transform-origin: right center;
+    transform: translateY(-50%) scaleX(-1) rotate(38deg);
+}
+
+.sweets-page .story-band::after {
+    content: '';
+    top: auto;
+    left: -6.5rem;
+    right: auto;
+    bottom: .25rem;
+    width: clamp(10rem, 14vw, 13rem);
+    background-image: url('assets/botanical-branch.png');
+    opacity: .4;
+    transform-origin: left center;
+    transform: rotate(-26deg);
+}
+
+.sweets-page .page-cta-wrap::before {
+    content: '';
+    top: auto;
+    right: -6rem;
+    bottom: -1.75rem;
+    left: auto;
+    width: clamp(10rem, 14vw, 13rem);
+    background-image: url('assets/botanical-branch-v2.png');
+    opacity: .38;
+    transform-origin: right center;
+    transform: scaleX(-1) rotate(-14deg);
+}
+
+.about-page .editorial-intro:not(.decorative-intro)::before {
+    right: -7.5rem;
+    top: 64%;
+    width: clamp(18rem, 27vw, 23rem);
+    transform: translateY(-50%) scaleX(-1) rotate(14deg);
+}
+
+.about-page .story-band::after {
+    content: '';
+    top: .35rem;
+    right: -6.25rem;
+    bottom: auto;
+    width: clamp(10rem, 14vw, 13rem);
+    background-image: url('assets/botanical-branch.png');
+    opacity: .4;
+    transform-origin: right center;
+    transform: scaleX(-1) rotate(24deg);
+}
+
+.about-page .story-band.is-reversed::after {
+    right: auto;
+    left: -6.5rem;
+    top: auto;
+    bottom: .25rem;
+    background-image: url('assets/botanical-branch-v2.png');
+    transform-origin: left center;
+    transform: rotate(-22deg);
+}
+
+.about-page .value-section::before {
+    content: '';
+    top: .35rem;
+    left: -6rem;
+    width: clamp(10rem, 14vw, 13rem);
+    background-image: url('assets/botanical-branch-v2.png');
+    opacity: .4;
+    transform-origin: left center;
+    transform: rotate(18deg);
+}
+
+@media (max-width: 767px) {
+    .internal-page .story-band::after,
+    .internal-page .value-section::before,
+    .internal-page .page-cta-wrap::before {
+        width: 9rem;
+        opacity: .3;
+    }
+
+    .highlights-page .editorial-intro.decorative-intro::before,
+    .house-page .editorial-intro.decorative-intro::before,
+    .sweets-page .editorial-intro.decorative-intro::before {
+        left: -5.5rem;
+    }
+
+    .highlights-page .editorial-intro.decorative-intro::after,
+    .house-page .editorial-intro.decorative-intro::after,
+    .sweets-page .editorial-intro.decorative-intro::after {
+        right: -5.75rem;
+    }
+
+    .about-page .editorial-intro:not(.decorative-intro)::before {
+        right: -7.25rem;
+        width: 13rem;
+    }
+}
+/* Ajustes direcionados pelas quatro capturas finais. */
+.highlights-page .editorial-intro.decorative-intro::after {
+    right: -5rem;
+    top: 56%;
+    width: clamp(16rem, 25vw, 21rem);
+    background-image: url('assets/botanical-branch-v2.png');
+    transform-origin: right center;
+    transform: translateY(-50%) scaleX(-1) rotate(18deg);
+}
+
+.house-page .editorial-intro.decorative-intro::after {
+    right: -5rem;
+    top: 58%;
+    width: clamp(16rem, 25vw, 21rem);
+    background-image: url('assets/botanical-branch-v2.png');
+    transform-origin: right center;
+    transform: translateY(-50%) scaleX(-1) rotate(24deg);
+}
+
+.sweets-page .catalog-section {
+    overflow: hidden;
+}
+
+.sweets-page .catalog-section::before {
+    content: '';
+    top: .5rem;
+    right: -5.25rem;
+    left: auto;
+    bottom: auto;
+    width: clamp(15rem, 23vw, 19rem);
+    aspect-ratio: 3 / 2;
+    background: url('assets/botanical-branch-v2.png') center / contain no-repeat;
+    opacity: .44;
+    filter: sepia(.16) brightness(.76) contrast(1.14);
+    transform-origin: right center;
+    transform: scaleX(-1) rotate(20deg);
+    pointer-events: none;
+}
+
+.about-page .editorial-intro:not(.decorative-intro)::before {
+    right: -8rem;
+    top: 60%;
+    width: clamp(22rem, 34vw, 30rem);
+    background-image: url('assets/botanical-branch-v2.png');
+    opacity: .46;
+    transform-origin: right center;
+    transform: translateY(-50%) scaleX(-1) rotate(10deg);
+}
+
+.about-page .about-testimonials {
+    position: relative;
+    overflow: hidden;
+}
+
+.about-page .about-testimonials::after {
+    content: '';
+    top: auto;
+    right: -5.5rem;
+    bottom: -2.25rem;
+    width: clamp(15rem, 23vw, 19rem);
+    aspect-ratio: 3 / 2;
+    background: url('assets/botanical-branch.png') center / contain no-repeat;
+    opacity: .42;
+    filter: sepia(.16) brightness(.76) contrast(1.14);
+    transform-origin: right center;
+    transform: scaleX(-1) rotate(-16deg);
+    pointer-events: none;
+}
+
+@media (max-width: 767px) {
+    .highlights-page .editorial-intro.decorative-intro::after,
+    .house-page .editorial-intro.decorative-intro::after {
+        right: -6rem;
+        width: 12rem;
+    }
+
+    .sweets-page .catalog-section::before {
+        right: -5rem;
+        width: 11rem;
+        opacity: .34;
+    }
+
+    .about-page .editorial-intro:not(.decorative-intro)::before {
+        right: -8rem;
+        width: 15rem;
+        opacity: .36;
+    }
+
+    .about-page .about-testimonials::after {
+        right: -5.5rem;
+        bottom: -1.5rem;
+        width: 11rem;
+        opacity: .32;
+    }
+}
+/* Correcao do eixo de espelhamento dos ramos direitos. */
+.highlights-page .editorial-intro.decorative-intro::after,
+.house-page .editorial-intro.decorative-intro::after,
+.sweets-page .editorial-intro.decorative-intro::after,
+.highlights-page .story-band::after,
+.house-page .page-cta-wrap::before,
+.sweets-page .catalog-section::before,
+.sweets-page .page-cta-wrap::before,
+.about-page .editorial-intro:not(.decorative-intro)::before,
+.about-page .story-band:not(.is-reversed)::after,
+.about-page .about-testimonials::after {
+    transform-origin: center center;
+}
+
+.highlights-page .editorial-intro.decorative-intro::after,
+.house-page .editorial-intro.decorative-intro::after {
+    right: -4rem;
+}
+
+.sweets-page .catalog-section::before {
+    right: -4.25rem;
+}
+
+.about-page .editorial-intro:not(.decorative-intro)::before {
+    right: -6.5rem;
+}
+
+.about-page .about-testimonials::after {
+    right: -1.75rem;
+    bottom: -5.5rem;
+    width: clamp(17rem, 26vw, 21rem);
+    transform-origin: right bottom;
+    transform: scaleX(-1) rotate(-18deg);
+}
+
+@media (max-width: 767px) {
+    .highlights-page .editorial-intro.decorative-intro::after,
+    .house-page .editorial-intro.decorative-intro::after {
+        right: -4.75rem;
+    }
+
+    .sweets-page .catalog-section::before {
+        right: -4.25rem;
+    }
+
+    .about-page .editorial-intro:not(.decorative-intro)::before {
+        right: -6rem;
+    }
+
+    .about-page .about-testimonials::after {
+        right: -1.25rem;
+        bottom: -3rem;
+        width: 12rem;
+        transform-origin: right bottom;
+        transform: scaleX(-1) rotate(-15deg);
+    }
+}
+/* Imagens editoriais proporcionais no celular. */
+@media (max-width: 767px) {
+    .internal-page .story-media {
+        min-height: 0;
+        aspect-ratio: 4 / 3;
+    }
+
+    .internal-page .story-media img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
+}

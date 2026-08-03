@@ -1,0 +1,8 @@
+{
+  "name": "mms-confeitaria",
+  "private": true,
+  "scripts": {
+    "test": "node tests/audit.mjs"
+  }
+}
+

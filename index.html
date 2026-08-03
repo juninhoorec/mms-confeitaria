@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MMS Confeitaria: bolos caseiros, doces artesanais e kits feitos com carinho em Camaragibe, Pernambuco.">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#4a2a1d">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="MMS Confeitaria | Confeitaria Caseira em Camaragibe">
+    <meta property="og:description" content="Bolos caseiros e doces artesanais feitos com carinho em Camaragibe, Pernambuco.">
+    <meta property="og:image" content="assets/hero-wide-final.webp">
+    <title>MMS Confeitaria | Confeitaria Caseira em Camaragibe</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon-192.png">
+    <link rel="shortcut icon" href="assets/favicon.ico">
+    <link rel="apple-touch-icon" href="assets/favicon-192.png">
+    <link rel="preload" href="assets/fonts/cormorant-garamond-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="assets/fonts/pinyon-script-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="assets/fonts/montserrat-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="style.css?v=20260803-3">
+    <link rel="stylesheet" href="enhancements.css?v=20260803-2">
+    <link rel="stylesheet" href="assets/vendor/fontawesome/css/all.min.css">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"Bakery","name":"MMS Confeitaria","telephone":"+55 81 98190-8099","areaServed":{"@type":"City","name":"Camaragibe"},"address":{"@type":"PostalAddress","addressLocality":"Camaragibe","addressRegion":"PE","addressCountry":"BR"},"openingHours":"Mo-Sa 09:00-21:00","image":"assets/hero-wide-final.webp"}</script>
+</head>
+<body>
+
+    <header class="hero-section">
+        <nav class="navbar" aria-label="Navegação principal">
+            <a class="nav-logo" href="index.html" aria-label="MMS Confeitaria — início">
+                <img src="assets/logo-clean.png" alt="MMS Confeitaria">
+            </a>
+
+            <div class="desktop-nav" aria-label="Categorias">
+                <a href="nossos-destaques/index.html">Nossos Destaques</a>
+                <a href="bolos-caseiros/index.html">Bolos Caseiros</a>
+                <a href="doces/index.html">Doces</a>
+                <a href="sobre-nos/index.html">Sobre Nós</a>
+            </div>
+
+            <div class="nav-actions">
+                <button class="cart-trigger" id="cart-trigger" type="button" aria-label="Abrir carrinho, vazio" aria-controls="cart-panel" aria-expanded="false">
+                    <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i>
+                    <span class="cart-count" aria-hidden="true">0</span>
+                </button>
+                <button class="menu-toggle" type="button" aria-label="Abrir menu" aria-controls="mobile-menu" aria-expanded="false">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+
+            <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+                <span class="mobile-menu-eyebrow">EXPLORE A MMS</span>
+                <a href="nossos-destaques/index.html">Nossos Destaques</a>
+                <a href="bolos-caseiros/index.html">Bolos Caseiros</a>
+                <a href="doces/index.html">Doces</a>
+                <a href="sobre-nos/index.html">Sobre Nós</a>
+            </div>
+        </nav>
+
+        <div class="hero-container">
+            <div class="hero-text-content">
+                <span class="hero-subtitle">FEITO COM AMOR</span>
+                <h1 class="hero-title">
+                    <span class="hero-title-main">MMS</span>
+                    <span class="hero-title-script"><span class="hero-script-initial">C</span>onfeitaria</span>
+                </h1>
+
+                <div class="hero-divider" aria-hidden="true">
+                    <i class="fa-regular fa-heart"></i>
+                </div>
+
+                <p class="hero-description">
+                    Confeitaria Caseira em Camaragibe • PE. <br>
+                    Bolos caseiros, doces artesanais e kits <br>
+                 preparados diariamente com <br>
+                    ingredientes selecionados e muito carinho.
+                </p>
+
+                <div class="hero-buttons">
+                    <a href="#destaques" class="btn-cardapio">VER CARDÁPIO <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+                    <a href="https://wa.me/5581981908099" target="_blank" rel="noopener noreferrer" class="btn-whatsapp">ENCOMENDAR PELO WHATSAPP <i class="fa-brands fa-whatsapp" aria-hidden="true"></i></a>
+                </div>
+            </div>
+
+            <div class="hero-image-wrapper" aria-hidden="true">
+                <div class="hero-image-card">
+                    <img src="assets/tabela bolo.jpeg" alt="Tabela de Bolos Caseiros MMS" loading="lazy">
+                </div>
+            </div>
+        </div>
+
+        <div class="scroll-indicator" aria-hidden="true">
+            <span>ROLE PARA EXPLORAR</span>
+            <i class="fa-solid fa-arrow-down"></i>
+        </div>
+    </header>
+
+    <main>
+        <section class="features-section">
+            <div class="features-header">
+                <span class="section-tag">DOCES MOMENTOS</span>
+                <h2 class="section-title">para lembrar</h2>
+                <p class="section-subtitle">Cada receita nasce do cuidado com os detalhes <br>e do prazer de transformar nosos produtos <br> em experiências inesquecíveis.</p>
+            </div>
+
+            <div class="features-grid">
+                <article class="feature-item">
+                    <div class="feature-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" focusable="false">
+                            <path d="M12 21v-8.2"></path>
+                            <path d="M12 13c-4.8 0-7.4-2.5-7.7-7.5 4.8 0 7.4 2.5 7.7 7.5Z"></path>
+                            <path d="M12 10.5c.5-4.5 3.2-6.8 7.8-6.8-.3 4.6-3 6.8-7.8 6.8Z"></path>
+                        </svg>
+                    </div>
+                    <h3>Ingredientes<br>Selecionados</h3>
+                </article>
+
+                <article class="feature-item">
+                    <div class="feature-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" focusable="false">
+                            <path d="M20.8 5.8a5.2 5.2 0 0 0-7.4 0L12 7.2l-1.4-1.4a5.2 5.2 0 1 0-7.4 7.4L12 22l8.8-8.8a5.2 5.2 0 0 0 0-7.4Z"></path>
+                        </svg>
+                    </div>
+                    <h3>Feito<br>Com Carinho</h3>
+                </article>
+
+                <article class="feature-item">
+                    <div class="feature-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" focusable="false">
+                            <path d="M4 12h16v8H4z"></path>
+                            <path d="M2.5 20h19"></path>
+                            <path d="M4 15c1.2 1 2.4 1 3.6 0 1.2-1 2.4-1 3.6 0 1.2 1 2.4 1 3.6 0 1.2-1 2.4-1 3.6 0 .5.4 1 .7 1.6.7"></path>
+                            <path d="M8 12V8M12 12V7M16 12V8"></path>
+                            <path d="M8 6.2c-.8-.8-.7-1.8 0-2.7.8.9.8 1.9 0 2.7ZM12 5.2c-.8-.8-.7-1.8 0-2.7.8.9.8 1.9 0 2.7ZM16 6.2c-.8-.8-.7-1.8 0-2.7.8.9.8 1.9 0 2.7Z"></path>
+                        </svg>
+                    </div>
+                    <h3>Receitas<br>Caseiras</h3>
+                </article>
+
+                <article class="feature-item">
+                    <div class="feature-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" focusable="false">
+                            <path d="M3 10h18v11H3z"></path>
+                            <path d="M2 7h20v4H2zM12 7v14"></path>
+                            <path d="M12 7H8.5a2.5 2.5 0 1 1 2.5-2.5c0 1.4 1 2.5 1 2.5Z"></path>
+                            <path d="M12 7h3.5A2.5 2.5 0 1 0 13 4.5C13 5.9 12 7 12 7Z"></path>
+                        </svg>
+                    </div>
+                    <h3>Entrega com<br>Todo Cuidado</h3>
+                </article>
+            </div>
+        </section>
+
+        <section class="products-section" id="destaques">
+            <div class="products-header-wrapper">
+                <div>
+                    <span class="section-tag">NOSSOS DESTAQUES</span>
+                    <h2 class="section-title-alt">Bolos que encantam<br>em cada detalhe</h2>
+                </div>
+                <button class="btn-ver-todos" type="button" data-open-catalog="highlights" aria-controls="products-modal" aria-expanded="false">VER TODOS <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
+            </div>
+
+            <div class="products-grid" id="cardapio">
+                <article class="product-card" data-product-id="bolo-chocolatudo" data-product-name="Bolo Chocolatudo" data-product-price="40.00">
+                    <div class="product-img">
+                        <img src="imagens mms/bolo chocolatudo.png" alt="Bolo Chocolatudo" loading="lazy">
+                        <button class="btn-fav" type="button" aria-label="Favoritar Bolo Chocolatudo">
+                            <i class="fa-regular fa-heart" aria-hidden="true"></i>
+                        </button>
+                        <button class="btn-add" type="button" aria-label="Adicionar Bolo Chocolatudo ao carrinho">
+                            <i class="fa-solid fa-plus" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <div class="product-info">
+                        <h3>Bolo Chocolatudo</h3>
+                        <div class="product-price">R$ 40,00</div>
+                    </div>
+                </article>
+
+                <article class="product-card" data-product-id="bolo-baunilha-com-ninho" data-product-name="Bolo Baunilha com Ninho" data-product-price="159.90">
+                    <div class="product-img">
+                        <img src="imagens mms/bolo baunilha com ninho.png" alt="Bolo de Baunilha com Ninho" loading="lazy">
+                        <button class="btn-fav" type="button" aria-label="Favoritar Bolo Baunilha com Ninho">
+                            <i class="fa-regular fa-heart" aria-hidden="true"></i>
+                        </button>
+                        <button class="btn-add" type="button" aria-label="Adicionar Bolo Baunilha com Ninho ao carrinho">
+                            <i class="fa-solid fa-plus" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <div class="product-info">
+                        <h3>Bolo Baunilha com Ninho</h3>
+                        <div class="product-price">R$ 159,90</div>
+                    </div>
+                </article>
+
+                <article class="product-card" data-product-id="ninho-nutella" data-product-name="Ninho com Nutella" data-product-price="159.90">
+                    <div class="product-img">
+                        <img src="assets/cake-3-premium.webp" alt="Bolo Ninho com Nutella" loading="lazy" decoding="async">
+                        <button class="btn-fav" type="button" aria-label="Favoritar Ninho com Nutella">
+                            <i class="fa-regular fa-heart" aria-hidden="true"></i>
+                        </button>
+                        <button class="btn-add" type="button" aria-label="Adicionar Ninho com Nutella ao carrinho">
+                            <i class="fa-solid fa-plus" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <div class="product-info">
+                        <h3>Ninho com Nutella</h3>
+                        <div class="product-price">R$ 159,90</div>
+                    </div>
+                </article>
+
+                <article class="product-card" data-product-id="bolo-chocolate-cremoso-50%" data-product-name="Bolo Chocolate Cremoso 50%" data-product-price="139.90">
+                    <div class="product-img">
+                        <img src="imagens mms/bolo-chocolate-cremoso-50.webp" alt="Bolo Chocolate Cremoso 50%" loading="lazy" decoding="async">
+                        <button class="btn-fav" type="button" aria-label="Favoritar Bolo Chocolate Cremoso 50%">
+                            <i class="fa-regular fa-heart" aria-hidden="true"></i>
+                        </button>
+                        <button class="btn-add" type="button" aria-label="Adicionar Bolo Chocolate Cremoso 50% ao carrinho">
+                            <i class="fa-solid fa-plus" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <div class="product-info">
+                        <h3>Bolo Chocolate Cremoso 50%</h3>
+                        <div class="product-price">R$ 139,90</div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="products-section category-preview category-preview-house" id="bolos-caseiros">
+            <div class="products-header-wrapper">
+                <div>
+                    <span class="section-tag">FEITOS COMO EM CASA</span>
+                    <h2 class="section-title-alt">Bolos Caseiros</h2>
+                </div>
+                <button class="btn-ver-todos" type="button" data-open-catalog="house" aria-controls="products-modal" aria-expanded="false">VER TODOS <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
+            </div>
+
+            <div class="products-grid">
+                <article class="product-card" data-product-id="bolo-baunilha">
+                    <div class="product-img">
+                        <img src="assets/hero-bolos-caseiros-premium.webp" alt="Bolo caseiro de baunilha" loading="lazy" decoding="async">
+                        <button class="btn-add" type="button" aria-label="Escolher Bolo de Baunilha"><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
+                    </div>
+                    <div class="product-info"><h3>Bolo de Baunilha</h3><div class="product-price">A partir de R$ 20,00</div></div>
+                </article>
+                <article class="product-card" data-product-id="bolo-chocolate-caseiro">
+                    <div class="product-img">
+                        <img src="assets/cake-1-premium.webp" alt="Bolo caseiro de chocolate" loading="lazy" decoding="async">
+                        <button class="btn-add" type="button" aria-label="Escolher Bolo de Chocolate"><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
+                    </div>
+                    <div class="product-info"><h3>Bolo de Chocolate</h3><div class="product-price">A partir de R$ 20,00</div></div>
+                </article>
+                <article class="product-card" data-product-id="bolo-cenoura">
+                    <div class="product-img">
+                        <img src="assets/bolo-cenoura-premium.webp" alt="Bolo caseiro de cenoura" loading="lazy" decoding="async">
+                        <button class="btn-add" type="button" aria-label="Escolher Bolo de Cenoura"><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
+                    </div>
+                    <div class="product-info"><h3>Bolo de Cenoura</h3><div class="product-price">A partir de R$ 20,00</div></div>
+                </article>
+                <article class="product-card" data-product-id="bolo-laranja">
+                    <div class="product-img">
+                        <img src="assets/bolo-laranja-premium.webp" alt="Bolo caseiro de laranja" loading="lazy" decoding="async">
+                        <button class="btn-add" type="button" aria-label="Escolher Bolo de Laranja"><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
+                    </div>
+                    <div class="product-info"><h3>Bolo de Laranja</h3><div class="product-price">A partir de R$ 20,00</div></div>
+                </article>
+            </div>
+        </section>
+
+        <section class="products-section category-preview category-preview-sweets" id="doces">
+            <div class="products-header-wrapper">
+                <div>
+                    <span class="section-tag">PEQUENOS ENCANTOS</span>
+                    <h2 class="section-title-alt">Doces</h2>
+                </div>
+                <button class="btn-ver-todos" type="button" data-open-catalog="sweets" aria-controls="products-modal" aria-expanded="false">VER TODOS <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
+            </div>
+
+            <div class="products-grid">
+                <article class="product-card" data-product-id="pote-chocolate">
+                    <div class="product-img">
+                        <img src="assets/bolo de pote chocolate.png" alt="Bolo de pote de chocolate 50%" loading="lazy">
+                        <button class="btn-add" type="button" aria-label="Escolher Bolo de Pote de Chocolate 50%"><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
+                    </div>
+                    <div class="product-info"><h3>Bolo de Pote de Chocolate 50%</h3><div class="product-price">R$ 10,00</div></div>
+                </article>
+                <article class="product-card" data-product-id="pote-laranja-chocolate">
+                    <div class="product-img">
+                        <img src="imagens mms/bolo de pote laranja.png" alt="Bolo de pote de laranja com chocolate" loading="lazy">
+                        <button class="btn-add" type="button" aria-label="Escolher Bolo de Pote de Laranja com Chocolate"><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
+                    </div>
+                    <div class="product-info"><h3>Bolo de Pote de Laranja com Chocolate</h3><div class="product-price">R$ 10,00</div></div>
+                </article>
+                <article class="product-card" data-product-id="naked-cake">
+                    <div class="product-img">
+                        <img src="imagens mms/naked prestigio.png" alt="Naked Cake" loading="lazy">
+                        <button class="btn-add" type="button" aria-label="Escolher Naked Cake"><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
+                    </div>
+                    <div class="product-info"><h3>Naked Cake</h3><div class="product-price">R$ 75,00</div></div>
+                </article>
+                <article class="product-card" data-product-id="naked-red">
+                    <div class="product-img">
+                        <img src="imagens mms/naked massa vermelha.png" alt="Naked Cake de massa vermelha" loading="lazy">
+                        <button class="btn-add" type="button" aria-label="Escolher Naked Cake Massa Vermelha"><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
+                    </div>
+                    <div class="product-info"><h3>Naked Cake Massa Vermelha</h3><div class="product-price">R$ 75,00</div></div>
+                </article>
+            </div>
+        </section>
+
+        <section class="testimonials-section" id="depoimentos">
+            <div class="testimonials-header">
+                <span class="section-tag">O QUE NOSSOS CLIENTES DIZEM</span>
+                <h2 class="section-title">Depoimentos</h2>
+                <div class="testimonial-divider" aria-hidden="true">
+                    <i class="fa-regular fa-heart"></i>
+                </div>
+            </div>
+
+            <div class="testimonials-grid">
+                <article class="testimonial-card">
+                    <div class="stars" aria-label="5 estrelas">
+                        <i class="fa-solid fa-star" aria-hidden="true"></i>
+                        <i class="fa-solid fa-star" aria-hidden="true"></i>
+                        <i class="fa-solid fa-star" aria-hidden="true"></i>
+                        <i class="fa-solid fa-star" aria-hidden="true"></i>
+                        <i class="fa-solid fa-star" aria-hidden="true"></i>
+                    </div>
+                    <p>Bolo maravilhoso, sabor incrível e muito bem feito! Dá pra sentir o amor em cada detalhe.</p>
+                    <span class="client-name">Juliana S.</span>
+                </article>
+
+                <article class="testimonial-card">
+                    <div class="stars" aria-label="5 estrelas">
+                        <i class="fa-solid fa-star" aria-hidden="true"></i>
+                        <i class="fa-solid fa-star" aria-hidden="true"></i>
+                        <i class="fa-solid fa-star" aria-hidden="true"></i>
+                        <i class="fa-solid fa-star" aria-hidden="true"></i>
+                        <i class="fa-solid fa-star" aria-hidden="true"></i>
+                    </div>
+                    <p>Atendimento excelente e os bolos são simplesmente perfeitos. Super recomendo!</p>
+                    <span class="client-name">Carlos M.</span>
+                </article>
+
+                <article class="testimonial-card">
+                    <div class="stars" aria-label="5 estrelas">
+                        <i class="fa-solid fa-star" aria-hidden="true"></i>
+                        <i class="fa-solid fa-star" aria-hidden="true"></i>
+                        <i class="fa-solid fa-star" aria-hidden="true"></i>
+                        <i class="fa-solid fa-star" aria-hidden="true"></i>
+                        <i class="fa-solid fa-star" aria-hidden="true"></i>
+                    </div>
+                    <p>Os doces são impecáveis! Ingredientes de qualidade e muito capricho. Virou minha confeitaria preferida!</p>
+                    <span class="client-name">Amanda R.</span>
+                </article>
+            </div>
+        </section>
+
+        <section class="perks-bar" aria-label="Informações de atendimento">
+            <div class="perks-container">
+                <div class="perk-item">
+                    <i class="fa-solid fa-truck" aria-hidden="true"></i>
+                    <span>Entrega em Camaragibe<br>e região</span>
+                </div>
+
+                <div class="perk-item">
+                    <i class="fa-regular fa-calendar" aria-hidden="true"></i>
+                    <span>Pedidos com até<br>2 dias de antecedência</span>
+                </div>
+
+                <div class="perk-item">
+                    <i class="fa-regular fa-credit-card" aria-hidden="true"></i>
+                    <span>Pagamento facilitado<br>Pix e Cartão</span>
+                </div>
+
+                <div class="perk-item">
+                    <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+                    <span>Atendimento pelo<br>WhatsApp</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-col brand-col">
+                <img src="assets/logo-clean.png" alt="MMS Confeitaria" class="footer-logo" loading="lazy">
+                <p>Confeitaria caseira em Camaragibe • PE.<br>Feito com amor todos os dias.</p>
+                <div class="social-links">
+                    <span class="social-link is-disabled" aria-label="Instagram oficial em atualização" title="Instagram oficial em atualização"><i class="fa-brands fa-instagram" aria-hidden="true"></i></span>
+                    <a href="https://wa.me/5581981908099" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h4>MENU</h4>
+                <ul>
+                    <li><a href="nossos-destaques/index.html">Nossos Destaques</a></li>
+                    <li><a href="bolos-caseiros/index.html">Bolos Caseiros</a></li>
+                    <li><a href="doces/index.html">Doces</a></li>
+                    <li><a href="sobre-nos/index.html">Sobre Nós</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>ATENDIMENTO</h4>
+                <ul class="contact-list">
+                    <li><i class="fa-solid fa-phone" aria-hidden="true"></i><a href="tel:+5581981908099">(81) 98190-8099</a></li>
+                    <li><i class="fa-regular fa-clock" aria-hidden="true"></i><span>Seg a Sáb: 9h às 21h</span></li>
+                    <li><i class="fa-solid fa-location-dot" aria-hidden="true"></i><span>Camaragibe • PE</span></li>
+                    <li><i class="fa-regular fa-envelope" aria-hidden="true"></i><a href="mailto:contato@mmsconfeitaria.com.br">contato@mmsconfeitaria.com.br</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>FORMAS DE PAGAMENTO</h4>
+                <div class="payment-methods">
+                    <div class="pay-badge"><i class="fa-solid fa-credit-card" aria-hidden="true"></i> Cartão</div>
+                    <div class="pay-badge"><i class="fa-solid fa-qrcode" aria-hidden="true"></i> Pix</div>
+                    <div class="pay-badge"><i class="fa-solid fa-money-bill-wave" aria-hidden="true"></i> Dinheiro</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2026 MMS Confeitaria. Todos os direitos reservados.</p>
+            <p>desenvolvido por ZFD.</p>
+        </div>
+    </footer>
+
+    <div class="products-modal" id="products-modal" aria-hidden="true">
+        <button class="dialog-backdrop" type="button" aria-label="Fechar catálogo" data-close-dialog="products-modal"></button>
+        <section class="products-dialog" role="dialog" aria-modal="true" aria-labelledby="catalog-title">
+            <div class="dialog-header">
+                <div>
+                    <span class="section-tag" id="catalog-eyebrow">CARDÁPIO COMPLETO</span>
+                    <h2 class="dialog-title" id="catalog-title">Todos os nossos destaques</h2>
+                </div>
+                <button class="dialog-close catalog-dialog-close" type="button" aria-label="Fechar catálogo" data-close-dialog="products-modal">
+                    <span>FECHAR</span>
+                    <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+                </button>
+            </div>
+
+            <div class="catalog-grid" id="catalog-grid">
+                <article class="catalog-card" data-product-id="bolo-chocolatudo" data-product-name="Bolo Chocolatudo" data-product-price="40.00">
+                    <div class="catalog-card-image">
+                        <img src="imagens mms/bolo chocolatudo.png" alt="Bolo Chocolatudo">
+                        <button class="btn-add" type="button" aria-label="Adicionar Bolo Chocolatudo ao carrinho"><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
+                    </div>
+                    <div class="catalog-card-info"><h3>Bolo Chocolatudo</h3><span>R$ 40,00</span></div>
+                </article>
+
+                <article class="catalog-card" data-product-id="bolo-baunilha-com-ninho" data-product-name="Bolo Baunilha com Ninho" data-product-price="159.90">
+                    <div class="catalog-card-image">
+                        <img src="imagens mms/bolo baunilha com ninho.png" alt="Bolo Baunilha com Ninho" loading="lazy" decoding="async">
+                        <button class="btn-add" type="button" aria-label="Adicionar Bolo Baunilha com Ninho ao carrinho"><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
+                    </div>
+                    <div class="catalog-card-info"><h3>Bolo Baunilha com Ninho</h3><span>R$ 159,90</span></div>
+                </article>
+
+                <article class="catalog-card" data-product-id="ninho-nutella" data-product-name="Bolo Ninho com Nutella" data-product-price="159.90">
+                    <div class="catalog-card-image">
+                        <img src="assets/cake-3-premium.webp" alt="Bolo Ninho com Nutella" loading="lazy" decoding="async">
+                        <button class="btn-add" type="button" aria-label="Adicionar Ninho com Nutella ao carrinho"><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
+                    </div>
+                    <div class="catalog-card-info"><h3>Ninho com Nutella</h3><span>R$ 159,90</span></div>
+                </article>
+
+                <article class="catalog-card" data-product-id="bolo-chocolate-cremoso-50%" data-product-name="Bolo Chocolate Cremoso 50%" data-product-price="139.90">
+                    <div class="catalog-card-image">
+                        <img src="imagens mms/bolo-chocolate-cremoso-50.webp" alt="Bolo Chocolate Cremoso 50%" loading="lazy" decoding="async">
+                        <button class="btn-add" type="button" aria-label="Adicionar Bolo Chocolate Cremoso 50% ao carrinho"><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
+                    </div>
+                    <div class="catalog-card-info"><h3>Bolo Chocolate Cremoso 50%</h3><span>R$ 139,90</span></div>
+                </article>
+
+                <article class="catalog-card" data-product-id="red-velvet" data-product-name="Red Velvet com Frutas Vermelhas" data-product-price="169.90">
+                    <div class="catalog-card-image">
+                        <img src="assets/cake-5-red-velvet.webp" alt="Bolo Red Velvet com Frutas Vermelhas" loading="lazy" decoding="async">
+                        <button class="btn-add" type="button" aria-label="Adicionar Red Velvet com Frutas Vermelhas ao carrinho"><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
+                    </div>
+                    <div class="catalog-card-info"><h3>Red Velvet com Frutas Vermelhas</h3><span>R$ 169,90</span></div>
+                </article>
+
+                <article class="catalog-card" data-product-id="doce-leite-nozes" data-product-name="Doce de Leite com Nozes" data-product-price="164.90">
+                    <div class="catalog-card-image">
+                        <img src="assets/cake-6-doce-leite-nozes.webp" alt="Bolo Doce de Leite com Nozes" loading="lazy" decoding="async">
+                        <button class="btn-add" type="button" aria-label="Adicionar Doce de Leite com Nozes ao carrinho"><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
+                    </div>
+                    <div class="catalog-card-info"><h3>Doce de Leite com Nozes</h3><span>R$ 164,90</span></div>
+                </article>
+            </div>
+        </section>
+    </div>
+
+    <div class="product-detail-modal" id="product-detail-modal" aria-hidden="true">
+        <button class="dialog-backdrop" type="button" aria-label="Fechar detalhes do produto" data-close-dialog="product-detail-modal"></button>
+        <section class="product-detail-dialog" role="dialog" aria-modal="true" aria-labelledby="product-detail-title">
+            <button class="dialog-close product-detail-close" type="button" aria-label="Fechar detalhes do produto" data-close-dialog="product-detail-modal">
+                <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+            </button>
+
+            <div class="product-detail-layout">
+                <button class="product-detail-image" id="product-detail-image-button" type="button" aria-label="Ampliar foto do produto">
+                    <img id="product-detail-image" src="" alt="">
+                </button>
+
+                <div class="product-detail-content">
+                    <span class="section-tag">DETALHES DO BOLO</span>
+                    <h2 class="product-detail-title" id="product-detail-title"></h2>
+                    <strong class="product-detail-price" id="product-detail-price"></strong>
+                    <p class="product-detail-description" id="product-detail-description"></p>
+
+                    <div class="product-detail-ingredients">
+                        <h3>Ingredientes principais</h3>
+                        <ul id="product-detail-ingredients"></ul>
+                    </div>
+
+                    <div class="product-variants" id="product-variants" hidden>
+                        <fieldset>
+                            <legend>Tamanho</legend>
+                            <div class="variant-options">
+                                <label><input type="radio" name="cake-size" value="pequeno" checked><span>Pequeno<small>8 a 10 fatias</small></span></label>
+                                <label><input type="radio" name="cake-size" value="medio"><span>Médio</span></label>
+                                <label><input type="radio" name="cake-size" value="grande"><span>Grande</span></label>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <legend>Acabamento</legend>
+                            <div class="variant-options variant-options-finish">
+                                <label><input type="radio" name="cake-finish" value="simples" checked><span>Simples</span></label>
+                                <label><input type="radio" name="cake-finish" value="cobertura"><span>Com cobertura</span></label>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <label class="product-notes-label" for="product-notes">
+                        Deseja informar ou retirar algum ingrediente?
+                        <textarea id="product-notes" rows="3" maxlength="240" placeholder="Ex.: sem morangos no topo, retirar nozes ou escrever uma mensagem..."></textarea>
+                        <small><span id="product-notes-count">0</span>/240 caracteres</small>
+                    </label>
+
+                    <div class="product-detail-actions">
+                        <div class="detail-quantity" aria-label="Quantidade do produto">
+                            <button id="detail-decrease" type="button" aria-label="Diminuir quantidade">−</button>
+                            <span id="detail-quantity-value">1</span>
+                            <button id="detail-increase" type="button" aria-label="Aumentar quantidade">+</button>
+                        </div>
+                        <button class="product-detail-add" id="product-detail-add" type="button">
+                            ADICIONAR AO CARRINHO <i class="fa-solid fa-plus" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="image-lightbox" id="image-lightbox" aria-hidden="true">
+        <button class="lightbox-backdrop" type="button" aria-label="Fechar foto ampliada"></button>
+        <div class="lightbox-content" role="dialog" aria-modal="true" aria-label="Foto ampliada do produto" tabindex="-1">
+            <button class="lightbox-close" type="button" aria-label="Fechar foto ampliada"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+            <img id="lightbox-image" src="" alt="" draggable="false">
+            <span class="lightbox-hint">Toque duas vezes ou use dois dedos para ampliar</span>
+        </div>
+    </div>
+
+    <div class="cart-panel" id="cart-panel" aria-hidden="true">
+        <button class="dialog-backdrop" type="button" aria-label="Fechar carrinho" data-close-dialog="cart-panel"></button>
+        <aside class="cart-drawer" role="dialog" aria-modal="true" aria-labelledby="cart-title">
+            <div class="dialog-header">
+                <div>
+                    <span class="section-tag">SEU PEDIDO</span>
+                    <h2 class="dialog-title" id="cart-title">Carrinho</h2>
+                </div>
+                <button class="dialog-close" type="button" aria-label="Fechar carrinho" data-close-dialog="cart-panel">
+                    <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+                </button>
+            </div>
+
+            <div class="cart-content">
+                <p class="cart-empty">Seu carrinho está vazio. Adicione um bolo para começar.</p>
+                <div class="cart-items" aria-live="polite"></div>
+            </div>
+
+            <div class="cart-summary">
+                <div class="cart-order-details">
+                    <div class="delivery-schedule">
+                        <label>
+                            Data da entrega
+                            <input id="order-date" type="date" required>
+                        </label>
+                        <label>
+                            Horário desejado
+                            <select id="order-time" required>
+                                <option value="">Selecione o horário</option>
+                                <option value="09:00">09:00</option>
+                                <option value="09:30">09:30</option>
+                                <option value="10:00">10:00</option>
+                                <option value="10:30">10:30</option>
+                                <option value="11:00">11:00</option>
+                                <option value="11:30">11:30</option>
+                                <option value="12:00">12:00</option>
+                                <option value="12:30">12:30</option>
+                                <option value="13:00">13:00</option>
+                                <option value="13:30">13:30</option>
+                                <option value="14:00">14:00</option>
+                                <option value="14:30">14:30</option>
+                                <option value="15:00">15:00</option>
+                                <option value="15:30">15:30</option>
+                                <option value="16:00">16:00</option>
+                                <option value="16:30">16:30</option>
+                                <option value="17:00">17:00</option>
+                                <option value="17:30">17:30</option>
+                                <option value="18:00">18:00</option>
+                                <option value="18:30">18:30</option>
+                                <option value="19:00">19:00</option>
+                                <option value="19:30">19:30</option>
+                                <option value="20:00">20:00</option>
+                                <option value="20:30">20:30</option>
+                                <option value="21:00">21:00</option>
+                            </select>
+                        </label>
+                    </div>
+                    <small class="delivery-schedule-note"><i class="fa-regular fa-clock" aria-hidden="true"></i> Horários entre 9h e 21h. As opções respeitam automaticamente o prazo de preparo.</small>
+                    <label class="order-address-field">
+                        Endereço de entrega
+                        <textarea id="order-address" rows="2" maxlength="180" placeholder="Rua, número, bairro e referência" required></textarea>
+                    </label>
+                    <label>
+                        Forma de pagamento
+                        <select id="order-payment" required>
+                            <option value="">Selecione</option>
+                            <option value="Pix">Pix</option>
+                            <option value="Cartão">Cartão</option>
+                            <option value="Dinheiro">Dinheiro</option>
+                        </select>
+                    </label>
+                </div>
+                <label class="pickup-option">
+                    <input id="pickup-local" type="checkbox">
+                    <span class="pickup-check" aria-hidden="true"><i class="fa-solid fa-check"></i></span>
+                    <span><strong>Retirada no local</strong><small>A MMS confirmará pelo WhatsApp o endereço e o horário disponíveis.</small></span>
+                </label>
+                <div><span>Subtotal</span><strong id="cart-subtotal">R$ 0,00</strong></div>
+                <div><span id="shipping-label">Taxa de entrega</span><strong id="cart-shipping">A confirmar</strong></div>
+                <small id="shipping-note">O valor será confirmado pela MMS conforme o endereço e a disponibilidade de entrega.</small>
+                <div class="cart-total"><span>Total</span><strong id="cart-total">R$ 0,00</strong></div>
+                <a class="cart-checkout" id="cart-checkout" href="https://wa.me/5581981908099" target="_blank" rel="noopener noreferrer" aria-disabled="true">
+                    FINALIZAR PELO WHATSAPP <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+                </a>
+            </div>
+        </aside>
+    </div>
+
+    <div class="cart-feedback" role="status" aria-live="polite"></div>
+
+    <div class="scroll-progress" id="scroll-progress" aria-hidden="true">
+        <div class="scroll-progress-ring" id="scroll-progress-ring" aria-label="Progresso da página: 0%">
+            <span id="scroll-progress-value">0%</span>
+        </div>
+        <button class="scroll-to-top" id="scroll-to-top" type="button" aria-label="Voltar ao topo">
+            <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
+        </button>
+    </div>
+
+    <script src="script.js?v=20260803-7"></script>
+</body>
+</html>
