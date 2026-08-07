@@ -330,11 +330,43 @@ function getResponsiveVariantUrl(source, width) {
     return url.href;
 }
 
+const RESPONSIVE_IMAGE_NAMES = new Set([
+    'bolo-cenoura-premium',
+    'bolo-coco-premium',
+    'bolo-fuba-cremoso-premium',
+    'bolo-laranja-premium',
+    'bolo com velas',
+    'bolo-chocolate-cremoso-50',
+    'cake-1-premium',
+    'cake-3-premium',
+    'cake-5-red-velvet',
+    'cake-6-doce-leite-nozes',
+    'doce-brigadeiros-gourmet-premium',
+    'doce-brownie-belga-premium',
+    'hero 2 sobre nos',
+    'hero-bolos-caseiros-premium',
+    'hero-cake',
+    'hero-doces-premium',
+    'hero doces',
+    'hero-sobre-nos-premium',
+    'hero-wide-final'
+]);
+
+function hasResponsiveVariants(source) {
+    const pathname = new URL(source, scriptBaseUrl).pathname;
+    const filename = decodeURIComponent(pathname.split('/').pop() || '');
+    return RESPONSIVE_IMAGE_NAMES.has(filename.replace(/\.webp$/i, ''));
+}
+
 function enhanceImages(container = document) {
     container.querySelectorAll('img').forEach((image) => {
         const source = image.getAttribute('src') || '';
 
         image.decoding = 'async';
+
+        if (!source) {
+            return;
+        }
 
         if (!image.hasAttribute('width') || !image.hasAttribute('height')) {
             if (image.closest('.nav-logo, .footer-logo') || image.classList.contains('footer-logo')) {
@@ -349,7 +381,7 @@ function enhanceImages(container = document) {
             }
         }
 
-        if (/\.webp(?:\?|$)/i.test(source) && !/-(?:640|960)\.webp/i.test(source)) {
+        if (/\.webp(?:\?|$)/i.test(source) && !/-(?:640|960)\.webp/i.test(source) && hasResponsiveVariants(source)) {
             const absoluteSource = resolveAssetUrl(source);
             image.srcset = `${getResponsiveVariantUrl(absoluteSource, 640)} 640w, ${getResponsiveVariantUrl(absoluteSource, 960)} 960w`;
             image.sizes = image.closest('.story-media')

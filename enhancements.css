@@ -861,3 +861,94 @@ html::-webkit-scrollbar-thumb:hover {
         min-height: 3.25rem;
     }
 }
+
+/* Correcoes de estabilidade visual apos carregamento e durante a rolagem. */
+.nav-logo,
+.footer-logo {
+    background: transparent;
+}
+
+.nav-logo img,
+.footer-logo {
+    aspect-ratio: 1;
+    object-fit: contain;
+}
+
+.nav-logo.image-load-error,
+.brand-col.image-load-error {
+    min-height: 0;
+    background: transparent;
+}
+
+.nav-logo.image-load-error::after,
+.brand-col.image-load-error::after {
+    content: none;
+}
+
+@media (min-width: 820px) {
+    .navbar.is-scrolled,
+    .internal-page .navbar.is-scrolled {
+        min-height: 3.9rem;
+        padding-block: .3rem;
+    }
+
+    .navbar.is-scrolled .nav-logo img,
+    .internal-page .navbar.is-scrolled .nav-logo img {
+        width: 3.15rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .footer {
+        padding: 2rem max(2rem, calc((100vw - 70rem) / 2)) 1rem;
+    }
+
+    .footer-container,
+    .footer-bottom {
+        width: min(100%, 70rem);
+    }
+
+    .footer-container {
+        grid-template-columns: minmax(15rem, 1.35fr) .75fr 1.15fr .85fr;
+        gap: clamp(1.75rem, 3vw, 3rem);
+    }
+
+    .brand-col {
+        display: grid;
+        grid-template-columns: 5.25rem minmax(0, 1fr);
+        column-gap: 1rem;
+    }
+
+    .footer-logo {
+        width: 5.25rem;
+    }
+
+    .brand-col p,
+    .footer-col li,
+    .footer-col li a,
+    .contact-list span {
+        font-size: .8rem;
+        line-height: 1.5;
+    }
+
+    .footer-col h4 {
+        font-size: .68rem;
+    }
+
+    .pay-badge {
+        min-height: 2.35rem;
+        font-size: .7rem;
+    }
+
+    .footer-bottom {
+        margin-top: 1.25rem;
+        padding-top: .85rem;
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 1rem;
+    }
+
+    .footer-bottom p {
+        font-size: .68rem;
+    }
+}
