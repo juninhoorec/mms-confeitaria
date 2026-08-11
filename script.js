@@ -299,6 +299,9 @@ const PRODUCTS = {
     },
 };
 
+// Fonte única compartilhada com busca, pronta entrega e painel local.
+window.MMS_PRODUCTS = PRODUCTS;
+
 const scriptBaseUrl = document.currentScript?.src
     ? new URL('.', document.currentScript.src).href
     : document.baseURI;

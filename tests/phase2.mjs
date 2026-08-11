@@ -1,0 +1,18 @@
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+import vm from 'node:vm';
+const root=resolve(import.meta.dirname,'..'),failures=[];
+const context={window:{MMS_PRODUCTS:{'bolo-chocolatudo':{name:'Bolo Chocolatudo'}}}};
+vm.createContext(context);vm.runInContext(readFileSync(resolve(root,'order-utils.js'),'utf8'),context);
+const parsed=context.window.MMSOrderUtils.parseWhatsAppOrder('CLIENTE: Ana\nTELEFONE: 81999990000\nITEM: 2 x Bolo Chocolatudo\nPARA ENTREGAR: 18/09/2026 às 15:00\nFRETE: retirada no local\nPAGAMENTO: Pix\nTOTAL: R$ 56,00',context.window.MMS_PRODUCTS);
+if(parsed.customerName!=='Ana'||parsed.items[0]?.quantity!==2||parsed.items[0]?.productId!=='bolo-chocolatudo'||parsed.date!=='2026-09-18'||parsed.time!=='15:00'||parsed.deliveryType!=='Retirada'||parsed.total!==56)failures.push('parser WhatsApp não reconheceu o cenário completo');
+const csv=context.window.MMSOrderUtils.ordersToCSV([{orderNumber:'#1042',customerName:'Ana',total:56}]);if(!csv.includes('#1042')||!csv.includes('56'))failures.push('exportação CSV inválida');
+const dateContext={window:{},Intl,Date,Object};vm.createContext(dateContext);vm.runInContext(readFileSync(resolve(root,'date-utils.js'),'utf8'),dateContext);
+const {getSaoPauloDateISO,shiftISODate}=dateContext.window.MMSDate;
+if(getSaoPauloDateISO(new Date('2026-09-19T02:30:00Z'))!=='2026-09-18')failures.push('23:30 em São Paulo avançou indevidamente para o dia UTC');
+if(getSaoPauloDateISO(new Date('2026-09-19T03:30:00Z'))!=='2026-09-19')failures.push('data após meia-noite em São Paulo incorreta');
+for(const [date,days,expected] of [['2026-09-18',-1,'2026-09-17'],['2026-03-01',-1,'2026-02-28'],['2024-03-01',-1,'2024-02-29']])if(shiftISODate(date,days)!==expected)failures.push(`deslocamento civil incorreto: ${date}`);
+const repository=readFileSync(resolve(root,'data-repositories.js'),'utf8');if(!repository.includes('catch'))failures.push('fallback para falha remota ausente');
+let requestedUrl='';const store=new Map();const repoContext={window:{MMS_CONFIG:{SUPABASE_URL:'https://example.supabase.co',SUPABASE_ANON_KEY:'public-test-key'},MMSDate:dateContext.window.MMSDate},localStorage:{getItem:key=>store.get(key)||null,setItem:(key,value)=>store.set(key,value),removeItem:key=>store.delete(key)},fetch:async url=>{requestedUrl=String(url);return{ok:true,status:200,json:async()=>[]}},Date,Intl,Object,Map,JSON,Number,String,Boolean,Math,Error,crypto:{randomUUID:()=> 'test-id'}};vm.createContext(repoContext);vm.runInContext(repository,repoContext);await repoContext.window.MMSData.availabilityForDate();
+const expectedToday=getSaoPauloDateISO();if(!requestedUrl.includes(`available_date=eq.${expectedToday}`))failures.push('repository remoto não recebeu a data civil de São Paulo');
+if(failures.length){console.error(failures.join('\n'));process.exit(1)}console.log('Phase 2 aprovada: parser WhatsApp, CSV e fallback remoto verificados.');

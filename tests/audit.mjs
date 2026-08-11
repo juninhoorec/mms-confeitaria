@@ -9,6 +9,8 @@ const pages = [
   'bolos-caseiros/index.html',
   'doces/index.html',
   'sobre-nos/index.html',
+  'politica-de-privacidade/index.html',
+  'termos-de-encomenda/index.html',
 ];
 const failures = [];
 const script = readFileSync(resolve(root, 'script.js'), 'utf8');
@@ -73,13 +75,44 @@ for (const page of pages) {
   }
 }
 
-for (const file of ['script.js', 'commerce-shell.js']) {
+for (const file of ['script.js', 'commerce-shell.js', 'premium.js', 'data-repositories.js', 'order-utils.js', 'admin/admin.js']) {
   try {
     new Function(readFileSync(resolve(root, file), 'utf8'));
   } catch (error) {
     failures.push(`${file}: JavaScript inválido: ${error.message}`);
   }
 }
+
+const premiumScript = readFileSync(resolve(root, 'premium.js'), 'utf8');
+const adminHtml = readFileSync(resolve(root, 'admin/index.html'), 'utf8');
+if (!/window\.MMS_PRODUCTS\s*=\s*PRODUCTS/.test(script)) failures.push('catálogo não está exposto como fonte única compartilhada');
+if (!premiumScript.includes("normalize('NFD')")) failures.push('busca sem normalização de acentos');
+if (!premiumScript.includes("item.quantity > 0")) failures.push('pronta entrega não remove quantidade zero');
+if (!premiumScript.includes("item.date === today")) failures.push('pronta entrega não filtra a data atual');
+if (!premiumScript.includes("mms-ready-availability-v1")) failures.push('chave de disponibilidade ausente');
+if (!/<meta\s+name="robots"\s+content="noindex,nofollow"/i.test(adminHtml)) failures.push('admin precisa de noindex,nofollow');
+const forbiddenAdminKey = ['service', 'role'].join('_');
+if (new RegExp(forbiddenAdminKey, 'i').test([script, premiumScript, adminHtml].join('\n'))) failures.push('chave administrativa não pode existir no frontend');
+for (const file of ['premium.css', 'premium.js', 'admin/index.html', 'admin/admin.css', 'admin/admin.js']) {
+  if (!existsSync(resolve(root, file))) failures.push(`arquivo novo ausente: ${file}`);
+}
+const repositories = readFileSync(resolve(root, 'data-repositories.js'), 'utf8');
+const orderUtils = readFileSync(resolve(root, 'order-utils.js'), 'utf8');
+const migration = readFileSync(resolve(root, 'supabase/migrations/001_mms_phase2.sql'), 'utf8');
+for (const required of ['LocalAvailabilityRepository', 'SupabaseAvailabilityRepository', 'LocalOrderRepository', 'SupabaseOrderRepository', 'availabilityForDate']) {
+  if (!repositories.includes(required)) failures.push(`repositório/adaptador ausente: ${required}`);
+}
+for (const required of ['parseWhatsAppOrder', 'ordersToCSV', "normalize('NFD')"]) {
+  if (!orderUtils.includes(required)) failures.push(`utilitário operacional ausente: ${required}`);
+}
+if (!/enable row level security/i.test(migration)) failures.push('migration sem RLS');
+if (!/revoke all on public\.orders from anon/i.test(migration)) failures.push('orders precisa negar acesso anon');
+if (!/revoke insert, update, delete on public\.availability from anon/i.test(migration)) failures.push('anon não pode escrever availability');
+if (!/available_date = \(now\(\) at time zone 'America\/Sao_Paulo'\)::date/i.test(migration)) failures.push('availability pública deve usar o dia atual de São Paulo');
+if (!/grant usage, select on sequence public\.mms_order_number_seq to authenticated/i.test(migration)) failures.push('sequência de pedidos sem permissão authenticated');
+if (!/admin deletes settings/i.test(migration)) failures.push('CRUD administrativo de settings incompleto');
+if (!/quantity integer[^\n]+check \(quantity >= 0\)/i.test(migration)) failures.push('availability sem constraint de quantidade');
+if (!existsSync(resolve(root, 'SUPABASE_SETUP.md')) || !existsSync(resolve(root, 'config.example.js'))) failures.push('documentação/configuração Supabase ausente');
 
 if (failures.length) {
   console.error(failures.join('\n'));

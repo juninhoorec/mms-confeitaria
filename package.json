@@ -2,7 +2,6 @@
   "name": "mms-confeitaria",
   "private": true,
   "scripts": {
-    "test": "node tests/audit.mjs"
+    "test": "node tests/audit.mjs && node tests/phase2.mjs"
   }
 }
-
