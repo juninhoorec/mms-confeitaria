@@ -14,6 +14,20 @@ const failures = [];
 const script = readFileSync(resolve(root, 'script.js'), 'utf8');
 const productIds = new Set([...script.matchAll(/^    '([^']+)': \{/gm)].map((match) => match[1]));
 
+for (const requiredProduct of ['bolo-chantininho', 'bolo-vulcao-chocomorango', 'bolo-prestigio-caseiro', 'bolo-laranja-chocolate-cremoso', 'pote-ninho-morango', 'naked-cake-prestigio']) {
+  if (!productIds.has(requiredProduct)) failures.push(`produto obrigatÃ³rio ausente: ${requiredProduct}`);
+}
+if (productIds.has('doce-leite-nozes')) failures.push('Doce de Leite com Nozes ainda estÃ¡ cadastrado nos destaques');
+if (productIds.has('bolo-baunilha') || productIds.has('bolo-chocolate-caseiro')) failures.push('Bolos caseiros substituÃ­dos ainda estÃ£o cadastrados');
+if (productIds.has('brigadeiro-gourmet')) failures.push('Caixa de Brigadeiros Gourmet ainda esta cadastrada em Doces');
+if (!/pricePerKg:\s*80/.test(script)) failures.push('Bolo Chantininho deve custar R$ 80,00 por kg');
+if (!/'bolo-vulcao-chocomorango':\s*\{[\s\S]{0,200}price:\s*55/.test(script)) failures.push('Bolo VulcÃ£o Chocomorango deve custar R$ 55,00');
+if (!/'pote-ninho-morango':\s*\{[\s\S]{0,200}price:\s*10/.test(script)) failures.push('Bolo de Pote Ninho com Morango deve custar R$ 10,00');
+if (!/'naked-cake-prestigio':\s*\{[\s\S]{0,200}price:\s*75/.test(script)) failures.push('Naked Cake Prestigio deve custar R$ 75,00');
+for (const option of ['baunilha', 'chocolate', 'coco-cremoso', 'ninho-morango', 'ninho-maracuja', 'chocolate-maracuja', 'doce-de-leite']) {
+  if (!script.includes(option)) failures.push(`opÃ§Ã£o do Chantininho ausente: ${option}`);
+}
+
 for (const page of pages) {
   const file = resolve(root, page);
   const html = readFileSync(file, 'utf8');

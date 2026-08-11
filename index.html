@@ -239,19 +239,19 @@
             </div>
 
             <div class="products-grid">
-                <article class="product-card" data-product-id="bolo-baunilha">
+                <article class="product-card" data-product-id="bolo-prestigio-caseiro">
                     <div class="product-img">
-                        <img src="assets/hero-bolos-caseiros-premium.webp" alt="Bolo caseiro de baunilha" loading="lazy" decoding="async">
-                        <button class="btn-add" type="button" aria-label="Escolher Bolo de Baunilha"><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
+                        <img src="assets/bolo-prestigio-caseiro.webp" alt="Bolo Prestígio" loading="lazy" decoding="async">
+                        <button class="btn-add" type="button" aria-label="Escolher Bolo Prestígio"><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
                     </div>
-                    <div class="product-info"><h3>Bolo de Baunilha</h3><div class="product-price">A partir de R$ 20,00</div></div>
+                    <div class="product-info"><h3>Bolo Prestígio</h3><div class="product-price">A partir de R$ 28,00</div></div>
                 </article>
-                <article class="product-card" data-product-id="bolo-chocolate-caseiro">
+                <article class="product-card" data-product-id="bolo-laranja-chocolate-cremoso">
                     <div class="product-img">
-                        <img src="assets/cake-1-premium.webp" alt="Bolo caseiro de chocolate" loading="lazy" decoding="async">
-                        <button class="btn-add" type="button" aria-label="Escolher Bolo de Chocolate"><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
+                        <img src="assets/bolo-laranja-chocolate-cremoso.webp" alt="Bolo de Laranja com Chocolate Cremoso" loading="lazy" decoding="async">
+                        <button class="btn-add" type="button" aria-label="Escolher Bolo de Laranja com Chocolate Cremoso"><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
                     </div>
-                    <div class="product-info"><h3>Bolo de Chocolate</h3><div class="product-price">A partir de R$ 20,00</div></div>
+                    <div class="product-info"><h3>Bolo de Laranja com Chocolate Cremoso</h3><div class="product-price">A partir de R$ 28,00</div></div>
                 </article>
                 <article class="product-card" data-product-id="bolo-cenoura">
                     <div class="product-img">
@@ -296,10 +296,10 @@
                 </article>
                 <article class="product-card" data-product-id="naked-cake">
                     <div class="product-img">
-                        <img src="imagens mms/naked prestigio.png" alt="Naked Cake" loading="lazy">
-                        <button class="btn-add" type="button" aria-label="Escolher Naked Cake"><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
+                        <img src="imagens mms/naked prestigio.png" alt="Naked Cake Chocolate com Prestígio" loading="lazy">
+                        <button class="btn-add" type="button" aria-label="Escolher Naked Cake Chocolate com Prestígio"><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
                     </div>
-                    <div class="product-info"><h3>Naked Cake</h3><div class="product-price">R$ 75,00</div></div>
+                    <div class="product-info"><h3>Naked Cake Chocolate com Prestígio</h3><div class="product-price">R$ 75,00</div></div>
                 </article>
                 <article class="product-card" data-product-id="naked-red">
                     <div class="product-img">
@@ -468,12 +468,20 @@
                     <div class="catalog-card-info"><h3>Chocolate Majestoso</h3><span>A partir de R$ 28,00</span></div>
                 </article>
 
-                <article class="catalog-card" data-product-id="doce-leite-nozes" data-product-name="Doce de Leite com Nozes" data-product-price="28.00">
+                <article class="catalog-card" data-product-id="bolo-chantininho" data-product-name="Bolo Chantininho" data-product-price="80.00">
                     <div class="catalog-card-image">
-                        <img src="assets/cake-6-doce-leite-nozes.webp" alt="Bolo Doce de Leite com Nozes" loading="lazy" decoding="async">
-                        <button class="btn-add" type="button" aria-label="Adicionar Doce de Leite com Nozes ao carrinho"><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
+                        <img src="assets/bolo-chantininho.webp" alt="Bolo Chantininho" loading="lazy" decoding="async">
+                        <button class="btn-add" type="button" aria-label="Escolher Bolo Chantininho"><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
                     </div>
-                    <div class="catalog-card-info"><h3>Doce de Leite com Nozes</h3><span>A partir de R$ 28,00</span></div>
+                    <div class="catalog-card-info"><h3>Bolo Chantininho</h3><span>A partir de R$ 80,00/kg</span></div>
+                </article>
+
+                <article class="catalog-card" data-product-id="bolo-vulcao-chocomorango" data-product-name="Bolo Vulcão Chocomorango" data-product-price="55.00">
+                    <div class="catalog-card-image">
+                        <img src="assets/bolo-vulcao-chocomorango.webp" alt="Bolo Vulcão Chocomorango" loading="lazy" decoding="async">
+                        <button class="btn-add" type="button" aria-label="Escolher Bolo Vulcão Chocomorango"><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
+                    </div>
+                    <div class="catalog-card-info"><h3>Bolo Vulcão Chocomorango</h3><span>A partir de R$ 55,00</span></div>
                 </article>
             </div>
         </section>
@@ -519,6 +527,8 @@
                             </div>
                         </fieldset>
                     </div>
+
+                    <div class="product-customizations" id="product-customizations" hidden></div>
 
                     <label class="product-notes-label" for="product-notes">
                         Deseja informar ou retirar algum ingrediente?
@@ -647,6 +657,6 @@
         </button>
     </div>
 
-    <script src="script.js?v=20260803-7"></script>
+    <script src="script.js?v=20260811-1"></script>
 </body>
 </html>

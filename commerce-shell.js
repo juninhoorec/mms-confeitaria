@@ -40,6 +40,7 @@
                                 </div>
                             </fieldset>
                         </div>
+                        <div class="product-customizations" id="product-customizations" hidden></div>
                         <label class="product-notes-label" for="product-notes">
                             Deseja informar ou retirar algum ingrediente?
                             <textarea id="product-notes" rows="3" maxlength="240" placeholder="Ex.: retirar nozes ou escrever uma mensagem..."></textarea>

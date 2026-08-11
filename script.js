@@ -32,6 +32,7 @@ const productDetailPrice = document.querySelector('#product-detail-price');
 const productDetailDescription = document.querySelector('#product-detail-description');
 const productDetailIngredients = document.querySelector('#product-detail-ingredients');
 const productVariants = document.querySelector('#product-variants');
+const productCustomizations = document.querySelector('#product-customizations');
 const cakeSizeInputs = [...document.querySelectorAll('input[name="cake-size"]')];
 const cakeFinishInputs = [...document.querySelectorAll('input[name="cake-finish"]')];
 const cakeFinishFieldset = cakeFinishInputs[0]?.closest('fieldset');
@@ -43,7 +44,7 @@ const detailIncrease = document.querySelector('#detail-increase');
 const productDetailAdd = document.querySelector('#product-detail-add');
 const imageLightbox = document.querySelector('#image-lightbox');
 const lightboxImage = document.querySelector('#lightbox-image');
-const zoomableImageSelector = '.product-img img, .catalog-card-image img, .story-media img';
+const zoomableImageSelector = '.story-media img';
 const scrollProgress = document.querySelector('#scroll-progress');
 const scrollProgressRing = document.querySelector('#scroll-progress-ring');
 const scrollProgressValue = document.querySelector('#scroll-progress-value');
@@ -125,45 +126,67 @@ const PRODUCTS = {
             grande: { cobertura: 55 },
         },
     },
-    'doce-leite-nozes': {
-        name: 'Doce de Leite com Nozes',
-        price: 28,
+    'bolo-chantininho': {
+        name: 'Bolo Chantininho',
+        price: 80,
         category: 'highlights',
-        defaultFinish: 'cobertura',
+        leadTimeHours: 48,
+        image: 'assets/bolo-chantininho.webp',
+        description: 'Bolo personalizado com acabamento em chantininho, massa e recheio escolhidos por você. O valor é calculado por quilo.',
+        ingredients: ['Massa artesanal', 'Chantininho', 'Recheio à escolha'],
+        customization: {
+            pricePerKg: 80,
+            masses: {
+                baunilha: 'Baunilha',
+                chocolate: 'Chocolate',
+            },
+            fillings: {
+                'coco-cremoso': 'Coco cremoso',
+                'chocolate-50': 'Chocolate 50%',
+                ninho: 'Ninho',
+                'ninho-morango': 'Ninho com morango',
+                'ninho-maracuja': 'Ninho com maracujá',
+                'chocolate-maracuja': 'Chocolate com maracujá',
+                'doce-de-leite': 'Doce de leite',
+            },
+        },
+    },
+    'bolo-vulcao-chocomorango': {
+        name: 'Bolo Vulcão Chocomorango',
+        price: 55,
+        startingAt: true,
+        category: 'highlights',
         leadTimeHours: 20,
-        image: 'assets/cake-6-doce-leite-nozes.webp',
-        description: 'Massa de baunilha com doce de leite cremoso, cobertura caramelizada e nozes selecionadas.',
-        ingredients: ['Massa de baunilha', 'Doce de leite', 'Nozes', 'Creme de leite'],
+        image: 'assets/bolo-vulcao-chocomorango.webp',
+        description: 'Bolo vulcão de chocolate com cobertura cremosa, brigadeiro e morangos frescos.',
+        ingredients: ['Massa de chocolate', 'Chocolate', 'Brigadeiro', 'Morangos'],
+    },
+    'bolo-prestigio-caseiro': {
+        name: 'Bolo Prestígio',
+        price: 28,
+        category: 'house',
+        defaultFinish: 'cobertura',
+        image: 'assets/bolo-prestigio-caseiro.webp',
+        description: 'Bolo caseiro de chocolate com cobertura cremosa de coco e finalização generosa de coco ralado.',
+        ingredients: ['Massa de chocolate', 'Coco', 'Leite condensado', 'Creme de leite'],
         pricing: {
             pequeno: { cobertura: 28 },
             medio: { cobertura: 40 },
             grande: { cobertura: 55 },
         },
     },
-    'bolo-baunilha': {
-        name: 'Bolo de Baunilha',
-        price: 20,
+    'bolo-laranja-chocolate-cremoso': {
+        name: 'Bolo de Laranja com Chocolate Cremoso',
+        price: 28,
         category: 'house',
-        image: 'assets/hero-bolos-caseiros-premium.webp',
-        description: 'Bolo caseiro de massa leve e perfumada, preparado artesanalmente para acompanhar o café e os encontros em família.',
-        ingredients: ['Farinha de trigo', 'Baunilha', 'Leite', 'Ovos'],
+        defaultFinish: 'cobertura',
+        image: 'assets/bolo-laranja-chocolate-cremoso.webp',
+        description: 'Massa caseira de laranja com cobertura de chocolate cremoso e acabamento de granulado de chocolate.',
+        ingredients: ['Laranja', 'Chocolate', 'Farinha de trigo', 'Ovos'],
         pricing: {
-            pequeno: { simples: 20, cobertura: 28 },
-            medio: { simples: 30, cobertura: 40 },
-            grande: { simples: 40, cobertura: 55 },
-        },
-    },
-    'bolo-chocolate-caseiro': {
-        name: 'Bolo de Chocolate',
-        price: 20,
-        category: 'house',
-        image: 'assets/cake-1-premium.webp',
-        description: 'Massa caseira de chocolate, úmida e intensa, com opção de cobertura cremosa para deixar cada fatia ainda mais especial.',
-        ingredients: ['Chocolate 50%', 'Farinha de trigo', 'Leite', 'Ovos'],
-        pricing: {
-            pequeno: { simples: 20, cobertura: 28 },
-            medio: { simples: 30, cobertura: 40 },
-            grande: { simples: 40, cobertura: 55 },
+            pequeno: { cobertura: 28 },
+            medio: { cobertura: 40 },
+            grande: { cobertura: 55 },
         },
     },
     'bolo-cenoura': {
@@ -235,7 +258,7 @@ const PRODUCTS = {
         ingredients: ['Massa de laranja', 'Chocolate', 'Creme de leite', 'Raspas de laranja'],
     },
     'naked-cake': {
-        name: 'Naked Cake',
+        name: 'Naked Cake Chocolate com Prestígio',
         price: 75,
         category: 'sweets',
         image: 'imagens mms/naked prestigio.png',
@@ -258,13 +281,21 @@ const PRODUCTS = {
         description: 'Camadas de massa de chocolate e creme de leite Ninho, montadas no pote para uma sobremesa cremosa e equilibrada.',
         ingredients: ['Massa de chocolate', 'Leite Ninho', 'Leite condensado', 'Creme de leite'],
     },
-    'brigadeiro-gourmet': {
-        name: 'Caixa de Brigadeiros Gourmet',
-        price: 24,
+    'pote-ninho-morango': {
+        name: 'Bolo de Pote Ninho com Morango',
+        price: 10,
         category: 'sweets',
-        image: 'assets/doce-brigadeiros-gourmet-premium.webp',
-        description: 'Seleção com seis brigadeiros artesanais, enrolados à mão e finalizados com confeitos premium.',
-        ingredients: ['Chocolate', 'Leite condensado', 'Manteiga', 'Confeitos'],
+        image: 'assets/bolo-pote-ninho-morango.webp',
+        description: 'Bolo de pote com creme de Ninho e morangos, montado em camadas para uma sobremesa cremosa e frutada.',
+        ingredients: ['Massa de bolo', 'Creme de Ninho', 'Morangos', 'Leite condensado'],
+    },
+    'naked-cake-prestigio': {
+        name: 'Naked Cake Prestígio',
+        price: 75,
+        category: 'sweets',
+        image: 'assets/naked-cake-prestigio.webp',
+        description: 'Massa de chocolate em camadas com recheio cremoso de coco e acabamento de chocolate.',
+        ingredients: ['Massa de chocolate', 'Coco', 'Leite condensado', 'Chocolate'],
     },
 };
 
@@ -319,7 +350,11 @@ const CATALOG_PRESENTATION = {
 };
 
 function getCatalogPriceLabel(product) {
-    return product.pricing
+    if (product.customization?.pricePerKg) {
+        return `A partir de ${currency.format(product.customization.pricePerKg)}/kg`;
+    }
+
+    return product.pricing || product.startingAt
         ? `A partir de ${currency.format(product.price)}`
         : currency.format(product.price);
 }
@@ -337,11 +372,16 @@ const RESPONSIVE_IMAGE_NAMES = new Set([
     'bolo-laranja-premium',
     'bolo com velas',
     'bolo-chocolate-cremoso-50',
+    'bolo-chantininho',
+    'bolo-laranja-chocolate-cremoso',
+    'bolo-prestigio-caseiro',
+    'bolo-vulcao-chocomorango',
+    'bolo-pote-ninho-morango',
     'cake-1-premium',
     'cake-3-premium',
     'cake-5-red-velvet',
     'cake-6-doce-leite-nozes',
-    'doce-brigadeiros-gourmet-premium',
+    'naked-cake-prestigio',
     'doce-brownie-belga-premium',
     'hero 2 sobre nos',
     'hero-bolos-caseiros-premium',
@@ -453,7 +493,7 @@ function renderCatalog(category) {
             aria-label="Ver detalhes de ${product.name}"
         >
             <div class="catalog-card-image">
-                <img src="${resolveAssetUrl(product.image)}" alt="${product.name}" loading="lazy" decoding="async" role="button" tabindex="0" aria-label="Ampliar foto: ${product.name}">
+                <img src="${resolveAssetUrl(product.image)}" alt="${product.name}" loading="lazy" decoding="async">
                 <button class="btn-add" type="button" aria-label="Escolher ${product.name}">
                     <i class="fa-solid fa-plus" aria-hidden="true"></i>
                 </button>
@@ -564,6 +604,11 @@ function getProductUnitPrice(productId, options = cartOptions[productId]) {
         return 0;
     }
 
+    if (product.customization?.pricePerKg) {
+        const kilos = Math.max(1, Math.min(99, Number(options?.kilos) || 1));
+        return product.customization.pricePerKg * kilos;
+    }
+
     if (!product.pricing) {
         return product.price;
     }
@@ -574,7 +619,20 @@ function getProductUnitPrice(productId, options = cartOptions[productId]) {
 }
 
 function getOptionsLabel(productId, options = cartOptions[productId]) {
-    if (!PRODUCTS[productId]?.pricing || !options) {
+    const product = PRODUCTS[productId];
+
+    if (!product || !options) {
+        return '';
+    }
+
+    if (product.customization) {
+        const kilos = Math.max(1, Number(options.kilos) || 1);
+        const mass = product.customization.masses[options.mass] || 'Baunilha';
+        const filling = product.customization.fillings[options.filling] || 'Coco cremoso';
+        return `${kilos} kg · Massa: ${mass} · Recheio: ${filling}`;
+    }
+
+    if (!product.pricing) {
         return '';
     }
 
@@ -828,7 +886,17 @@ function setDetailQuantity(quantity) {
 }
 
 function getSelectedDetailOptions() {
-    if (!PRODUCTS[detailProductId]?.pricing) {
+    const product = PRODUCTS[detailProductId];
+
+    if (product?.customization && productCustomizations) {
+        return {
+            mass: productCustomizations.querySelector('#chantininho-mass')?.value || 'baunilha',
+            filling: productCustomizations.querySelector('#chantininho-filling')?.value || 'coco-cremoso',
+            kilos: Math.max(1, Math.min(99, Number(productCustomizations.querySelector('#chantininho-kilos')?.value) || 1)),
+        };
+    }
+
+    if (!product?.pricing) {
         return null;
     }
 
@@ -844,7 +912,8 @@ function updateDetailVariantPrice() {
     detailOptions = getSelectedDetailOptions();
 
     if (productDetailPrice && detailProductId) {
-        productDetailPrice.textContent = currency.format(getProductUnitPrice(detailProductId, detailOptions));
+        const price = currency.format(getProductUnitPrice(detailProductId, detailOptions));
+        productDetailPrice.textContent = PRODUCTS[detailProductId].startingAt ? `A partir de ${price}` : price;
     }
 }
 
@@ -857,9 +926,11 @@ function openProductDetail(productId, trigger) {
 
     detailProductId = productId;
     setDetailQuantity(1);
-    detailOptions = product.pricing
-        ? { ...(cartOptions[productId] || { size: 'pequeno', finish: product.defaultFinish || 'simples' }) }
-        : null;
+    detailOptions = product.customization
+        ? { ...(cartOptions[productId] || { mass: 'baunilha', filling: 'coco-cremoso', kilos: 1 }) }
+        : product.pricing
+            ? { ...(cartOptions[productId] || { size: 'pequeno', finish: product.defaultFinish || 'simples' }) }
+            : null;
 
     if (productDetailImage) {
         productDetailImage.src = resolveAssetUrl(product.image);
@@ -875,7 +946,8 @@ function openProductDetail(productId, trigger) {
     }
 
     if (productDetailPrice) {
-        productDetailPrice.textContent = currency.format(getProductUnitPrice(productId, detailOptions));
+        const price = currency.format(getProductUnitPrice(productId, detailOptions));
+        productDetailPrice.textContent = product.startingAt ? `A partir de ${price}` : price;
     }
 
     if (productDetailDescription) {
@@ -890,6 +962,38 @@ function openProductDetail(productId, trigger) {
 
     if (productVariants) {
         productVariants.hidden = !product.pricing;
+    }
+
+    if (productCustomizations) {
+        productCustomizations.hidden = !product.customization;
+        productCustomizations.innerHTML = product.customization ? `
+            <div class="chantininho-options">
+                <label for="chantininho-mass">Massa
+                    <select id="chantininho-mass">
+                        ${Object.entries(product.customization.masses).map(([value, label]) => `<option value="${value}">${label}</option>`).join('')}
+                    </select>
+                </label>
+                <label for="chantininho-filling">Recheio
+                    <select id="chantininho-filling">
+                        ${Object.entries(product.customization.fillings).map(([value, label]) => `<option value="${value}">${label}</option>`).join('')}
+                    </select>
+                </label>
+                <fieldset class="chantininho-weight">
+                    <legend>Peso do bolo</legend>
+                    <div class="detail-quantity" aria-label="Peso do bolo em quilos">
+                        <button type="button" data-kilo-action="decrease" aria-label="Diminuir um quilo">−</button>
+                        <output id="chantininho-kilos" aria-live="polite">${detailOptions.kilos}</output>
+                        <button type="button" data-kilo-action="increase" aria-label="Aumentar um quilo">+</button>
+                    </div>
+                    <small>R$ 80,00 por quilo · mínimo de 1 kg</small>
+                </fieldset>
+            </div>
+        ` : '';
+
+        if (product.customization) {
+            productCustomizations.querySelector('#chantininho-mass').value = detailOptions.mass;
+            productCustomizations.querySelector('#chantininho-filling').value = detailOptions.filling;
+        }
     }
 
     if (cakeFinishFieldset) {
@@ -1185,6 +1289,14 @@ function addProduct(productId, button, quantity = 1, notes = null, options = nul
         };
     }
 
+    if (product.customization) {
+        cartOptions[productId] = {
+            mass: product.customization.masses[options?.mass] ? options.mass : 'baunilha',
+            filling: product.customization.fillings[options?.filling] ? options.filling : 'coco-cremoso',
+            kilos: Math.max(1, Math.min(99, Number(options?.kilos) || 1)),
+        };
+    }
+
     if (typeof notes === 'string') {
         const cleanNotes = notes.trim().slice(0, 240);
 
@@ -1234,6 +1346,28 @@ detailDecrease?.addEventListener('click', () => setDetailQuantity(detailQuantity
 detailIncrease?.addEventListener('click', () => setDetailQuantity(detailQuantity + 1));
 [...cakeSizeInputs, ...cakeFinishInputs].forEach((input) => {
     input.addEventListener('change', updateDetailVariantPrice);
+});
+
+productCustomizations?.addEventListener('change', updateDetailVariantPrice);
+productCustomizations?.addEventListener('click', (event) => {
+    const button = event.target.closest('[data-kilo-action]');
+
+    if (!button) {
+        return;
+    }
+
+    const output = productCustomizations.querySelector('#chantininho-kilos');
+    const currentKilos = Math.max(1, Number(output?.value || output?.textContent) || 1);
+    const nextKilos = button.dataset.kiloAction === 'increase'
+        ? Math.min(99, currentKilos + 1)
+        : Math.max(1, currentKilos - 1);
+
+    if (output) {
+        output.value = String(nextKilos);
+        output.textContent = String(nextKilos);
+    }
+
+    updateDetailVariantPrice();
 });
 
 productNotes?.addEventListener('input', () => {
@@ -1519,8 +1653,9 @@ document.querySelectorAll('.product-card, .catalog-card').forEach((card) => {
         return;
     }
 
-    card.setAttribute('role', 'group');
-    card.setAttribute('aria-label', product.name);
+    card.setAttribute('role', 'button');
+    card.setAttribute('tabindex', '0');
+    card.setAttribute('aria-label', `Ver detalhes de ${product.name}`);
 });
 
 document.querySelectorAll(zoomableImageSelector).forEach((image) => {
@@ -1532,7 +1667,19 @@ document.querySelectorAll(zoomableImageSelector).forEach((image) => {
 });
 
 document.addEventListener('keydown', (event) => {
-    if (!['Enter', ' '].includes(event.key) || !(event.target instanceof HTMLImageElement)) {
+    if (!['Enter', ' '].includes(event.key)) {
+        return;
+    }
+
+    const productCard = event.target.closest?.('.product-card, .catalog-card');
+
+    if (productCard && event.target === productCard) {
+        event.preventDefault();
+        openProductDetail(productCard.dataset.productId, productCard);
+        return;
+    }
+
+    if (!(event.target instanceof HTMLImageElement)) {
         return;
     }
 
