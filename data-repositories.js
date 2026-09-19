@@ -2,27 +2,359 @@
   const config = window.MMS_CONFIG || {};
   const dates = window.MMSDate;
   const remote = Boolean(config.SUPABASE_URL && config.SUPABASE_ANON_KEY);
-  const KEYS = { availability:'mms-ready-availability-v1', orders:'mms-admin-orders-v1', settings:'mms-settings-v1' };
-  const read = (key, fallback=[]) => { try { return JSON.parse(localStorage.getItem(key) || JSON.stringify(fallback)); } catch { return fallback; } };
-  const write = (key, value) => localStorage.setItem(key, JSON.stringify(value));
-  const sessionKey='mms-supabase-session';
-  const getSession=()=>read(sessionKey,null);
-  const headers=(auth=false)=>({apikey:config.SUPABASE_ANON_KEY,'Content-Type':'application/json',Prefer:'return=representation',...(auth&&getSession()?.access_token?{Authorization:`Bearer ${getSession().access_token}`}:{Authorization:`Bearer ${config.SUPABASE_ANON_KEY}`})});
-  const request=async(path,options={})=>{const response=await fetch(`${config.SUPABASE_URL}/rest/v1/${path}`,{...options,headers:{...headers(options.auth),...(options.headers||{})}});if(!response.ok)throw new Error(`Supabase ${response.status}`);if(response.status===204)return null;return response.json()};
-  const normalizeAvailability=row=>({id:row.id,productId:row.product_id??row.productId,options:row.options||{},quantity:Number(row.quantity)||0,date:row.available_date??row.date,priceOverride:row.price_override??row.priceOverride??null,note:row.note||'',active:Boolean(row.active),createdAt:row.created_at??row.createdAt,updatedAt:row.updated_at??row.updatedAt});
-  const toAvailability=item=>({product_id:item.productId,options:item.options||{},quantity:Number(item.quantity)||0,available_date:item.date,price_override:item.priceOverride||null,note:item.note||null,active:Boolean(item.active&&Number(item.quantity)>0),updated_at:new Date().toISOString()});
-  class LocalAvailabilityRepository{async listForDate(date){return read(KEYS.availability).filter(x=>x.date===date&&x.active&&x.quantity>0)}async listAllForDate(date){return read(KEYS.availability).filter(x=>x.date===date)}async replaceForDate(date,items){const value=[...read(KEYS.availability).filter(x=>x.date!==date),...items.map(x=>({...x,date,active:x.quantity>0,updatedAt:new Date().toISOString()}))];write(KEYS.availability,value);return value.filter(x=>x.date===date)}async decrement(id,date){const all=read(KEYS.availability),item=all.find(x=>(x.id===id||x.productId===id)&&x.date===date);if(item){item.quantity=Math.max(0,item.quantity-1);item.active=item.quantity>0;item.updatedAt=new Date().toISOString();write(KEYS.availability,all)}return item}}
-  class SupabaseAvailabilityRepository{async listForDate(date){return(await request(`availability?select=*&available_date=eq.${date}&active=eq.true&quantity=gt.0`)).map(normalizeAvailability)}async listAllForDate(date){return(await request(`availability?select=*&available_date=eq.${date}`,{auth:true})).map(normalizeAvailability)}async replaceForDate(date,items){await request(`availability?available_date=eq.${date}`,{method:'DELETE',auth:true,headers:{Prefer:'return=minimal'}});if(!items.length)return[];return(await request('availability?on_conflict=product_id,available_date,options',{method:'POST',auth:true,headers:{Prefer:'resolution=merge-duplicates,return=representation'},body:JSON.stringify(items.map(toAvailability))})).map(normalizeAvailability)}async decrement(id,date){const items=await this.listAllForDate(date),item=items.find(x=>x.id===id||x.productId===id);if(!item)return null;const quantity=Math.max(0,item.quantity-1);const rows=await request(`availability?id=eq.${item.id}`,{method:'PATCH',auth:true,body:JSON.stringify({quantity,active:quantity>0,updated_at:new Date().toISOString()})});return normalizeAvailability(rows[0])}}
-  const normalizeOrder=row=>({id:row.id,orderNumber:row.order_number??row.orderNumber,customerName:row.customer_name??row.customerName??row.customer,customerPhone:row.customer_phone??row.customerPhone??row.phone,source:row.source||'manual',items:row.items||[],deliveryType:row.delivery_type??row.deliveryType,address:row.address||'',date:row.date,time:row.time||'',paymentMethod:row.payment_method??row.paymentMethod,paymentStatus:(row.payment_status??row.paymentStatus)||'Pendente',status:row.status||'NOVO',notes:row.notes??row.summary??'',subtotal:Number(row.subtotal)||0,deliveryFee:row.delivery_fee??row.deliveryFee,total:Number(row.total)||0,createdAt:row.created_at??row.createdAt,updatedAt:row.updated_at??row.updatedAt});
-  const toOrder=o=>({order_number:o.orderNumber,customer_name:o.customerName,customer_phone:o.customerPhone,source:o.source||'manual',items:o.items||[],delivery_type:o.deliveryType||'Retirada',address:o.address||null,date:o.date,time:o.time||null,payment_method:o.paymentMethod||null,payment_status:o.paymentStatus||'Pendente',status:o.status||'NOVO',notes:o.notes||null,subtotal:Number(o.subtotal)||0,delivery_fee:o.deliveryFee==null?null:Number(o.deliveryFee),total:Number(o.total)||0,updated_at:new Date().toISOString()});
-  class LocalOrderRepository{async list(){return read(KEYS.orders).map(normalizeOrder)}async save(order){const all=read(KEYS.orders),now=new Date().toISOString(),value=normalizeOrder({...order,id:order.id||crypto.randomUUID(),orderNumber:order.orderNumber||MMSData.nextOrderNumber(all),createdAt:order.createdAt||now,updatedAt:now});const i=all.findIndex(x=>x.id===value.id);i<0?all.unshift(value):all.splice(i,1,value);write(KEYS.orders,all);return value}async remove(id){write(KEYS.orders,read(KEYS.orders).filter(x=>x.id!==id))}}
-  class SupabaseOrderRepository{async list(){return(await request('orders?select=*&order=created_at.desc',{auth:true})).map(normalizeOrder)}async save(order){const payload=toOrder(order);if(order.id){const rows=await request(`orders?id=eq.${order.id}`,{method:'PATCH',auth:true,body:JSON.stringify(payload)});return normalizeOrder(rows[0])}const rows=await request('orders',{method:'POST',auth:true,body:JSON.stringify(payload)});return normalizeOrder(rows[0])}async remove(id){return request(`orders?id=eq.${id}`,{method:'DELETE',auth:true,headers:{Prefer:'return=minimal'}})}}
-  class LocalSettingsRepository{async get(){return read(KEYS.settings,{})}async save(value){write(KEYS.settings,value);return value}}
-  class SupabaseSettingsRepository{async get(){const rows=await request('settings?select=*&id=eq.main',{auth:true});return rows[0]?.value||{}}async save(value){await request('settings?on_conflict=id',{method:'POST',auth:true,headers:{Prefer:'resolution=merge-duplicates,return=representation'},body:JSON.stringify({id:'main',value,updated_at:new Date().toISOString()})});return value}}
-  const auth={configured:remote,session:getSession,async signIn(email,password){const res=await fetch(`${config.SUPABASE_URL}/auth/v1/token?grant_type=password`,{method:'POST',headers:{apikey:config.SUPABASE_ANON_KEY,'Content-Type':'application/json'},body:JSON.stringify({email,password})});if(!res.ok)throw new Error('E-mail ou senha inválidos.');const session=await res.json();write(sessionKey,session);return session},signOut(){localStorage.removeItem(sessionKey)}};
-  const availability=remote?new SupabaseAvailabilityRepository():new LocalAvailabilityRepository();
-  const orders=remote?new SupabaseOrderRepository():new LocalOrderRepository();
-  const settings=remote?new SupabaseSettingsRepository():new LocalSettingsRepository();
-  const cache=new Map();
-  window.MMSData={remote,auth,availability,orders,settings,keys:KEYS,nextOrderNumber(list){const max=list.reduce((n,o)=>Math.max(n,Number(String(o.orderNumber||'').replace(/\D/g,''))||1041),1041);return `#${max+1}`},async availabilityForDate(date=dates.getSaoPauloDateISO()){const key=`a:${date}`,hit=cache.get(key);if(hit&&Date.now()-hit.at<30000)return hit.value;const value=await availability.listForDate(date);cache.set(key,{at:Date.now(),value});return value},clearCache(){cache.clear()}};
+  const KEYS = {
+    availability: "mms-ready-availability-v1",
+    orders: "mms-admin-orders-v1",
+    settings: "mms-settings-v1",
+  };
+  const read = (key, fallback = []) => {
+    try {
+      return JSON.parse(localStorage.getItem(key) || JSON.stringify(fallback));
+    } catch {
+      return fallback;
+    }
+  };
+  const write = (key, value) =>
+    localStorage.setItem(key, JSON.stringify(value));
+  const sessionKey = "mms-supabase-session";
+  const getSession = () => read(sessionKey, null);
+  const headers = (auth = false) => ({
+    apikey: config.SUPABASE_ANON_KEY,
+    "Content-Type": "application/json",
+    Prefer: "return=representation",
+    ...(auth && getSession()?.access_token
+      ? { Authorization: `Bearer ${getSession().access_token}` }
+      : { Authorization: `Bearer ${config.SUPABASE_ANON_KEY}` }),
+  });
+  const request = async (path, options = {}) => {
+    const response = await fetch(`${config.SUPABASE_URL}/rest/v1/${path}`, {
+      ...options,
+      headers: { ...headers(options.auth), ...(options.headers || {}) },
+    });
+    if (!response.ok) throw new Error(`Supabase ${response.status}`);
+    if (response.status === 204) return null;
+    return response.json();
+  };
+  const normalizeAvailability = (row) => ({
+    id: row.id,
+    productId: row.product_id ?? row.productId,
+    options: row.options || {},
+    quantity: Number(row.quantity) || 0,
+    date: row.available_date ?? row.date,
+    priceOverride: row.price_override ?? row.priceOverride ?? null,
+    note: row.note || "",
+    active: Boolean(row.active),
+    createdAt: row.created_at ?? row.createdAt,
+    updatedAt: row.updated_at ?? row.updatedAt,
+  });
+  const toAvailability = (item) => ({
+    product_id: item.productId,
+    options: item.options || {},
+    quantity: Number(item.quantity) || 0,
+    available_date: item.date,
+    price_override: item.priceOverride || null,
+    note: item.note || null,
+    active: Boolean(item.active && Number(item.quantity) > 0),
+    updated_at: new Date().toISOString(),
+  });
+  class LocalAvailabilityRepository {
+    async listForDate(date) {
+      return read(KEYS.availability).filter(
+        (x) => x.date === date && x.active && x.quantity > 0,
+      );
+    }
+    async listAllForDate(date) {
+      return read(KEYS.availability).filter((x) => x.date === date);
+    }
+    async replaceForDate(date, items) {
+      const value = [
+        ...read(KEYS.availability).filter((x) => x.date !== date),
+        ...items.map((x) => ({
+          ...x,
+          date,
+          active: x.quantity > 0,
+          updatedAt: new Date().toISOString(),
+        })),
+      ];
+      write(KEYS.availability, value);
+      return value.filter((x) => x.date === date);
+    }
+    async decrement(id, date) {
+      const all = read(KEYS.availability),
+        item = all.find(
+          (x) => (x.id === id || x.productId === id) && x.date === date,
+        );
+      if (item) {
+        item.quantity = Math.max(0, item.quantity - 1);
+        item.active = item.quantity > 0;
+        item.updatedAt = new Date().toISOString();
+        write(KEYS.availability, all);
+      }
+      return item;
+    }
+  }
+  class SupabaseAvailabilityRepository {
+    async listForDate(date) {
+      return (
+        await request(
+          `availability?select=*&available_date=eq.${date}&active=eq.true&quantity=gt.0`,
+        )
+      ).map(normalizeAvailability);
+    }
+    async listAllForDate(date) {
+      return (
+        await request(`availability?select=*&available_date=eq.${date}`, {
+          auth: true,
+        })
+      ).map(normalizeAvailability);
+    }
+    async replaceForDate(date, items) {
+      await request(`availability?available_date=eq.${date}`, {
+        method: "DELETE",
+        auth: true,
+        headers: { Prefer: "return=minimal" },
+      });
+      if (!items.length) return [];
+      return (
+        await request(
+          "availability?on_conflict=product_id,available_date,options",
+          {
+            method: "POST",
+            auth: true,
+            headers: {
+              Prefer: "resolution=merge-duplicates,return=representation",
+            },
+            body: JSON.stringify(items.map(toAvailability)),
+          },
+        )
+      ).map(normalizeAvailability);
+    }
+    async decrement(id, date) {
+      const items = await this.listAllForDate(date),
+        item = items.find((x) => x.id === id || x.productId === id);
+      if (!item) return null;
+      const quantity = Math.max(0, item.quantity - 1);
+      const rows = await request(`availability?id=eq.${item.id}`, {
+        method: "PATCH",
+        auth: true,
+        body: JSON.stringify({
+          quantity,
+          active: quantity > 0,
+          updated_at: new Date().toISOString(),
+        }),
+      });
+      return normalizeAvailability(rows[0]);
+    }
+  }
+  const normalizeOrder = (row) => ({
+    id: row.id,
+    orderNumber: row.order_number ?? row.orderNumber,
+    customerName: row.customer_name ?? row.customerName ?? row.customer,
+    customerPhone: row.customer_phone ?? row.customerPhone ?? row.phone,
+    source: row.source || "manual",
+    items: row.items || [],
+    deliveryType: row.delivery_type ?? row.deliveryType,
+    address: row.address || "",
+    date: row.date,
+    time: row.time || "",
+    paymentMethod: row.payment_method ?? row.paymentMethod,
+    paymentStatus: (row.payment_status ?? row.paymentStatus) || "Pendente",
+    status: row.status || "NOVO",
+    notes: row.notes ?? row.summary ?? "",
+    subtotal: Number(row.subtotal) || 0,
+    deliveryFee: row.delivery_fee ?? row.deliveryFee,
+    total: Number(row.total) || 0,
+    createdAt: row.created_at ?? row.createdAt,
+    updatedAt: row.updated_at ?? row.updatedAt,
+  });
+  const toOrder = (o) => ({
+    order_number: o.orderNumber,
+    customer_name: o.customerName,
+    customer_phone: o.customerPhone,
+    source: o.source || "manual",
+    items: o.items || [],
+    delivery_type: o.deliveryType || "Retirada",
+    address: o.address || null,
+    date: o.date,
+    time: o.time || null,
+    payment_method: o.paymentMethod || null,
+    payment_status: o.paymentStatus || "Pendente",
+    status: o.status || "NOVO",
+    notes: o.notes || null,
+    subtotal: Number(o.subtotal) || 0,
+    delivery_fee: o.deliveryFee == null ? null : Number(o.deliveryFee),
+    total: Number(o.total) || 0,
+    updated_at: new Date().toISOString(),
+  });
+  class LocalOrderRepository {
+    async list() {
+      return read(KEYS.orders).map(normalizeOrder);
+    }
+    async save(order) {
+      const all = read(KEYS.orders),
+        now = new Date().toISOString(),
+        value = normalizeOrder({
+          ...order,
+          id: order.id || crypto.randomUUID(),
+          orderNumber: order.orderNumber || MMSData.nextOrderNumber(all),
+          createdAt: order.createdAt || now,
+          updatedAt: now,
+        });
+      const i = all.findIndex((x) => x.id === value.id);
+      i < 0 ? all.unshift(value) : all.splice(i, 1, value);
+      write(KEYS.orders, all);
+      return value;
+    }
+    async remove(id) {
+      write(
+        KEYS.orders,
+        read(KEYS.orders).filter((x) => x.id !== id),
+      );
+    }
+  }
+  class SupabaseOrderRepository {
+    async list() {
+      return (
+        await request("orders?select=*&order=created_at.desc", { auth: true })
+      ).map(normalizeOrder);
+    }
+    async save(order) {
+      const payload = toOrder(order);
+      if (order.id) {
+        const rows = await request(`orders?id=eq.${order.id}`, {
+          method: "PATCH",
+          auth: true,
+          body: JSON.stringify(payload),
+        });
+        return normalizeOrder(rows[0]);
+      }
+      const rows = await request("orders", {
+        method: "POST",
+        auth: true,
+        body: JSON.stringify(payload),
+      });
+      return normalizeOrder(rows[0]);
+    }
+    async remove(id) {
+      return request(`orders?id=eq.${id}`, {
+        method: "DELETE",
+        auth: true,
+        headers: { Prefer: "return=minimal" },
+      });
+    }
+  }
+  class LocalSettingsRepository {
+    async get() {
+      return this.getValue("main");
+    }
+    async save(value) {
+      return this.saveValue("main", value);
+    }
+    async getValue(id) {
+      const values = read(KEYS.settings, {});
+      return values[id] || {};
+    }
+    async saveValue(id, value) {
+      const values = read(KEYS.settings, {});
+      values[id] = value;
+      write(KEYS.settings, values);
+      return value;
+    }
+  }
+  class SupabaseSettingsRepository {
+    async get() {
+      return this.getValue("main");
+    }
+    async save(value) {
+      return this.saveValue("main", value);
+    }
+    async getValue(id) {
+      const rows = await request(
+        `settings?select=*&id=eq.${encodeURIComponent(id)}`,
+        {
+          auth: true,
+        },
+      );
+      return rows[0]?.value || {};
+    }
+    async saveValue(id, value) {
+      await request("settings?on_conflict=id", {
+        method: "POST",
+        auth: true,
+        headers: {
+          Prefer: "resolution=merge-duplicates,return=representation",
+        },
+        body: JSON.stringify({
+          id,
+          value,
+          updated_at: new Date().toISOString(),
+        }),
+      });
+      return value;
+    }
+  }
+  const auth = {
+    configured: remote,
+    session: getSession,
+    async signIn(email, password) {
+      const res = await fetch(
+        `${config.SUPABASE_URL}/auth/v1/token?grant_type=password`,
+        {
+          method: "POST",
+          headers: {
+            apikey: config.SUPABASE_ANON_KEY,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+        },
+      );
+      if (!res.ok) throw new Error("E-mail ou senha inválidos.");
+      const session = await res.json();
+      write(sessionKey, session);
+      return session;
+    },
+    signOut() {
+      localStorage.removeItem(sessionKey);
+    },
+  };
+  const availability = remote
+    ? new SupabaseAvailabilityRepository()
+    : new LocalAvailabilityRepository();
+  const orders = remote
+    ? new SupabaseOrderRepository()
+    : new LocalOrderRepository();
+  const settings = remote
+    ? new SupabaseSettingsRepository()
+    : new LocalSettingsRepository();
+  const cache = new Map();
+  window.MMSData = {
+    remote,
+    auth,
+    availability,
+    orders,
+    settings,
+    keys: KEYS,
+    nextOrderNumber(list) {
+      const max = list.reduce(
+        (n, o) =>
+          Math.max(
+            n,
+            Number(String(o.orderNumber || "").replace(/\D/g, "")) || 1041,
+          ),
+        1041,
+      );
+      return `#${max + 1}`;
+    },
+    async availabilityForDate(date = dates.getSaoPauloDateISO()) {
+      const key = `a:${date}`,
+        hit = cache.get(key);
+      if (hit && Date.now() - hit.at < 30000) return hit.value;
+      const value = await availability.listForDate(date);
+      cache.set(key, { at: Date.now(), value });
+      return value;
+    },
+    clearCache() {
+      cache.clear();
+    },
+  };
 })();

@@ -102,9 +102,10 @@ const migration = readFileSync(resolve(root, 'supabase/migrations/001_mms_phase2
 for (const required of ['LocalAvailabilityRepository', 'SupabaseAvailabilityRepository', 'LocalOrderRepository', 'SupabaseOrderRepository', 'availabilityForDate']) {
   if (!repositories.includes(required)) failures.push(`repositório/adaptador ausente: ${required}`);
 }
-for (const required of ['parseWhatsAppOrder', 'ordersToCSV', "normalize('NFD')"]) {
+for (const required of ['parseWhatsAppOrder', 'ordersToCSV']) {
   if (!orderUtils.includes(required)) failures.push(`utilitário operacional ausente: ${required}`);
 }
+if (!/\.normalize\(["']NFD["']\)/.test(orderUtils)) failures.push('utilitário operacional sem normalização Unicode');
 if (!/enable row level security/i.test(migration)) failures.push('migration sem RLS');
 if (!/revoke all on public\.orders from anon/i.test(migration)) failures.push('orders precisa negar acesso anon');
 if (!/revoke insert, update, delete on public\.availability from anon/i.test(migration)) failures.push('anon não pode escrever availability');

@@ -1,0 +1,16 @@
+.data-table button{min-height:36px;padding:0 13px;border:1px solid #d8c8bd;border-radius:999px;background:#fffaf6;color:#2a180f;font-weight:700;cursor:pointer}
+.customer-summary{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:18px 0}
+.customer-summary div,.report-sections section{padding:16px;border:1px solid #eaded5;border-radius:14px}
+.customer-summary dt{color:#70442c;font-size:.72rem}
+.customer-summary dd{margin:5px 0 0;font-weight:700}
+.customer-history{display:grid;gap:10px;margin:18px 0}
+.customer-history article{padding:14px;border-radius:12px;background:#faf5f1}
+.customer-history header{display:flex;justify-content:space-between;gap:12px}
+.customer-history p{margin:8px 0}
+.customer-history small{color:#70442c}
+.report-sections{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:20px}
+.report-sections h3{margin-top:0}
+.report-summary{display:grid;gap:9px}
+.report-summary p{display:flex;justify-content:space-between;gap:8px;margin:0;padding:10px;border-radius:10px;background:#faf5f1}
+.report-summary small{color:#70442c}
+@media(max-width:680px){.customer-summary{grid-template-columns:1fr}}
