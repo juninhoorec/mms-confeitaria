@@ -296,6 +296,34 @@
   const auth = {
     configured: remote,
     session: getSession,
+    async ensureSession() {
+      const session = getSession();
+      if (!session) return null;
+      const expiresAt = Number(session.expires_at || 0) * 1000;
+      if (!expiresAt || expiresAt > Date.now() + 60000) return session;
+      if (!session.refresh_token) {
+        this.signOut();
+        return null;
+      }
+      const res = await fetch(
+        `${config.SUPABASE_URL}/auth/v1/token?grant_type=refresh_token`,
+        {
+          method: "POST",
+          headers: {
+            apikey: config.SUPABASE_ANON_KEY,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ refresh_token: session.refresh_token }),
+        },
+      );
+      if (!res.ok) {
+        this.signOut();
+        return null;
+      }
+      const refreshed = await res.json();
+      write(sessionKey, refreshed);
+      return refreshed;
+    },
     async signIn(email, password) {
       const res = await fetch(
         `${config.SUPABASE_URL}/auth/v1/token?grant_type=password`,

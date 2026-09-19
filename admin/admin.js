@@ -36,7 +36,8 @@
       : '<i class="fa-solid fa-circle-info"></i><p><strong>Modo local.</strong> Alterações salvas somente neste dispositivo.</p>';
     $("#logout").hidden = !D.remote;
   };
-  if (D.remote && !D.auth.session()) {
+  const showLogin = () => {
+    $("#admin-app").hidden = true;
     $("#login-screen").hidden = false;
     $("#login-form").onsubmit = async (e) => {
       e.preventDefault();
@@ -49,6 +50,9 @@
         $(".form-feedback").textContent = err.message;
       }
     };
+  };
+  if (D.remote && !(await D.auth.ensureSession())) {
+    showLogin();
   } else {
     showApp();
   }
