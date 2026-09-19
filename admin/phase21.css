@@ -14,3 +14,9 @@
 .report-summary p{display:flex;justify-content:space-between;gap:8px;margin:0;padding:10px;border-radius:10px;background:#faf5f1}
 .report-summary small{color:#70442c}
 @media(max-width:680px){.customer-summary{grid-template-columns:1fr}}
+.product-list{grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr))}
+.admin-product{grid-template-columns:72px minmax(0,1fr)}
+.admin-product .product-switch{min-width:0}
+.admin-product .product-switch span{min-width:0}
+.admin-product .product-switch strong{overflow-wrap:anywhere}
+.admin-product .qty-control{grid-column:1/-1;justify-content:flex-end}
