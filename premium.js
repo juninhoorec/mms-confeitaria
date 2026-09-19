@@ -9,6 +9,33 @@
   catch { try { ready = JSON.parse(localStorage.getItem(READY_KEY) || '[]').filter(item => item.active && item.date === today && item.quantity > 0 && products[item.productId]); } catch { ready = []; } }
   const categoryName = { highlights: 'Destaques', house: 'Bolos Caseiros', sweets: 'Doces' };
   const priceLabel = p => `${p.pricing || p.startingAt || p.customization ? 'A partir de ' : ''}${money.format(p.customization?.pricePerKg || p.price)}${p.customization ? '/kg' : ''}`;
+  const initReadyCarousel = grid => {
+    const cards = [...grid.querySelectorAll('.ready-card')];
+    if (cards.length <= 2) return;
+    grid.classList.add('is-carousel');
+    grid.setAttribute('role', 'region');
+    grid.setAttribute('aria-roledescription', 'carrossel');
+    grid.setAttribute('aria-label', 'Produtos disponíveis hoje');
+    cards.forEach((card, index) => card.setAttribute('aria-label', `${index + 1} de ${cards.length}`));
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    let index = 0;
+    let timer;
+    const goTo = next => {
+      index = next >= cards.length ? 0 : next;
+      grid.scrollTo({ left: cards[index].offsetLeft - cards[0].offsetLeft, behavior: 'smooth' });
+    };
+    const play = () => { clearInterval(timer); timer = setInterval(() => goTo(index + 1), 3800); };
+    const pause = () => clearInterval(timer);
+    grid.addEventListener('pointerenter', pause);
+    grid.addEventListener('pointerleave', play);
+    grid.addEventListener('focusin', pause);
+    grid.addEventListener('focusout', event => { if (!grid.contains(event.relatedTarget)) play(); });
+    grid.addEventListener('touchstart', pause, { passive: true });
+    grid.addEventListener('touchend', play, { passive: true });
+    addEventListener('resize', () => goTo(index), { passive: true });
+    document.addEventListener('visibilitychange', () => document.hidden ? pause() : play());
+    play();
+  };
   const openProduct = id => {
     const card = document.querySelector(`[data-product-id="${CSS.escape(id)}"]`);
     if (card) { card.scrollIntoView({ behavior: 'smooth', block: 'center' }); card.querySelector('.btn-add')?.focus(); card.querySelector('.btn-add')?.click(); }
@@ -28,7 +55,7 @@
 
   const hero=document.querySelector('.hero-section');
   if(hero){const strip=document.createElement('section');strip.className='service-strip';strip.setAttribute('aria-label','Informações de atendimento');strip.innerHTML=`<article><i class="fa-regular fa-calendar"></i><div><strong>Encomendas com antecedência</strong><small>Garanta a disponibilidade da sua data</small></div></article><article><i class="fa-solid fa-truck"></i><div><strong>Retirada ou entrega</strong><small>Em Camaragibe e região</small></div></article><article><i class="fa-brands fa-whatsapp"></i><div><strong>Atendimento pelo WhatsApp</strong><small>Tire dúvidas e faça seu pedido</small></div></article><article><i class="fa-regular fa-heart"></i><div><strong>Feito com carinho</strong><small>Qualidade em cada receita</small></div></article>`;hero.after(strip)}
-  if(ready.length && document.querySelector('main')){const section=document.createElement('section');section.className='ready-section';section.id='pronta-entrega';section.innerHTML=`<div class="ready-heading"><div><span class="section-tag">DISPONÍVEIS HOJE</span><h2>Pronta entrega</h2></div><p>Delícias já disponíveis para você garantir hoje mesmo. Sujeito à disponibilidade.</p></div><div class="ready-grid">${ready.map(item=>{const p=products[item.productId];return `<article class="ready-card"><span class="ready-badge" data-low="${item.quantity<=2}">${item.quantity<=2?`Últimas ${item.quantity}`:'Disponível hoje'}</span><img src="${new URL(p.image,document.baseURI).href}" alt="${p.name}" loading="lazy"><div class="ready-card-body"><h3>${p.name}</h3><span>${priceLabel(p)}</span><button type="button" data-ready-id="${item.productId}">VER PRODUTO <i class="fa-solid fa-arrow-right"></i></button></div></article>`}).join('')}</div>`;const anchor=document.querySelector('.features-section')||document.querySelector('main').firstElementChild;anchor?.after(section);section.addEventListener('click',e=>{const b=e.target.closest('[data-ready-id]');if(b)openProduct(b.dataset.readyId)})}
+  if(ready.length && document.querySelector('main')){const section=document.createElement('section');section.className='ready-section';section.id='pronta-entrega';section.innerHTML=`<div class="ready-heading"><div><span class="section-tag">DISPONÍVEIS HOJE</span><h2>Pronta entrega</h2></div><p>Delícias já disponíveis para você garantir hoje mesmo. Sujeito à disponibilidade.</p></div><div class="ready-grid">${ready.map(item=>{const p=products[item.productId];return `<article class="ready-card"><span class="ready-badge" data-low="${item.quantity<=2}">${item.quantity<=2?`Últimas ${item.quantity}`:'Disponível hoje'}</span><img src="${new URL(p.image,document.baseURI).href}" alt="${p.name}" loading="lazy"><div class="ready-card-body"><h3>${p.name}</h3><span>${priceLabel(p)}</span><button type="button" data-ready-id="${item.productId}">VER PRODUTO <i class="fa-solid fa-arrow-right"></i></button></div></article>`}).join('')}</div>`;const anchor=document.querySelector('.features-section')||document.querySelector('main').firstElementChild;anchor?.after(section);section.addEventListener('click',e=>{const b=e.target.closest('[data-ready-id]');if(b)openProduct(b.dataset.readyId)});initReadyCarousel(section.querySelector('.ready-grid'))}
   document.querySelectorAll('[data-product-id]').forEach(card=>{const item=ready.find(r=>r.productId===card.dataset.productId);if(item&&!card.querySelector('.product-ready-badge'))card.insertAdjacentHTML('afterbegin',`<span class="product-ready-badge">Disponível hoje</span>`)});
   const grid=document.querySelector('.page-products-grid');
   if(grid){
