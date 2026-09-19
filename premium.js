@@ -11,12 +11,13 @@
   const priceLabel = p => `${p.pricing || p.startingAt || p.customization ? 'A partir de ' : ''}${money.format(p.customization?.pricePerKg || p.price)}${p.customization ? '/kg' : ''}`;
   const initReadyCarousel = grid => {
     const cards = [...grid.querySelectorAll('.ready-card')];
-    if (cards.length <= 2) return;
+    if (cards.length <= 1) return;
     grid.classList.add('is-carousel');
     grid.setAttribute('role', 'region');
     grid.setAttribute('aria-roledescription', 'carrossel');
     grid.setAttribute('aria-label', 'Produtos disponíveis hoje');
     cards.forEach((card, index) => card.setAttribute('aria-label', `${index + 1} de ${cards.length}`));
+    if (cards.length <= 2) return;
     if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     let index = 0;
     let timer;
