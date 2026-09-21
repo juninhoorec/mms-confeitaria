@@ -115,13 +115,14 @@
 
 .about-page .page-hero {
     min-height: clamp(40rem, 70vw, 48rem);
-    background-image: url('assets/hero-sobre-nos-family.webp');
-    background-position: center top;
+    background-image: url('assets/hero-sobre-nos-desktop-v2.png');
+    background-position: center;
     background-size: cover;
 }
 
 .about-page .page-hero::before {
     z-index: 1;
+    background: rgba(18, 8, 4, .46);
 }
 
 .about-page .page-hero-content {
