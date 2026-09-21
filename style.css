@@ -680,13 +680,6 @@ a:focus-visible {
     align-items: end;
 }
 
-.mini-heading {
-    margin-top: clamp(3.5rem, 7vw, 6rem);
-}
-
-.mini-heading .section-title-alt {
-    margin-bottom: 0;
-}
 
 .products-header-wrapper .section-tag {
     margin-bottom: .55rem;

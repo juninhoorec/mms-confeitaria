@@ -119,6 +119,47 @@
     background-size: cover;
 }
 
+.about-page .page-hero::after {
+    content: '';
+    position: absolute;
+    z-index: 0;
+    inset: 0;
+    background: url('assets/hero-sobre-nos-family.webp') right center / contain no-repeat;
+}
+
+.about-page .page-hero::before {
+    z-index: 1;
+}
+
+.about-page .page-hero-content {
+    z-index: 2;
+}
+
+@media (max-width: 1100px) {
+    .about-page .page-hero {
+        background-image: url('assets/hero-sobre-nos-premium-960.webp');
+    }
+}
+
+@media (max-width: 767px) {
+    .about-page .page-hero {
+        min-height: clamp(42rem, 105svh, 48rem);
+        background-image: url('assets/hero-sobre-nos-mobile.webp');
+        background-position: center 42%;
+        background-size: cover;
+    }
+
+    .about-page .page-hero::before {
+        background:
+            linear-gradient(0deg, rgba(18, 8, 4, .56), rgba(18, 8, 4, .12) 48%, rgba(18, 8, 4, .2)),
+            rgba(18, 8, 4, .36);
+    }
+
+    .about-page .page-hero::after {
+        display: none;
+    }
+}
+
 .editorial-intro,
 .catalog-section,
 .story-split,
