@@ -175,6 +175,10 @@
     gap: 1rem;
 }
 
+.catalog-subheading {
+    margin-top: clamp(3.5rem, 7vw, 6rem);
+}
+
 .catalog-heading h2 {
     font-family: var(--serif);
     font-size: clamp(2.2rem, 7vw, 4rem);
