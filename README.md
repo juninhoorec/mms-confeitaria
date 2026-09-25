@@ -24,7 +24,11 @@ O site é estático: não há servidor próprio, banco de dados ou pagamento on-
 
 ## Uso local
 
-O projeto pode ser aberto diretamente pelo `index.html`. Para executar a auditoria automatizada, instale uma versão atual do Node.js e rode:
+Inicie o servidor local do projeto com `npm start` e abra `http://localhost:8000/admin/`. É necessário deixar a janela do servidor aberta enquanto usa o painel; o endereço local fica disponível apenas neste computador. Para abrir o painel automaticamente quando o Windows entrar na sua conta, execute `npm run server:install` uma vez. O Windows iniciará o servidor em segundo plano e tentará recuperá-lo caso ele pare. Para remover essa inicialização automática, execute `npm run server:uninstall`.
+
+Este modo local guarda pedidos e disponibilidade no armazenamento do navegador deste computador; não sincroniza automaticamente com outros aparelhos. Dados compartilhados entre dispositivos e autenticação do painel exigem a configuração e as credenciais de produção do Supabase.
+
+Para executar a auditoria automatizada, instale uma versão atual do Node.js e rode:
 
 ```text
 npm test

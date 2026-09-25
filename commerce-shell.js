@@ -12,7 +12,7 @@
                 </button>
                 <div class="product-detail-layout">
                     <button class="product-detail-image" id="product-detail-image-button" type="button" aria-label="Ampliar foto do produto">
-                        <img id="product-detail-image" src="" alt="">
+                        <img id="product-detail-image" src="" alt=""><span class="detail-image-placeholder" aria-hidden="true">MMS<br><small>feito à mão</small></span>
                     </button>
                     <div class="product-detail-content">
                         <span class="section-tag">DETALHES DO PRODUTO</span>
@@ -85,6 +85,7 @@
                 </div>
                 <div class="cart-summary">
                     <div class="cart-order-details">
+                        <fieldset class="candle-choice"><legend>Velas para o pedido</legend><label for="cart-candle-type">Adicionar velas? <small>R$ 2,00 por vela, para cada bolo</small></label><select id="cart-candle-type"><option value="">Não quero velas</option><option value="palito">Palito</option><option value="estrelinha">Estrelinha</option></select><small id="cart-candle-summary">Sem velas</small></fieldset>
                         <div class="delivery-schedule">
                             <label>Data da entrega<input id="order-date" type="date" required></label>
                             <label>Horário desejado<select id="order-time" required>

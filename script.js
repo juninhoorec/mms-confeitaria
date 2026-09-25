@@ -10,6 +10,8 @@ const catalogTitle = document.querySelector('#catalog-title');
 const catalogGrid = document.querySelector('#catalog-grid');
 const cartCount = document.querySelector('.cart-count');
 const cartItems = document.querySelector('.cart-items');
+const cartCandleType = document.querySelector('#cart-candle-type');
+const cartCandleSummary = document.querySelector('#cart-candle-summary');
 const cartEmpty = document.querySelector('.cart-empty');
 const cartSubtotal = document.querySelector('#cart-subtotal');
 const cartShipping = document.querySelector('#cart-shipping');
@@ -129,7 +131,7 @@ const PRODUCTS = {
     'bolo-chantininho': {
         name: 'Bolo Chantininho',
         price: 80,
-        category: 'highlights',
+        category: 'specials',
         leadTimeHours: 48,
         image: 'assets/bolo-chantininho.webp',
         description: 'Bolo personalizado com acabamento em chantininho, massa e recheio escolhidos por você. O valor é calculado por quilo.',
@@ -164,7 +166,7 @@ const PRODUCTS = {
     'chantininho-pink': {
         name: 'Bolo Chantininho Pink',
         price: 80,
-        category: 'highlights',
+        category: 'specials',
         leadTimeHours: 48,
         image: 'assets/chantininho pink bolo.png',
         description: 'Bolo personalizado com acabamento pink em chantininho e laços de cetim, preparado para celebrações especiais.',
@@ -342,10 +344,12 @@ const PRODUCTS = {
         description: 'A combinação cítrica da laranja com creme de chocolate em camadas delicadas e frescas.',
         ingredients: ['Massa de laranja', 'Chocolate', 'Creme de leite', 'Raspas de laranja'],
     },
+    'brownie': { name: 'Brownie', price: 10, category: 'sweets', image: 'assets/brownie.jpg', description: 'Brownie artesanal de chocolate.', ingredients: ['Chocolate', 'Massa artesanal'] },
+    'brownie-recheado': { name: 'Brownie Recheado', price: 15, category: 'sweets', image: 'assets/brownie-recheado.jpg', description: 'Brownie artesanal com recheio cremoso.', ingredients: ['Chocolate', 'Recheio cremoso'] },
     'naked-cake': {
         name: 'Naked Cake Chocolate com Prestígio',
         price: 75,
-        category: 'sweets',
+        category: 'specials',
         image: 'imagens mms/naked prestigio.png',
         description: 'Massa leve, recheio cremoso e acabamento aparente com frutas frescas, ideal para celebrações intimistas.',
         ingredients: ['Massa branca', 'Creme de leite', 'Morangos', 'Leite condensado'],
@@ -353,7 +357,7 @@ const PRODUCTS = {
     'naked-red': {
         name: 'Naked Cake Massa Vermelha',
         price: 75,
-        category: 'sweets',
+        category: 'specials',
         image: 'imagens mms/naked massa vermelha.png',
         description: 'Massa vermelha aveludada, creme suave e frutas frescas em uma composição elegante e marcante.',
         ingredients: ['Massa Red Velvet', 'Creme suave', 'Frutas vermelhas', 'Baunilha'],
@@ -377,7 +381,7 @@ const PRODUCTS = {
     'naked-cake-prestigio': {
         name: 'Naked Cake Prestígio',
         price: 75,
-        category: 'sweets',
+        category: 'specials',
         image: 'assets/naked-cake-prestigio.webp',
         description: 'Massa de chocolate em camadas com recheio cremoso de coco e acabamento de chocolate.',
         ingredients: ['Massa de chocolate', 'Coco', 'Leite condensado', 'Chocolate'],
@@ -455,6 +459,7 @@ const currency = new Intl.NumberFormat('pt-BR', {
 let cart = loadCart();
 let cartNotes = loadCartNotes();
 let cartOptions = loadCartOptions();
+const cartExtras = { candleType: '' };
 let activeDialog = null;
 let dialogTrigger = null;
 let activeCatalogTrigger = null;
@@ -475,7 +480,11 @@ const CATALOG_PRESENTATION = {
     },
     sweets: {
         eyebrow: 'PEQUENOS ENCANTOS',
-        title: 'Todos os doces',
+        title: 'Doces e bolos de pote',
+    },
+    specials: {
+        eyebrow: 'PARA CELEBRAR',
+        title: 'Bolos especiais',
     },
 };
 
@@ -584,7 +593,7 @@ function syncProductCards(container = document) {
         const title = card.querySelector('.product-info h3, .catalog-card-info h3');
         const price = card.querySelector('.product-price, .catalog-card-info span');
 
-        if (image) {
+        if (image && product.image) {
             image.src = resolveAssetUrl(product.image);
             image.alt = product.name;
         }
@@ -612,7 +621,8 @@ function renderCatalog(category) {
     }
 
     const products = Object.entries(PRODUCTS)
-        .filter(([, product]) => product.category === category);
+        .filter(([, product]) => product.category === category && !product.hiddenFromCatalog)
+        .sort(([, a], [, b]) => a.price - b.price || a.name.localeCompare(b.name, 'pt-BR'));
 
     catalogEyebrow.textContent = presentation.eyebrow;
     catalogTitle.textContent = presentation.title;
@@ -623,7 +633,7 @@ function renderCatalog(category) {
             aria-label="Ver detalhes de ${product.name}"
         >
             <div class="catalog-card-image">
-                <img src="${resolveAssetUrl(product.image)}" alt="${product.name}" loading="lazy" decoding="async">
+                ${product.image ? `<img src="${resolveAssetUrl(product.image)}" alt="${product.name}" loading="lazy" decoding="async">` : `<div class="brownie-placeholder" aria-hidden="true"><span>feito à mão</span><strong>${product.name}</strong><i>chocolate &amp; carinho</i></div>`}
                 <button class="btn-add" type="button" aria-label="Escolher ${product.name}">
                     <i class="fa-solid fa-plus" aria-hidden="true"></i>
                 </button>
@@ -1063,8 +1073,9 @@ function openProductDetail(productId, trigger) {
             : null;
 
     if (productDetailImage) {
-        productDetailImage.src = resolveAssetUrl(product.image);
-        productDetailImage.alt = `Bolo ${product.name}`;
+        productDetailImage.src = product.image ? resolveAssetUrl(product.image) : '';
+        productDetailImage.alt = product.image ? `Bolo ${product.name}` : '';
+        productDetailImage.closest('.product-detail-image')?.classList.toggle('is-placeholder', !product.image);
     }
 
     if (productDetailImageButton) {
@@ -1284,6 +1295,7 @@ function updateCheckoutLink(items, subtotal, shipping, total) {
         return;
     }
 
+    const totalQuantity = items.reduce((sum, item) => sum + item.quantity, 0);
     const itemLines = items.map(({ id, product, quantity, optionsLabel }) => {
         const notes = cartNotes[id];
         const variant = optionsLabel ? ` | OPÇÃO: ${optionsLabel}` : '';
@@ -1297,10 +1309,12 @@ function updateCheckoutLink(items, subtotal, shipping, total) {
         ...itemLines,
         '',
         `PARA ENTREGAR: ${formatDate(order.date)}`,
+        `HORÁRIO: ${order.time}`,
         `ENDEREÇO: ${order.address}`,
         `FRETE: ${pickupAtStore ? 'R$ 0,00 — retirada no local' : 'A confirmar no atendimento'}`,
         `FORMA DE PAGAMENTO: ${order.payment}`,
         `SUBTOTAL: ${currency.format(subtotal)}`,
+        ...(cartExtras.candleType ? [`VELAS (${cartExtras.candleType}): ${totalQuantity} × ${currency.format(2)} = ${currency.format(totalQuantity * 2)}`] : []),
         `TOTAL: ${currency.format(total)}`,
     ].join('\n');
 
@@ -1329,8 +1343,9 @@ function renderCart() {
         }));
     const quantity = entries.reduce((total, item) => total + item.quantity, 0);
     const subtotal = entries.reduce((total, item) => total + (item.unitPrice * item.quantity), 0);
+    const candleTotal = cartExtras.candleType ? quantity * 2 : 0;
     const shipping = getShippingFee(quantity);
-    const total = subtotal + shipping;
+    const total = subtotal + candleTotal + shipping;
     updateDeliveryConstraints(entries);
 
     if (cartCount) {
@@ -1352,7 +1367,7 @@ function renderCart() {
     if (cartItems) {
         cartItems.innerHTML = entries.map(({ id, quantity: itemQuantity, product, unitPrice, optionsLabel }) => `
             <article class="cart-item" data-cart-id="${id}">
-                <img src="${resolveAssetUrl(product.image)}" alt="">
+                ${product.image ? `<img src="${resolveAssetUrl(product.image)}" alt="">` : `<div class="brownie-placeholder cart-brownie-placeholder" aria-hidden="true"><strong>Brownie</strong></div>`}
                 <div class="cart-item-main">
                     <div class="cart-item-top">
                         <h3>${product.name}</h3>
@@ -1377,7 +1392,10 @@ function renderCart() {
     }
 
     if (cartSubtotal) {
-        cartSubtotal.textContent = currency.format(subtotal);
+        cartSubtotal.textContent = currency.format(subtotal + candleTotal);
+    }
+    if (cartCandleSummary) {
+        cartCandleSummary.textContent = cartExtras.candleType ? `${quantity} × ${currency.format(2)} = ${currency.format(candleTotal)}` : 'Sem velas';
     }
 
     if (cartShipping) {
@@ -1398,7 +1416,7 @@ function renderCart() {
         cartTotal.textContent = currency.format(total);
     }
 
-    updateCheckoutLink(entries, subtotal, shipping, total);
+    updateCheckoutLink(entries, subtotal + candleTotal, shipping, total);
     updateCardSelectionControls();
 }
 
@@ -1707,6 +1725,11 @@ function updatePickupState() {
 }
 
 pickupLocal?.addEventListener('change', updatePickupState);
+cartCandleType?.addEventListener('change', () => {
+    cartExtras.candleType = cartCandleType.value;
+    renderCart();
+});
+
 [orderDate, orderTime, orderAddress, orderPayment].forEach((field) => {
     field?.addEventListener('input', renderCart);
     field?.addEventListener('change', renderCart);

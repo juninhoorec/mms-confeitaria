@@ -6,6 +6,7 @@ const siteUrl = 'https://juninhoorec.github.io/mms-confeitaria/';
 const pages = [
   'index.html',
   'nossos-destaques/index.html',
+  'bolos-especiais/index.html',
   'bolos-caseiros/index.html',
   'doces/index.html',
   'sobre-nos/index.html',

@@ -21,8 +21,8 @@
     <link rel="preload" href="assets/fonts/cormorant-garamond-latin.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="assets/fonts/pinyon-script-latin.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="assets/fonts/montserrat-latin.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="stylesheet" href="style.css?v=20260803-3">
-    <link rel="stylesheet" href="enhancements.css?v=20260803-2">
+    <link rel="stylesheet" href="style.css?v=20260925-1">
+    <link rel="stylesheet" href="enhancements.css?v=20260925-1">
     <link rel="stylesheet" href="assets/vendor/fontawesome/css/all.min.css">
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"Bakery","name":"MMS Confeitaria","url":"https://juninhoorec.github.io/mms-confeitaria/","telephone":"+55 81 8680-1803","areaServed":{"@type":"City","name":"Camaragibe"},"address":{"@type":"PostalAddress","streetAddress":"Rua Castanhola, 1010 — Aldeia de Baixo","addressLocality":"Camaragibe","addressRegion":"PE","addressCountry":"BR"},"openingHours":["Tu-Sa 08:00-19:00","Su 08:00-15:00"],"image":"https://juninhoorec.github.io/mms-confeitaria/assets/hero-wide-final.webp"}</script>
     <link rel="stylesheet" href="premium.css?v=20260919-3">
@@ -35,12 +35,7 @@
                 <img src="assets/logo-clean.png" alt="MMS Confeitaria">
             </a>
 
-            <div class="desktop-nav" aria-label="Categorias">
-                <a href="nossos-destaques/index.html">Nossos Destaques</a>
-                <a href="bolos-caseiros/index.html">Bolos Caseiros</a>
-                <a href="doces/index.html">Doces</a>
-                <a href="sobre-nos/index.html">Sobre Nós</a>
-            </div>
+            <div class="desktop-nav" aria-label="Categorias"><a href="nossos-destaques/index.html">Nossos Destaques</a><a href="bolos-especiais/index.html">Bolos especiais</a><a href="bolos-caseiros/index.html">Bolos Caseiros</a><a href="doces/index.html">Doces</a><a href="sobre-nos/index.html">Sobre Nós</a></div>
 
             <div class="nav-actions">
                 <button class="cart-trigger" id="cart-trigger" type="button" aria-label="Abrir carrinho, vazio" aria-controls="cart-panel" aria-expanded="false">
@@ -57,6 +52,7 @@
             <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
                 <span class="mobile-menu-eyebrow">EXPLORE A MMS</span>
                 <a href="nossos-destaques/index.html">Nossos Destaques</a>
+                <a href="bolos-especiais/index.html">Bolos especiais</a>
                 <a href="bolos-caseiros/index.html">Bolos Caseiros</a>
                 <a href="doces/index.html">Doces</a>
                 <a href="sobre-nos/index.html">Sobre Nós</a>
@@ -82,12 +78,6 @@
                 <div class="hero-buttons">
                     <a href="#destaques" class="btn-cardapio">VER CARDÁPIO <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
                     <a href="https://wa.me/558186801803" target="_blank" rel="noopener noreferrer" class="btn-whatsapp">ENCOMENDAR PELO WHATSAPP <i class="fa-brands fa-whatsapp" aria-hidden="true"></i></a>
-                </div>
-            </div>
-
-            <div class="hero-image-wrapper" aria-hidden="true">
-                <div class="hero-image-card">
-                    <img src="assets/tabela bolo.jpeg" alt="Tabela de Bolos Caseiros MMS" loading="lazy">
                 </div>
             </div>
         </div>
@@ -154,151 +144,35 @@
             </div>
         </section>
 
-        <section class="products-section" id="destaques">
-            <div class="products-header-wrapper">
-                <div>
-                    <span class="section-tag">NOSSOS DESTAQUES</span>
-                    <h2 class="section-title-alt">Bolos que encantam<br>em cada detalhe</h2>
-                </div>
-                <button class="btn-ver-todos" type="button" data-open-catalog="highlights" aria-controls="products-modal" aria-expanded="false">CARDÁPIO COMPLETO <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
-            </div>
+        <section class="cake-size-guide" aria-labelledby="cake-guide-title"><div class="cake-guide-ornament" aria-hidden="true"><i class="fa-solid fa-cake-candles"></i></div><div class="cake-guide-heading"><span class="section-tag">UM GUIA PARA ESCOLHER</span><h2 id="cake-guide-title">Tamanho certo para cada momento</h2><p>Referências dos bolos caseiros para planejar sua mesa com carinho.</p></div><div class="cake-guide-grid"><article><span>PEQUENO</span><strong>18 cm</strong><p>8 a 10 fatias · aprox. 500 g</p></article><article><span>MÉDIO</span><strong>20 cm</strong><p>12 a 15 fatias · aprox. 750 g a 900 g</p></article><article><span>GRANDE</span><strong>24 cm</strong><p>18 a 22 fatias · aprox. 1,2 kg a 1,5 kg</p></article></div><small>O rendimento e o peso podem variar conforme a receita e a cobertura.</small></section>
 
-            <div class="products-grid" id="cardapio">
-                <article class="product-card" data-product-id="bolo-chocolatudo" data-product-name="Bolo Chocolatudo" data-product-price="28.00">
-                    <div class="product-img">
-                        <img src="imagens mms/bolo chocolatudo.png" alt="Bolo Chocolatudo" loading="lazy">
-                        <button class="btn-fav" type="button" aria-label="Favoritar Bolo Chocolatudo">
-                            <i class="fa-regular fa-heart" aria-hidden="true"></i>
-                        </button>
-                        <button class="btn-add" type="button" aria-label="Adicionar Bolo Chocolatudo ao carrinho">
-                            <i class="fa-solid fa-plus" aria-hidden="true"></i>
-                        </button>
-                    </div>
-                    <div class="product-info">
-                        <h3>Bolo Chocolatudo</h3>
-                        <div class="product-price">A partir de R$ 28,00</div>
-                    </div>
-                </article>
+        <section class="products-section category-preview " id="destaques"><div class="products-header-wrapper"><div><span class="section-tag">NOSSOS DESTAQUES</span><h2 class="section-title-alt">Bolos que encantam<br>em cada detalhe</h2></div><button class="btn-ver-todos" type="button" data-open-catalog="highlights" aria-controls="products-modal" aria-expanded="false">CARDÁPIO COMPLETO <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button></div><div class="products-grid">
+                <article class="product-card " data-product-id="bolo-chocolatudo"><div class="product-img"><img src="imagens mms/bolo chocolatudo.png" alt="Bolo Chocolatudo" loading="lazy" decoding="async"><button class="btn-add" type="button" aria-label="Escolher Bolo Chocolatudo"><i class="fa-solid fa-plus" aria-hidden="true"></i></button></div><div class="product-info"><h3>Bolo Chocolatudo</h3><div class="product-price">A partir de R$ 28,00</div></div></article>
+                <article class="product-card " data-product-id="bolo-baunilha-com-ninho"><div class="product-img"><img src="imagens mms/bolo baunilha com ninho.png" alt="Bolo Baunilha com Ninho" loading="lazy" decoding="async"><button class="btn-add" type="button" aria-label="Escolher Bolo Baunilha com Ninho"><i class="fa-solid fa-plus" aria-hidden="true"></i></button></div><div class="product-info"><h3>Bolo Baunilha com Ninho</h3><div class="product-price">A partir de R$ 28,00</div></div></article>
+                <article class="product-card " data-product-id="nuvem-de-limao"><div class="product-img"><img src="assets/nuvem de limao.png" alt="Nuvem de Limão" loading="lazy" decoding="async"><button class="btn-add" type="button" aria-label="Escolher Nuvem de Limão"><i class="fa-solid fa-plus" aria-hidden="true"></i></button></div><div class="product-info"><h3>Nuvem de Limão</h3><div class="product-price">A partir de R$ 28,00</div></div></article>
+                <article class="product-card " data-product-id="bolo-chocolate-cremoso-50%"><div class="product-img"><img src="imagens mms/bolo-chocolate-cremoso-50.webp" alt="Bolo Chocolate Cremoso 50%" loading="lazy" decoding="async"><button class="btn-add" type="button" aria-label="Escolher Bolo Chocolate Cremoso 50%"><i class="fa-solid fa-plus" aria-hidden="true"></i></button></div><div class="product-info"><h3>Bolo Chocolate Cremoso 50%</h3><div class="product-price">A partir de R$ 28,00</div></div></article>
+            </div></section>
 
-                <article class="product-card" data-product-id="bolo-baunilha-com-ninho" data-product-name="Bolo Baunilha com Ninho" data-product-price="28.00">
-                    <div class="product-img">
-                        <img src="imagens mms/bolo baunilha com ninho.png" alt="Bolo de Baunilha com Ninho" loading="lazy">
-                        <button class="btn-fav" type="button" aria-label="Favoritar Bolo Baunilha com Ninho">
-                            <i class="fa-regular fa-heart" aria-hidden="true"></i>
-                        </button>
-                        <button class="btn-add" type="button" aria-label="Adicionar Bolo Baunilha com Ninho ao carrinho">
-                            <i class="fa-solid fa-plus" aria-hidden="true"></i>
-                        </button>
-                    </div>
-                    <div class="product-info">
-                        <h3>Bolo Baunilha com Ninho</h3>
-                        <div class="product-price">A partir de R$ 28,00</div>
-                    </div>
-                </article>
+<section class="products-section category-preview category-preview-house" id="bolos-caseiros"><div class="products-header-wrapper"><div><span class="section-tag">FEITOS COMO EM CASA</span><h2 class="section-title-alt">Bolos Caseiros &amp; Minis Caseirinhos</h2></div><button class="btn-ver-todos" type="button" data-open-catalog="house" aria-controls="products-modal" aria-expanded="false">VER TODOS OS BOLOS <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button></div><div class="products-grid">
+                <article class="product-card " data-product-id="mini-caseirinho-chocolate"><div class="product-img"><img src="assets/mini caseirinho chocolate.png" alt="Mini Caseirinho de Chocolate" loading="lazy" decoding="async"><button class="btn-add" type="button" aria-label="Escolher Mini Caseirinho de Chocolate"><i class="fa-solid fa-plus" aria-hidden="true"></i></button></div><div class="product-info"><h3>Mini Caseirinho de Chocolate</h3><div class="product-price">R$ 12,00</div></div></article>
+                <article class="product-card " data-product-id="mini-caseirinho-oreo"><div class="product-img"><img src="assets/mini caseirinho oreo 2.png" alt="Mini Caseirinho Oreo" loading="lazy" decoding="async"><button class="btn-add" type="button" aria-label="Escolher Mini Caseirinho Oreo"><i class="fa-solid fa-plus" aria-hidden="true"></i></button></div><div class="product-info"><h3>Mini Caseirinho Oreo</h3><div class="product-price">R$ 12,00</div></div></article>
+                <article class="product-card " data-product-id="bolo-laranja"><div class="product-img"><img src="assets/bolo-laranja-premium.webp" alt="Bolo de Laranja" loading="lazy" decoding="async"><button class="btn-add" type="button" aria-label="Escolher Bolo de Laranja"><i class="fa-solid fa-plus" aria-hidden="true"></i></button></div><div class="product-info"><h3>Bolo de Laranja</h3><div class="product-price">A partir de R$ 20,00</div></div></article>
+                <article class="product-card " data-product-id="bolo-prestigio-caseiro"><div class="product-img"><img src="assets/bolo-prestigio-caseiro.webp" alt="Bolo Prestígio" loading="lazy" decoding="async"><button class="btn-add" type="button" aria-label="Escolher Bolo Prestígio"><i class="fa-solid fa-plus" aria-hidden="true"></i></button></div><div class="product-info"><h3>Bolo Prestígio</h3><div class="product-price">A partir de R$ 28,00</div></div></article>
+            </div></section>
 
-                <article class="product-card" data-product-id="nuvem-de-limao" data-product-name="Nuvem de Limão" data-product-price="28.00">
-                    <div class="product-img">
-                        <img src="assets/nuvem de limao.png" alt="Bolo Nuvem de Limão" loading="lazy" decoding="async">
-                        <button class="btn-fav" type="button" aria-label="Favoritar Nuvem de Limão">
-                            <i class="fa-regular fa-heart" aria-hidden="true"></i>
-                        </button>
-                        <button class="btn-add" type="button" aria-label="Adicionar Nuvem de Limão ao carrinho">
-                            <i class="fa-solid fa-plus" aria-hidden="true"></i>
-                        </button>
-                    </div>
-                    <div class="product-info">
-                        <h3>Nuvem de Limão</h3>
-                        <div class="product-price">A partir de R$ 28,00</div>
-                    </div>
-                </article>
+<section class="products-section category-preview category-preview-sweets" id="doces"><div class="products-header-wrapper"><div><span class="section-tag">PEQUENOS ENCANTOS</span><h2 class="section-title-alt">Doces</h2></div><button class="btn-ver-todos" type="button" data-open-catalog="sweets" aria-controls="products-modal" aria-expanded="false">VER TODOS OS DOCES <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button></div><div class="products-grid">
+                <article class="product-card " data-product-id="pote-brigadeiro-supremo"><div class="product-img"><img src="assets/brigadeiro supremo bolo de pote.png" alt="Bolo de Pote Brigadeiro Supremo" loading="lazy" decoding="async"><button class="btn-add" type="button" aria-label="Escolher Bolo de Pote Brigadeiro Supremo"><i class="fa-solid fa-plus" aria-hidden="true"></i></button></div><div class="product-info"><h3>Bolo de Pote Brigadeiro Supremo</h3><div class="product-price">R$ 10,00</div></div></article>
+                <article class="product-card " data-product-id="pote-ninho-tropical"><div class="product-img"><img src="assets/ninho tropical bolo de pote.png" alt="Bolo de Pote Ninho Tropical" loading="lazy" decoding="async"><button class="btn-add" type="button" aria-label="Escolher Bolo de Pote Ninho Tropical"><i class="fa-solid fa-plus" aria-hidden="true"></i></button></div><div class="product-info"><h3>Bolo de Pote Ninho Tropical</h3><div class="product-price">R$ 10,00</div></div></article>
+                <article class="product-card" data-product-id="brownie"><div class="product-img"><img src="assets/brownie.jpg" alt="Pedaços de brownie artesanal de chocolate em copos individuais" loading="lazy" decoding="async"><button class="btn-add" type="button" aria-label="Escolher Brownie"><i class="fa-solid fa-plus" aria-hidden="true"></i></button></div><div class="product-info"><h3>Brownie</h3><div class="product-price">R$ 10,00</div></div></article>
+                <article class="product-card" data-product-id="brownie-recheado"><div class="product-img"><img src="assets/brownie-recheado.jpg" alt="Brownie recheado com creme de chocolate e morangos" loading="lazy" decoding="async"><button class="btn-add" type="button" aria-label="Escolher Brownie Recheado"><i class="fa-solid fa-plus" aria-hidden="true"></i></button></div><div class="product-info"><h3>Brownie Recheado</h3><div class="product-price">R$ 15,00</div></div></article>
+            </div></section>
 
-                <article class="product-card" data-product-id="bolo-chocolate-cremoso-50%" data-product-name="Bolo Chocolate Cremoso 50%" data-product-price="28.00">
-                    <div class="product-img">
-                        <img src="imagens mms/bolo-chocolate-cremoso-50.webp" alt="Bolo Chocolate Cremoso 50%" loading="lazy" decoding="async">
-                        <button class="btn-fav" type="button" aria-label="Favoritar Bolo Chocolate Cremoso 50%">
-                            <i class="fa-regular fa-heart" aria-hidden="true"></i>
-                        </button>
-                        <button class="btn-add" type="button" aria-label="Adicionar Bolo Chocolate Cremoso 50% ao carrinho">
-                            <i class="fa-solid fa-plus" aria-hidden="true"></i>
-                        </button>
-                    </div>
-                    <div class="product-info">
-                        <h3>Bolo Chocolate Cremoso 50%</h3>
-                        <div class="product-price">A partir de R$ 28,00</div>
-                    </div>
-                </article>
-            </div>
-        </section>
-
-        <section class="products-section category-preview category-preview-house" id="bolos-caseiros">
-            <div class="products-header-wrapper">
-                <div>
-                    <span class="section-tag">FEITOS COMO EM CASA</span>
-                    <h2 class="section-title-alt">Bolos Caseiros &amp; Minis Caseirinhos</h2>
-                </div>
-                <button class="btn-ver-todos" type="button" data-open-catalog="house" aria-controls="products-modal" aria-expanded="false">VER TODOS OS BOLOS <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
-            </div>
-
-            <div class="products-grid">
-                <article class="product-card" data-product-id="bolo-prestigio-caseiro">
-                    <div class="product-img">
-                        <img src="assets/bolo-prestigio-caseiro.webp" alt="Bolo Prestígio" loading="lazy" decoding="async">
-                        <button class="btn-add" type="button" aria-label="Escolher Bolo Prestígio"><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
-                    </div>
-                    <div class="product-info"><h3>Bolo Prestígio</h3><div class="product-price">A partir de R$ 28,00</div></div>
-                </article>
-                <article class="product-card" data-product-id="bolo-laranja-chocolate-cremoso">
-                    <div class="product-img">
-                        <img src="assets/bolo-laranja-chocolate-cremoso.webp" alt="Bolo de Laranja com Chocolate Cremoso" loading="lazy" decoding="async">
-                        <button class="btn-add" type="button" aria-label="Escolher Bolo de Laranja com Chocolate Cremoso"><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
-                    </div>
-                    <div class="product-info"><h3>Bolo de Laranja com Chocolate Cremoso</h3><div class="product-price">A partir de R$ 28,00</div></div>
-                </article>
-                <article class="product-card" data-product-id="mini-caseirinho-massa-vermelha"><div class="product-img"><img src="assets/mini caseirinho massa vermelha.png" alt="Mini Caseirinho Massa Vermelha" loading="lazy"><button class="btn-add" type="button" aria-label="Escolher Mini Caseirinho Massa Vermelha"><i class="fa-solid fa-plus"></i></button></div><div class="product-info"><h3>Mini Caseirinho Massa Vermelha</h3><div class="product-price">R$ 12,00</div></div></article>
-                <article class="product-card" data-product-id="mini-caseirinho-oreo"><div class="product-img"><img src="assets/mini caseirinho oreo 2.png" alt="Mini Caseirinho Oreo" loading="lazy"><button class="btn-add" type="button" aria-label="Escolher Mini Caseirinho Oreo"><i class="fa-solid fa-plus"></i></button></div><div class="product-info"><h3>Mini Caseirinho Oreo</h3><div class="product-price">R$ 12,00</div></div></article>
-            </div>
-        </section>
-
-        <section class="products-section category-preview category-preview-sweets" id="doces">
-            <div class="products-header-wrapper">
-                <div>
-                    <span class="section-tag">PEQUENOS ENCANTOS</span>
-                    <h2 class="section-title-alt">Doces</h2>
-                </div>
-                <button class="btn-ver-todos" type="button" data-open-catalog="sweets" aria-controls="products-modal" aria-expanded="false">VER TODOS OS DOCES <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
-            </div>
-
-            <div class="products-grid">
-                <article class="product-card" data-product-id="pote-brigadeiro-supremo">
-                    <div class="product-img">
-                        <img src="assets/brigadeiro supremo bolo de pote.png" alt="Bolo de Pote Brigadeiro Supremo" loading="lazy">
-                        <button class="btn-add" type="button" aria-label="Escolher Bolo de Pote Brigadeiro Supremo"><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
-                    </div>
-                    <div class="product-info"><h3>Bolo de Pote Brigadeiro Supremo</h3><div class="product-price">R$ 10,00</div></div>
-                </article>
-                <article class="product-card" data-product-id="pote-ninho-tropical">
-                    <div class="product-img">
-                        <img src="assets/ninho tropical bolo de pote.png" alt="Bolo de Pote Ninho Tropical" loading="lazy">
-                        <button class="btn-add" type="button" aria-label="Escolher Bolo de Pote Ninho Tropical"><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
-                    </div>
-                    <div class="product-info"><h3>Bolo de Pote Ninho Tropical</h3><div class="product-price">R$ 10,00</div></div>
-                </article>
-                <article class="product-card" data-product-id="naked-red">
-                    <div class="product-img">
-                        <img src="imagens mms/naked massa vermelha.png" alt="Naked Cake Massa Vermelha" loading="lazy">
-                        <button class="btn-add" type="button" aria-label="Escolher Naked Cake Massa Vermelha"><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
-                    </div>
-                    <div class="product-info"><h3>Naked Cake Massa Vermelha</h3><div class="product-price">R$ 75,00</div></div>
-                </article>
-                <article class="product-card" data-product-id="naked-cake-prestigio">
-                    <div class="product-img">
-                        <img src="assets/naked-cake-prestigio.webp" alt="Naked Cake Prestígio" loading="lazy" decoding="async">
-                        <button class="btn-add" type="button" aria-label="Escolher Naked Cake Prestígio"><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
-                    </div>
-                    <div class="product-info"><h3>Naked Cake Prestígio</h3><div class="product-price">R$ 75,00</div></div>
-                </article>
-            </div>
-        </section>
+<section class="products-section category-preview category-preview-specials" id="bolos-especiais"><div class="products-header-wrapper"><div><span class="section-tag">PARA CELEBRAR</span><h2 class="section-title-alt">Bolos especiais</h2></div><button class="btn-ver-todos" type="button" data-open-catalog="specials" aria-controls="products-modal" aria-expanded="false">VER TODOS <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button></div><div class="products-grid">
+                <article class="product-card " data-product-id="naked-cake"><div class="product-img"><img src="imagens mms/naked prestigio.png" alt="Naked Cake Chocolate com Prestígio" loading="lazy" decoding="async"><button class="btn-add" type="button" aria-label="Escolher Naked Cake Chocolate com Prestígio"><i class="fa-solid fa-plus" aria-hidden="true"></i></button></div><div class="product-info"><h3>Naked Cake Chocolate com Prestígio</h3><div class="product-price">R$ 75,00</div></div></article>
+                <article class="product-card " data-product-id="naked-red"><div class="product-img"><img src="imagens mms/naked massa vermelha.png" alt="Naked Cake Massa Vermelha" loading="lazy" decoding="async"><button class="btn-add" type="button" aria-label="Escolher Naked Cake Massa Vermelha"><i class="fa-solid fa-plus" aria-hidden="true"></i></button></div><div class="product-info"><h3>Naked Cake Massa Vermelha</h3><div class="product-price">R$ 75,00</div></div></article>
+                <article class="product-card " data-product-id="naked-cake-prestigio"><div class="product-img"><img src="assets/naked-cake-prestigio.webp" alt="Naked Cake Prestígio" loading="lazy" decoding="async"><button class="btn-add" type="button" aria-label="Escolher Naked Cake Prestígio"><i class="fa-solid fa-plus" aria-hidden="true"></i></button></div><div class="product-info"><h3>Naked Cake Prestígio</h3><div class="product-price">R$ 75,00</div></div></article>
+                <article class="product-card " data-product-id="bolo-chantininho"><div class="product-img"><img src="assets/bolo-chantininho.webp" alt="Bolo Chantininho" loading="lazy" decoding="async"><button class="btn-add" type="button" aria-label="Escolher Bolo Chantininho"><i class="fa-solid fa-plus" aria-hidden="true"></i></button></div><div class="product-info"><h3>Bolo Chantininho</h3><div class="product-price">A partir de R$ 80,00/kg</div></div></article>
+            </div></section>
 
         <section class="testimonials-section" id="depoimentos">
             <div class="testimonials-header">
@@ -371,7 +245,7 @@
                 <ul>
                     <li><a href="nossos-destaques/index.html">Nossos Destaques</a></li>
                     <li><a href="bolos-caseiros/index.html">Bolos Caseiros</a></li>
-                    <li><a href="doces/index.html">Doces</a></li>
+                    <li><a href="doces/index.html">Doces</a></li><li><a href="bolos-especiais/index.html">Bolos especiais</a></li>
                     <li><a href="sobre-nos/index.html">Sobre Nós</a></li>
                 </ul>
             </div>
@@ -416,62 +290,7 @@
                 </button>
             </div>
 
-            <div class="catalog-grid" id="catalog-grid">
-                <article class="catalog-card" data-product-id="bolo-chocolatudo" data-product-name="Bolo Chocolatudo" data-product-price="28.00">
-                    <div class="catalog-card-image">
-                        <img src="imagens mms/bolo chocolatudo.png" alt="Bolo Chocolatudo">
-                        <button class="btn-add" type="button" aria-label="Adicionar Bolo Chocolatudo ao carrinho"><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
-                    </div>
-                    <div class="catalog-card-info"><h3>Bolo Chocolatudo</h3><span>A partir de R$ 28,00</span></div>
-                </article>
-
-                <article class="catalog-card" data-product-id="bolo-baunilha-com-ninho" data-product-name="Bolo Baunilha com Ninho" data-product-price="28.00">
-                    <div class="catalog-card-image">
-                        <img src="imagens mms/bolo baunilha com ninho.png" alt="Bolo Baunilha com Ninho" loading="lazy" decoding="async">
-                        <button class="btn-add" type="button" aria-label="Adicionar Bolo Baunilha com Ninho ao carrinho"><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
-                    </div>
-                    <div class="catalog-card-info"><h3>Bolo Baunilha com Ninho</h3><span>A partir de R$ 28,00</span></div>
-                </article>
-
-                <article class="catalog-card" data-product-id="nuvem-de-limao" data-product-name="Bolo Nuvem de Limão" data-product-price="28.00">
-                    <div class="catalog-card-image">
-                        <img src="assets/nuvem de limao.png" alt="Bolo Nuvem de Limão" loading="lazy" decoding="async">
-                        <button class="btn-add" type="button" aria-label="Adicionar Nuvem de Limão ao carrinho"><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
-                    </div>
-                    <div class="catalog-card-info"><h3>Nuvem de Limão</h3><span>A partir de R$ 28,00</span></div>
-                </article>
-
-                <article class="catalog-card" data-product-id="bolo-chocolate-cremoso-50%" data-product-name="Bolo Chocolate Cremoso 50%" data-product-price="28.00">
-                    <div class="catalog-card-image">
-                        <img src="imagens mms/bolo-chocolate-cremoso-50.webp" alt="Bolo Chocolate Cremoso 50%" loading="lazy" decoding="async">
-                        <button class="btn-add" type="button" aria-label="Adicionar Bolo Chocolate Cremoso 50% ao carrinho"><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
-                    </div>
-                    <div class="catalog-card-info"><h3>Bolo Chocolate Cremoso 50%</h3><span>A partir de R$ 28,00</span></div>
-                </article>
-
-                <article class="catalog-card" data-product-id="chocolate-majestoso" data-product-name="Chocolate Majestoso" data-product-price="28.00">
-                    <div class="catalog-card-image">
-                        <img src="assets/chocolate majestoso.png" alt="Bolo Chocolate Majestoso" loading="lazy" decoding="async">
-                        <button class="btn-add" type="button" aria-label="Adicionar Chocolate Majestoso ao carrinho"><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
-                    </div>
-                    <div class="catalog-card-info"><h3>Chocolate Majestoso</h3><span>A partir de R$ 28,00</span></div>
-                </article>
-
-                <article class="catalog-card" data-product-id="bolo-chantininho" data-product-name="Bolo Chantininho" data-product-price="80.00">
-                    <div class="catalog-card-image">
-                        <img src="assets/bolo-chantininho.webp" alt="Bolo Chantininho" loading="lazy" decoding="async">
-                        <button class="btn-add" type="button" aria-label="Escolher Bolo Chantininho"><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
-                    </div>
-                    <div class="catalog-card-info"><h3>Bolo Chantininho</h3><span>A partir de R$ 80,00/kg</span></div>
-                </article>
-
-                <article class="catalog-card" data-product-id="bolo-vulcao-chocomorango" data-product-name="Bolo Vulcão Chocomorango" data-product-price="55.00">
-                    <div class="catalog-card-image">
-                        <img src="assets/bolo-vulcao-chocomorango.webp" alt="Bolo Vulcão Chocomorango" loading="lazy" decoding="async">
-                        <button class="btn-add" type="button" aria-label="Escolher Bolo Vulcão Chocomorango"><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
-                    </div>
-                    <div class="catalog-card-info"><h3>Bolo Vulcão Chocomorango</h3><span>A partir de R$ 55,00</span></div>
-                </article>
+            <div class="catalog-grid" id="catalog-grid" aria-live="polite"></div>
             </div>
         </section>
     </div>
@@ -485,7 +304,7 @@
 
             <div class="product-detail-layout">
                 <button class="product-detail-image" id="product-detail-image-button" type="button" aria-label="Ampliar foto do produto">
-                    <img id="product-detail-image" src="" alt="">
+                    <img id="product-detail-image" src="" alt=""><span class="detail-image-placeholder" aria-hidden="true">MMS<br><small>feito à mão</small></span>
                 </button>
 
                 <div class="product-detail-content">

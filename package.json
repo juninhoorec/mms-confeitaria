@@ -2,6 +2,9 @@
   "name": "mms-confeitaria",
   "private": true,
   "scripts": {
+    "start": "node tools/local-server.mjs",
+    "server:install": "powershell -NoProfile -ExecutionPolicy Bypass -File tools/install-autostart.ps1",
+    "server:uninstall": "powershell -NoProfile -ExecutionPolicy Bypass -File tools/install-autostart.ps1 -Uninstall",
     "test": "node tests/audit.mjs && node tests/phase2.mjs"
   }
 }
