@@ -121,7 +121,19 @@ body {
 body.menu-open,
 body.dialog-open {
     overflow: hidden;
-    touch-action: none;
+    overscroll-behavior: none;
+}
+
+body.mobile-search-open {
+    overflow: hidden;
+    overscroll-behavior: none;
+}
+
+html.menu-open,
+html.dialog-open,
+html.mobile-search-open {
+    overflow: hidden;
+    overscroll-behavior: none;
 }
 
 img {
@@ -1240,8 +1252,14 @@ a:focus-visible {
     top: 0;
     right: 0;
     width: min(100%, 27rem);
+    width: min(100vw, 27rem);
     height: 100%;
-    padding: max(1.1rem, env(safe-area-inset-top)) 1rem max(1rem, env(safe-area-inset-bottom));
+    height: 100vh;
+    height: 100dvh;
+    max-width: 100%;
+    min-width: 0;
+    padding: max(1.1rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(1rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left));
+    overflow: hidden;
     display: grid;
     grid-template-rows: auto minmax(0, 1fr) auto;
     transform: translateX(100%);
@@ -1252,10 +1270,23 @@ a:focus-visible {
     transform: translateX(0);
 }
 
+.cart-panel {
+    overflow: clip;
+    overscroll-behavior: none;
+}
+
 .cart-content {
     min-height: 0;
+    min-width: 0;
     margin-top: 1rem;
     overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior: contain;
+    scrollbar-width: none;
+}
+
+.cart-content::-webkit-scrollbar {
+    display: none;
 }
 
 .cart-empty {
@@ -1372,9 +1403,52 @@ a:focus-visible {
 .cart-summary {
     padding-top: 1rem;
     border-top: 1px solid rgba(112, 68, 44, .2);
+    min-width: 0;
     max-height: 62svh;
     overflow-y: auto;
-    scrollbar-width: thin;
+    overflow-x: hidden;
+    overscroll-behavior: contain;
+    scrollbar-width: none;
+}
+
+.cart-summary::-webkit-scrollbar {
+    display: none;
+}
+
+@media (max-width: 819px) {
+    .cart-drawer {
+        display: flex;
+        flex-direction: column;
+        overflow-x: hidden;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        scrollbar-width: none;
+    }
+
+    .cart-drawer::-webkit-scrollbar {
+        display: none;
+    }
+
+    .cart-drawer > .dialog-header {
+        position: sticky;
+        z-index: 2;
+        top: 0;
+        flex: 0 0 auto;
+        padding-bottom: .35rem;
+        background: linear-gradient(var(--cream) 88%, rgba(236, 228, 221, 0));
+    }
+
+    .cart-content {
+        flex: 0 0 auto;
+        overflow: visible;
+    }
+
+    .cart-summary {
+        flex: 0 0 auto;
+        max-height: none;
+        overflow: visible;
+        padding-bottom: max(1rem, env(safe-area-inset-bottom));
+    }
 }
 
 .cart-summary > div {

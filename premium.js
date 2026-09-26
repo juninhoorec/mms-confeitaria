@@ -7,7 +7,7 @@
   let ready = [];
   try { ready = (await window.MMSData.availabilityForDate(today)).filter(item => item.active && item.quantity > 0 && products[item.productId]); }
   catch { try { ready = JSON.parse(localStorage.getItem(READY_KEY) || '[]').filter(item => item.active && item.date === today && item.quantity > 0 && products[item.productId]); } catch { ready = []; } }
-  const categoryName = { highlights: 'Destaques', house: 'Bolos Caseiros', sweets: 'Doces' };
+  const categoryName = { highlights: 'Destaques', house: 'Bolos Caseiros', sweets: 'Doces', specials: 'Bolos especiais' };
   const priceLabel = p => `${p.pricing || p.startingAt || p.customization ? 'A partir de ' : ''}${money.format(p.customization?.pricePerKg || p.price)}${p.customization ? '/kg' : ''}`;
   const productNameHTML = value => String(value).replace(/\s+(\d+%)(?=\s|$)/g, '&nbsp;$1');
   const initReadyCarousel = grid => {
@@ -51,8 +51,27 @@
     const mobileButton = document.createElement('button'); mobileButton.className='mobile-search-trigger'; mobileButton.type='button'; mobileButton.setAttribute('aria-label','Buscar produtos'); mobileButton.innerHTML='<i class="fa-solid fa-magnifying-glass"></i>'; nav.querySelector('.nav-actions')?.prepend(mobileButton);
     const input=search.querySelector('input'), results=search.querySelector('.search-results'); let active=-1;
     const render = () => { const q=normalize(input.value.trim()); if(!q){results.hidden=true;input.setAttribute('aria-expanded','false');return;} const matches=Object.entries(products).filter(([,p])=>normalize(`${p.name} ${p.description} ${categoryName[p.category]}`).includes(q)).slice(0,7); results.innerHTML=matches.length?matches.map(([id,p],i)=>`<button class="search-result" role="option" aria-selected="${i===active}" data-search-id="${id}"><img src="${new URL(p.image,document.baseURI).href}" alt=""><span><strong>${p.name}</strong><small>${categoryName[p.category]}${ready.some(r=>r.productId===id)?' · Disponível hoje':''}</small></span><small>${priceLabel(p)}</small></button>`).join(''):'<p class="search-empty">Nenhum produto encontrado.</p>'; results.hidden=false; input.setAttribute('aria-expanded','true'); };
-    input.addEventListener('input',()=>{active=-1;render()}); input.addEventListener('keydown',e=>{const items=[...results.querySelectorAll('.search-result')];if(e.key==='Escape'){results.hidden=true;document.body.classList.remove('mobile-search-open')}else if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();active=(active+(e.key==='ArrowDown'?1:-1)+items.length)%items.length;render()}else if(e.key==='Enter'&&items[active])items[active].click()});
-    results.addEventListener('click',e=>{const item=e.target.closest('[data-search-id]');if(item)openProduct(item.dataset.searchId)}); mobileButton.addEventListener('click',()=>{document.body.classList.add('mobile-search-open');setTimeout(()=>input.focus(),0)}); search.querySelector('.search-close').addEventListener('click',()=>{document.body.classList.remove('mobile-search-open');results.hidden=true});
+    const closeSearch = (restoreFocus = true) => {
+      const wasMobileOpen = document.body.classList.contains('mobile-search-open');
+      document.body.classList.remove('mobile-search-open');
+      document.documentElement.classList.remove('mobile-search-open');
+      results.hidden = true;
+      input.setAttribute('aria-expanded', 'false');
+      if (wasMobileOpen) {
+        if (restoreFocus) mobileButton.focus();
+      } else {
+        input.value = '';
+        if (restoreFocus) input.focus();
+      }
+    };
+    input.addEventListener('input',()=>{active=-1;render()}); input.addEventListener('keydown',e=>{const items=[...results.querySelectorAll('.search-result')];if(e.key==='Escape'){e.preventDefault();closeSearch()}else if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();active=(active+(e.key==='ArrowDown'?1:-1)+items.length)%items.length;render()}else if(e.key==='Enter'&&items[active])items[active].click()});
+    results.addEventListener('click',e=>{const item=e.target.closest('[data-search-id]');if(item){closeSearch(false);openProduct(item.dataset.searchId)}}); mobileButton.addEventListener('click',()=>{document.body.classList.add('mobile-search-open');document.documentElement.classList.add('mobile-search-open');setTimeout(()=>input.focus(),0)}); search.querySelector('.search-close').addEventListener('click',()=>closeSearch());
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && document.body.classList.contains('mobile-search-open')) { event.preventDefault(); closeSearch(); }
+    });
+    document.addEventListener('pointerdown', event => {
+      if (document.body.classList.contains('mobile-search-open') && !search.contains(event.target) && !mobileButton.contains(event.target)) closeSearch();
+    });
   }
 
   const hero=document.querySelector('.hero-section');

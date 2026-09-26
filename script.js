@@ -345,6 +345,7 @@ const PRODUCTS = {
         ingredients: ['Massa de laranja', 'Chocolate', 'Creme de leite', 'Raspas de laranja'],
     },
     'brownie': { name: 'Brownie', price: 10, category: 'sweets', image: 'assets/brownie.jpg', description: 'Brownie artesanal de chocolate.', ingredients: ['Chocolate', 'Massa artesanal'] },
+    'copo-felicidade': { name: 'Copo da Felicidade', price: 14, category: 'sweets', image: 'assets/copo-da-felicidade.jpg', description: 'Camadas de brownie, creme branco e morangos frescos.', ingredients: ['Brownie', 'Creme branco', 'Morango'] },
     'brownie-recheado': { name: 'Brownie Recheado', price: 15, category: 'sweets', image: 'assets/brownie-recheado.jpg', description: 'Brownie artesanal com recheio cremoso.', ingredients: ['Chocolate', 'Recheio cremoso'] },
     'naked-cake': {
         name: 'Naked Cake Chocolate com Prestígio',
@@ -946,6 +947,7 @@ function setMenuState(isOpen, restoreFocus = false) {
     mobileMenu.setAttribute('aria-hidden', String(!isOpen));
     navbar.classList.toggle('menu-open', isOpen);
     document.body.classList.toggle('menu-open', isOpen && window.innerWidth < 1024);
+    document.documentElement.classList.toggle('menu-open', isOpen && window.innerWidth < 1024);
 
     if (isOpen) {
         requestAnimationFrame(() => mobileMenu.querySelector('a')?.focus());
@@ -975,6 +977,7 @@ function openDialog(dialog, trigger) {
     dialog.classList.add('is-open');
     dialog.setAttribute('aria-hidden', 'false');
     document.body.classList.add('dialog-open');
+    document.documentElement.classList.add('dialog-open');
 
     if (dialog === cartPanel) {
         cartTrigger?.setAttribute('aria-expanded', 'true');
@@ -1008,6 +1011,7 @@ function closeDialog(dialog = activeDialog, restoreFocus = true) {
     if (activeDialog === dialog) {
         activeDialog = null;
         document.body.classList.remove('dialog-open');
+        document.documentElement.classList.remove('dialog-open');
 
         if (restoreFocus && dialogTrigger instanceof HTMLElement) {
             dialogTrigger.focus();
