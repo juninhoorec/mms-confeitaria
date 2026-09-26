@@ -1806,3 +1806,93 @@
 
     .specials-page .catalog-section { padding-top: 1.15rem; }
 }
+
+/* Hero mobile compacto compartilhado pelas vitrines internas. */
+@media (max-width: 767px) {
+    .highlights-page .page-hero,
+    .house-page .page-hero,
+    .sweets-page .page-hero {
+        min-height: clamp(40rem, 100svh, 44rem);
+        background-size: cover;
+    }
+
+    .highlights-page .page-hero { background-position: 59% center; }
+    .house-page .page-hero { background-position: 62% center; }
+    .sweets-page .page-hero { background-position: 68% center; }
+
+    .highlights-page .page-hero::before,
+    .house-page .page-hero::before,
+    .sweets-page .page-hero::before {
+        background:
+            linear-gradient(90deg, rgba(18, 8, 4, .58), rgba(18, 8, 4, .2) 78%),
+            linear-gradient(0deg, rgba(18, 8, 4, .64), transparent 46%, rgba(18, 8, 4, .16));
+    }
+
+    .highlights-page .page-hero-content,
+    .house-page .page-hero-content,
+    .sweets-page .page-hero-content {
+        width: min(calc(100% - 2rem), 30rem);
+        box-sizing: border-box;
+        min-height: clamp(40rem, 100svh, 44rem);
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding-top: clamp(20rem, 49svh, 22rem);
+        padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
+    }
+
+    .highlights-page .page-hero-content .page-kicker,
+    .house-page .page-hero-content .page-kicker,
+    .sweets-page .page-hero-content .page-kicker {
+        font-size: .62rem;
+        letter-spacing: .17em;
+    }
+
+    .highlights-page .page-hero-content h1,
+    .house-page .page-hero-content h1,
+    .sweets-page .page-hero-content h1 {
+        max-width: 13ch;
+        margin-top: .35rem;
+        font-size: clamp(2.25rem, 9.5vw, 3.1rem);
+        line-height: .94;
+        text-wrap: pretty;
+    }
+
+    .highlights-page .page-hero-content > p,
+    .house-page .page-hero-content > p,
+    .sweets-page .page-hero-content > p {
+        max-width: 30ch;
+        margin-top: .7rem;
+        font-size: clamp(.86rem, 3.7vw, .95rem);
+        line-height: 1.46;
+        text-wrap: pretty;
+    }
+
+    .highlights-page .page-hero-actions,
+    .house-page .page-hero-actions,
+    .sweets-page .page-hero-actions {
+        width: 100%;
+        margin-top: auto;
+        padding-top: 1rem;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: .55rem;
+    }
+
+    .highlights-page .page-hero-actions .page-button,
+    .house-page .page-hero-actions .page-button,
+    .sweets-page .page-hero-actions .page-button {
+        min-width: 0;
+        min-height: 2.85rem;
+        padding: .65rem .25rem;
+        gap: .25rem;
+        font-size: clamp(.59rem, 2.5vw, .68rem);
+        letter-spacing: 0;
+        line-height: 1.25;
+        text-align: center;
+    }
+
+    .highlights-page .catalog-section,
+    .house-page .catalog-section,
+    .sweets-page .catalog-section { padding-top: 1.15rem; }
+}
