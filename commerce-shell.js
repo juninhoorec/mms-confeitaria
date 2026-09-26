@@ -100,11 +100,10 @@
                                 <option value="15:00">15:00</option><option value="15:30">15:30</option>
                                 <option value="16:00">16:00</option><option value="16:30">16:30</option>
                                 <option value="17:00">17:00</option><option value="17:30">17:30</option>
-                                <option value="18:00">18:00</option><option value="18:30">18:30</option>
-                                <option value="19:00">19:00</option>
+                                <option value="18:00">18:00</option>
                             </select></label>
                         </div>
-                        <small class="delivery-schedule-note"><i class="fa-regular fa-clock" aria-hidden="true"></i> Terça a sábado, das 8h às 19h; domingo, das 8h às 15h. Segunda-feira não há atendimento.</small>
+                        <small class="delivery-schedule-note"><i class="fa-regular fa-clock" aria-hidden="true"></i> Atendimento todos os dias, das 08h às 18h.</small>
                         <label class="order-address-field">Endereço de entrega<textarea id="order-address" rows="2" maxlength="180" placeholder="Rua, número, bairro e referência" required></textarea></label>
                         <label>Forma de pagamento<select id="order-payment" required>
                             <option value="">Selecione</option><option value="Pix">Pix</option><option value="Cartão">Cartão</option><option value="Dinheiro">Dinheiro</option>

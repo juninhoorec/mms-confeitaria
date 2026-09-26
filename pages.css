@@ -1458,107 +1458,6 @@
         object-position: center;
     }
 }
-.specials-page .page-hero {
-    display: block;
-    min-height: 0;
-    aspect-ratio: 3 / 1;
-    background-image: url('assets/hero-bolos-especiais.jpg');
-    background-position: center;
-    background-size: 100% 100%;
-}
-
-.specials-page .page-hero::before { display: none; }
-
-.specials-page .page-hero-content {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    overflow: hidden;
-    clip-path: inset(50%);
-    white-space: nowrap;
-}
-
-.specials-page .specials-hero-hotspot {
-    position: absolute;
-    z-index: 3;
-    top: 65.7%;
-    left: 8.5%;
-    width: 15.5%;
-    height: 10.8%;
-    border-radius: 999px;
-}
-
-.specials-page .specials-hero-hotspot:focus-visible {
-    outline: 3px solid #fff;
-    outline-offset: 4px;
-}
-
-@media (min-width: 768px) {
-    .specials-page .navbar:not(.is-scrolled) .nav-logo {
-        visibility: hidden;
-        opacity: 0;
-        pointer-events: none;
-    }
-
-    .specials-page .navbar.is-scrolled .nav-logo {
-        visibility: visible;
-        opacity: 1;
-        pointer-events: auto;
-    }
-
-    .specials-page .specials-logo-hotspot {
-        position: absolute;
-        z-index: 3;
-        top: 7.2%;
-        left: 9.3%;
-        width: 6.5%;
-        height: 18.5%;
-        border-radius: 50%;
-    }
-
-    .specials-page .specials-logo-hotspot:focus-visible {
-        outline: 3px solid #fff;
-        outline-offset: 3px;
-    }
-}
-
-@media (max-width: 767px) {
-    .specials-page .page-hero {
-        min-height: clamp(37rem, 92vh, 44rem);
-        aspect-ratio: auto;
-        background-color: #42291f;
-        background-size: auto 60%;
-        background-position: 78% top;
-        background-repeat: no-repeat;
-    }
-
-    .specials-page .page-hero::before {
-        display: block;
-        z-index: 0;
-        background: linear-gradient(180deg, transparent 18%, rgba(36, 20, 14, .12) 35%, #42291f 61%, #42291f 100%);
-    }
-
-    .specials-page .page-hero-content {
-        position: relative;
-        z-index: 1;
-        width: min(calc(100% - 2rem), 70rem);
-        height: auto;
-        margin: 0 auto;
-        padding: clamp(21rem, 60vw, 24rem) 0 2rem;
-        overflow: visible;
-        clip-path: none;
-        white-space: normal;
-    }
-
-    .specials-page .page-hero-content .page-hero-actions .page-button-primary {
-        display: inline-flex;
-    }
-
-    .specials-page .specials-hero-hotspot,
-    .specials-page .specials-logo-hotspot { display: none; }
-}
-
 /* Vitrine especial mais direta: menos respiro vazio e benefícios em faixa compacta. */
 .specials-page .editorial-intro.decorative-intro {
     min-height: clamp(2.5rem, 4vw, 3.5rem);
@@ -1674,7 +1573,37 @@
     }
 
     .internal-page .page-products-grid {
-        gap: .75rem;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: clamp(.55rem, 2.4vw, .75rem);
+    }
+
+    .internal-page .page-products-grid .product-img {
+        aspect-ratio: 1.42 / 1;
+    }
+
+    .internal-page .page-products-grid .product-info {
+        min-width: 0;
+        padding: .68rem .65rem .72rem;
+    }
+
+    .internal-page .page-products-grid .product-info h3 {
+        font-size: clamp(.78rem, 3.35vw, .9rem);
+        line-height: 1.28;
+        overflow-wrap: anywhere;
+    }
+
+    .internal-page .page-products-grid .product-price {
+        margin-top: .28rem;
+        padding-right: 1.8rem;
+        font-size: clamp(.73rem, 3.1vw, .82rem);
+        line-height: 1.3;
+    }
+
+    .internal-page .page-products-grid .btn-add {
+        right: .4rem;
+        bottom: .4rem;
+        width: 2.5rem;
+        min-height: 2.5rem;
     }
 
     .internal-page .story-band,
@@ -1684,6 +1613,16 @@
 
     .internal-page .page-cta-wrap {
         padding-block: 1.5rem;
+    }
+}
+
+@media (max-width: 359px) {
+    .internal-page .page-products-grid .product-info {
+        padding-inline: .55rem;
+    }
+
+    .internal-page .page-products-grid .product-info h3 {
+        font-size: .76rem;
     }
 }
 
@@ -1750,4 +1689,120 @@
         line-height: 1.25;
         text-align: center;
     }
+}
+
+/* Hero Bolos Especiais — mesma hierarquia editorial e ações de Sobre Nós. */
+.specials-page .page-hero {
+    min-height: clamp(26rem, 35vw, 40rem);
+    background-image: url('assets/hero-bolos-especiais-clean.webp');
+    background-position: center;
+    background-size: cover;
+}
+
+.specials-page .page-hero::before {
+    z-index: 1;
+    background:
+        linear-gradient(90deg, rgba(28, 14, 8, .72), rgba(28, 14, 8, .38) 48%, rgba(28, 14, 8, .06) 100%),
+        linear-gradient(0deg, rgba(28, 14, 8, .42), transparent 48%);
+}
+
+.specials-page .page-hero-content {
+    position: relative;
+    z-index: 2;
+    width: min(calc(100% - 2rem), 70rem);
+    height: auto;
+    min-height: inherit;
+    margin-inline: auto;
+    padding: clamp(7rem, 15vh, 9.5rem) 0 clamp(3.25rem, 7vh, 4.75rem);
+    overflow: visible;
+    clip-path: none;
+    white-space: normal;
+}
+
+.specials-page .page-hero-content .page-kicker { display: none; }
+.specials-page .page-hero-content h1 {
+    max-width: 15ch;
+    font-size: clamp(3.25rem, 6.5vw, 6rem);
+    line-height: .92;
+}
+.specials-page .page-hero-content > p { max-width: 34rem; }
+.specials-page .page-hero-actions { gap: .7rem; }
+.specials-page .specials-hero-hotspot,
+.specials-page .specials-logo-hotspot { display: none; }
+
+.specials-page .editorial-intro.decorative-intro { display: none; }
+.specials-page .catalog-section { padding-top: clamp(1.25rem, 3vw, 1.8rem); }
+
+@media (min-width: 768px) {
+    .specials-page .page-hero-content { padding-left: clamp(1rem, 2vw, 1.5rem); }
+    .specials-page .navbar:not(.is-scrolled) .nav-logo,
+    .specials-page .navbar.is-scrolled .nav-logo {
+        visibility: visible;
+        opacity: 1;
+        pointer-events: auto;
+    }
+}
+
+@media (max-width: 767px) {
+    .specials-page .page-hero {
+        min-height: clamp(40rem, 100svh, 44rem);
+        background-image: url('assets/hero-bolos-especiais-mobile.webp');
+        background-position: center 44%;
+        background-size: cover;
+    }
+
+    .specials-page .page-hero::before {
+        background:
+            linear-gradient(90deg, rgba(18, 8, 4, .48), rgba(18, 8, 4, .14) 100%),
+            linear-gradient(0deg, rgba(18, 8, 4, .72), rgba(18, 8, 4, .22) 57%, rgba(18, 8, 4, .12));
+    }
+
+    .specials-page .page-hero-content {
+        width: min(calc(100% - 2rem), 30rem);
+        box-sizing: border-box;
+        min-height: clamp(40rem, 100svh, 44rem);
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding-top: clamp(21rem, 53svh, 23rem);
+        padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
+    }
+
+    .specials-page .page-hero-content h1 {
+        max-width: 12ch;
+        margin-top: .35rem;
+        font-size: clamp(2.35rem, 10vw, 3.2rem);
+        line-height: .94;
+    }
+
+    .specials-page .page-hero-content > p {
+        max-width: 29ch;
+        margin-top: .7rem;
+        font-size: clamp(.88rem, 3.8vw, .96rem);
+        line-height: 1.46;
+        text-wrap: pretty;
+    }
+
+    .specials-page .page-hero-actions {
+        width: 100%;
+        margin-top: auto;
+        padding-top: 1rem;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: .55rem;
+    }
+
+    .specials-page .page-hero-actions .page-button {
+        min-width: 0;
+        min-height: 2.85rem;
+        padding: .65rem .15rem;
+        gap: .2rem;
+        font-size: clamp(.59rem, 2.5vw, .68rem);
+        letter-spacing: 0;
+        line-height: 1.25;
+        text-align: center;
+        white-space: nowrap;
+    }
+
+    .specials-page .catalog-section { padding-top: 1.15rem; }
 }
