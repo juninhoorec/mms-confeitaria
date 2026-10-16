@@ -74,20 +74,35 @@
   document
     .querySelectorAll("[data-go]")
     .forEach((b) => (b.onclick = () => go(b.dataset.go)));
-  const card = (label, value) =>
-      `<article><span>${label}</span><strong>${value}</strong></article>`,
+  const card = (label, value, icon = "fa-chart-simple") =>
+      `<article class="metric-card"><div class="metric-icon-wrap"><i class="fa-solid ${icon}"></i></div><div class="metric-info"><span>${label}</span><strong>${value}</strong></div></article>`,
     empty = (t) => `<p class="empty-state">${t}</p>`;
   async function loadAvailability(date = $("#ready-date").value) {
     availability = await D.availability.listAllForDate(date);
     return availability;
   }
+  function updateProductCard(row, qty) {
+    const isAvail = qty > 0;
+    row.classList.toggle("is-available", isAvail);
+    row.classList.toggle("is-empty", !isAvail);
+    const pill = row.querySelector(".stock-pill");
+    if (pill) {
+      pill.className = `stock-pill ${isAvail ? "pill-active" : "pill-empty"}`;
+      pill.innerHTML = `<i class="fa-solid ${isAvail ? "fa-check" : "fa-circle-xmark"}"></i> ${isAvail ? `${qty} disponível` : "Sem estoque"}`;
+    }
+    $("#save-status").innerHTML = `<span class="status-unsaved"><i class="fa-solid fa-circle-exclamation"></i> Alterações pendentes</span>`;
+  }
   async function renderAvailability() {
     await loadAvailability();
-    $("#admin-products").innerHTML = Object.entries(P)
+    const categories = { highlights: "Destaques", house: "Bolos Caseiros", sweets: "Doces" };
+    const prods = window.MMS_PRODUCTS || P;
+    $("#admin-products").innerHTML = Object.entries(prods)
+      .filter(([, p]) => !p.deleted)
       .map(([id, p]) => {
         const x = availability.find((a) => a.productId === id),
-          q = x?.quantity || 0;
-        return `<article class="admin-product" data-product="${id}"><img src="${p.image}" alt=""><label class="product-switch"><input type="checkbox" ${q > 0 ? "checked" : ""}><span><strong>${esc(p.name)}</strong><small>${{ highlights: "Destaques", house: "Bolos Caseiros", sweets: "Doces" }[p.category]} · ${money.format(p.price)}</small></span></label><div class="qty-control"><button type="button" data-minus aria-label="Vender uma unidade">−1</button><input type="number" min="0" max="99" value="${q}" aria-label="Quantidade de ${esc(p.name)}"></div></article>`;
+          q = Number(x?.quantity) || 0;
+        const isAvail = q > 0;
+        return `<article class="admin-product ${isAvail ? "is-available" : "is-empty"}" data-product="${id}"><div class="product-media"><img src="${p.image}" alt="${esc(p.name)}" loading="lazy"><span class="stock-pill ${isAvail ? "pill-active" : "pill-empty"}"><i class="fa-solid ${isAvail ? "fa-check" : "fa-circle-xmark"}"></i> ${isAvail ? `${q} disponível` : "Sem estoque"}</span></div><div class="product-details"><span class="product-tag">${categories[p.category] || "Confeitaria"}</span><strong class="product-title">${esc(p.name)}</strong><span class="product-price">${money.format(p.price)}</span></div><div class="qty-control"><div class="qty-stepper"><button type="button" class="btn-qty btn-minus" data-minus title="Diminuir 1" aria-label="Diminuir unidade"><i class="fa-solid fa-minus"></i></button><input type="number" min="0" max="99" value="${q}" class="qty-number" aria-label="Quantidade de ${esc(p.name)}"><button type="button" class="btn-qty btn-plus" data-plus title="Aumentar 1" aria-label="Aumentar unidade"><i class="fa-solid fa-plus"></i></button></div></div></article>`;
       })
       .join("");
   }
@@ -95,44 +110,55 @@
     const row = e.target.closest("[data-product]");
     if (!row) return;
     const input = row.querySelector("input[type=number]");
-    if (e.target.matches("[data-minus]")) {
-      e.target.disabled = true;
-      const current = availability.find(
-        (x) => x.productId === row.dataset.product,
-      );
-      if (current) {
-        await D.availability.decrement(
-          current.id || current.productId,
-          $("#ready-date").value,
-        );
-        D.clearCache();
-        await renderAvailability();
-        $("#save-status").textContent =
-          `Salvo às ${new Date().toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" })}`;
-        return;
-      }
-      input.value = Math.max(0, Number(input.value) - 1);
+    if (!input) return;
+
+    if (e.target.closest("[data-minus]")) {
+      const val = Math.max(0, (parseInt(input.value, 10) || 0) - 1);
+      input.value = val;
+      updateProductCard(row, val);
+    } else if (e.target.closest("[data-plus]")) {
+      const val = Math.min(99, (parseInt(input.value, 10) || 0) + 1);
+      input.value = val;
+      updateProductCard(row, val);
     }
-    row.querySelector("input[type=checkbox]").checked = Number(input.value) > 0;
+  };
+  $("#admin-products").oninput = (e) => {
+    if (e.target.matches("input[type=number]")) {
+      const row = e.target.closest("[data-product]");
+      if (row) {
+        const val = Math.max(0, parseInt(e.target.value, 10) || 0);
+        e.target.value = isNaN(val) ? 0 : val;
+        updateProductCard(row, val);
+      }
+    }
   };
   $("#save-ready").onclick = async () => {
-    const items = [...document.querySelectorAll("[data-product]")]
-      .map((row) => ({
-        id: availability.find((x) => x.productId === row.dataset.product)?.id,
-        productId: row.dataset.product,
-        quantity: row.querySelector("input[type=checkbox]").checked
-          ? Number(row.querySelector("input[type=number]").value)
-          : 0,
-        date: $("#ready-date").value,
-        active: true,
-        options: {},
-      }))
-      .filter((x) => x.quantity > 0);
-    await D.availability.replaceForDate($("#ready-date").value, items);
-    D.clearCache();
-    $("#save-status").textContent =
-      `Salvo às ${new Date().toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" })}`;
-    await refresh();
+    const btn = $("#save-ready");
+    const origHTML = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Salvando...';
+    try {
+      const items = [...document.querySelectorAll("[data-product]")]
+        .map((row) => ({
+          id: availability.find((x) => x.productId === row.dataset.product)?.id,
+          productId: row.dataset.product,
+          quantity: Number(row.querySelector("input[type=number]").value) || 0,
+          date: $("#ready-date").value,
+          active: (Number(row.querySelector("input[type=number]").value) || 0) > 0,
+          options: {},
+        }))
+        .filter((x) => x.quantity > 0);
+      await D.availability.replaceForDate($("#ready-date").value, items);
+      D.clearCache();
+      const timeStr = new Date().toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
+      $("#save-status").innerHTML = `<span class="status-saved"><i class="fa-solid fa-check"></i> Salvo com sucesso às ${timeStr}</span>`;
+      await refresh();
+    } catch (err) {
+      $("#save-status").innerHTML = `<span class="status-error"><i class="fa-solid fa-triangle-exclamation"></i> Erro ao salvar: ${err.message}</span>`;
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = origHTML;
+    }
   };
   $("#clear-day").onclick = async () => {
     await D.availability.replaceForDate($("#ready-date").value, []);
@@ -152,6 +178,252 @@
   };
   $("#ready-date").value = today;
   $("#ready-date").onchange = renderAvailability;
+
+  /* ==========================================================================
+     GERENCIAMENTO DE PRODUTOS / CARDÁPIO
+     ========================================================================== */
+  let activeCatFilter = "all";
+  let customCatalog = {};
+
+  async function loadCustomCatalog() {
+    if (D.catalog) {
+      customCatalog = await D.catalog.getProducts();
+      for (const [id, item] of Object.entries(customCatalog)) {
+        if (!item) continue;
+        if (item.deleted) {
+          delete window.MMS_PRODUCTS[id];
+        } else {
+          window.MMS_PRODUCTS[id] = { ...(window.MMS_PRODUCTS[id] || {}), ...item };
+        }
+      }
+    }
+  }
+
+  const categoryLabels = {
+    highlights: "Nossos Destaques",
+    house: "Bolos Caseiros",
+    sweets: "Doces",
+    specials: "Bolos Especiais",
+  };
+
+  function renderCatalogAdmin() {
+    const list = $("#catalog-products-list");
+    if (!list) return;
+
+    const allProds = Object.entries(window.MMS_PRODUCTS || {})
+      .filter(([, p]) => !p.deleted && (activeCatFilter === "all" || p.category === activeCatFilter))
+      .sort(([, a], [, b]) => (a.category || "").localeCompare(b.category || "") || a.name.localeCompare(b.name, "pt-BR"));
+
+    if (!allProds.length) {
+      list.innerHTML = empty("Nenhum produto cadastrado nesta categoria.");
+      return;
+    }
+
+    list.innerHTML = allProds
+      .map(([id, p]) => `
+        <article class="catalog-item-card" data-product-id="${id}">
+          <div class="catalog-item-header">
+            <img class="catalog-item-img" src="${p.image || "assets/logo-clean.png"}" alt="${esc(p.name)}" onerror="this.src='assets/logo-clean.png'">
+            <div class="catalog-item-details">
+              <span class="catalog-item-cat">${categoryLabels[p.category] || p.category || "Geral"}</span>
+              <strong class="catalog-item-name" title="${esc(p.name)}">${esc(p.name)}</strong>
+              <span class="catalog-item-price">${money.format(p.price || 0)}</span>
+            </div>
+          </div>
+          <div class="catalog-item-actions">
+            <button type="button" class="btn-edit-prod" data-edit-product="${id}">
+              <i class="fa-solid fa-pen-to-square"></i> Editar
+            </button>
+            <button type="button" class="btn-delete-prod" data-delete-product="${id}">
+              <i class="fa-solid fa-trash-can"></i> Excluir
+            </button>
+          </div>
+        </article>
+      `)
+      .join("");
+  }
+
+  document.querySelectorAll("[data-cat-filter]").forEach((btn) => {
+    btn.onclick = () => {
+      document.querySelectorAll("[data-cat-filter]").forEach((b) => b.classList.remove("is-active"));
+      btn.classList.add("is-active");
+      activeCatFilter = btn.dataset.catFilter;
+      renderCatalogAdmin();
+    };
+  });
+
+  function processImageFile(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+          const maxDim = 640;
+          let w = img.width, h = img.height;
+          if (w > maxDim || h > maxDim) {
+            if (w > h) {
+              h = Math.round((h * maxDim) / w);
+              w = maxDim;
+            } else {
+              w = Math.round((w * maxDim) / h);
+              h = maxDim;
+            }
+          }
+          const canvas = document.createElement("canvas");
+          canvas.width = w;
+          canvas.height = h;
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0, w, h);
+          resolve(canvas.toDataURL("image/jpeg", 0.85));
+        };
+        img.onerror = reject;
+        img.src = e.target.result;
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  const chooseImageBtn = $("#btn-choose-image");
+  const fileInput = $("#prod-file-input");
+  if (chooseImageBtn && fileInput) {
+    chooseImageBtn.onclick = () => fileInput.click();
+    fileInput.onchange = async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      try {
+        const dataUrl = await processImageFile(file);
+        $("#prod-image-preview").src = dataUrl;
+        $("#prod-image-url").value = dataUrl;
+      } catch (err) {
+        alert("Não foi possível processar a imagem. Tente outra foto.");
+      }
+    };
+  }
+
+  const prodImageUrlInput = $("#prod-image-url");
+  if (prodImageUrlInput) {
+    prodImageUrlInput.oninput = (e) => {
+      if (e.target.value.trim()) {
+        $("#prod-image-preview").src = e.target.value.trim();
+      }
+    };
+  }
+
+  const btnAddProduct = $("#btn-add-product");
+  if (btnAddProduct) {
+    btnAddProduct.onclick = () => {
+      $("#product-modal-kicker").textContent = "NOVO CADASTRO";
+      $("#product-modal-title").textContent = "Adicionar Produto";
+      $("#prod-id").value = "";
+      $("#prod-name").value = "";
+      $("#prod-price").value = "";
+      $("#prod-category").value = activeCatFilter !== "all" ? activeCatFilter : "highlights";
+      $("#prod-image-url").value = "";
+      $("#prod-image-preview").src = "assets/logo-clean.png";
+      $("#prod-description").value = "";
+      $("#product-modal").showModal();
+    };
+  }
+
+  const catalogProductsList = $("#catalog-products-list");
+  if (catalogProductsList) {
+    catalogProductsList.onclick = async (e) => {
+      const editBtn = e.target.closest("[data-edit-product]");
+      if (editBtn) {
+        const id = editBtn.dataset.editProduct;
+        const prod = window.MMS_PRODUCTS[id];
+        if (!prod) return;
+        $("#product-modal-kicker").textContent = "EDITAR PRODUTO";
+        $("#product-modal-title").textContent = prod.name;
+        $("#prod-id").value = id;
+        $("#prod-name").value = prod.name || "";
+        $("#prod-price").value = prod.price || "";
+        $("#prod-category").value = prod.category || "highlights";
+        $("#prod-image-url").value = prod.image || "";
+        $("#prod-image-preview").src = prod.image || "assets/logo-clean.png";
+        $("#prod-description").value = prod.description || "";
+        $("#product-modal").showModal();
+        return;
+      }
+
+      const delBtn = e.target.closest("[data-delete-product]");
+      if (delBtn) {
+        const id = delBtn.dataset.deleteProduct;
+        const prod = window.MMS_PRODUCTS[id];
+        if (!prod) return;
+        if (confirm(`Tem certeza que deseja excluir o produto "${prod.name}" do cardápio?`)) {
+          customCatalog[id] = { deleted: true };
+          delete window.MMS_PRODUCTS[id];
+          await D.catalog.saveProducts(customCatalog);
+          renderCatalogAdmin();
+          await renderAvailability();
+        }
+      }
+    };
+  }
+
+  const btnCloseProductModal = $("#btn-close-product-modal");
+  const btnCancelProduct = $("#btn-cancel-product");
+  if (btnCloseProductModal) btnCloseProductModal.onclick = () => $("#product-modal").close();
+  if (btnCancelProduct) btnCancelProduct.onclick = () => $("#product-modal").close();
+
+  const productModalForm = $("#product-modal-form");
+  if (productModalForm) {
+    productModalForm.onsubmit = async (e) => {
+      e.preventDefault();
+      const saveBtn = $("#btn-save-product");
+      const origText = saveBtn.innerHTML;
+      saveBtn.disabled = true;
+      saveBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Salvando...';
+
+      try {
+        let id = $("#prod-id").value.trim();
+        const name = $("#prod-name").value.trim();
+        const price = parseFloat($("#prod-price").value) || 0;
+        const category = $("#prod-category").value;
+        const image = $("#prod-image-url").value.trim() || $("#prod-image-preview").src;
+        const description = $("#prod-description").value.trim();
+
+        if (!id) {
+          const slug = name
+            .toLowerCase()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .replace(/[^a-z0-9]+/g, "-")
+            .replace(/(^-|-$)/g, "");
+          id = slug || `prod-${Date.now()}`;
+          if (window.MMS_PRODUCTS[id]) {
+            id = `${id}-${Date.now().toString().slice(-4)}`;
+          }
+        }
+
+        const productPayload = {
+          name,
+          price,
+          category,
+          image: image || "assets/logo-clean.png",
+          description: description || name,
+          leadTimeHours: 20,
+          defaultFinish: "cobertura",
+        };
+
+        customCatalog[id] = productPayload;
+        window.MMS_PRODUCTS[id] = { ...(window.MMS_PRODUCTS[id] || {}), ...productPayload };
+
+        await D.catalog.saveProducts(customCatalog);
+
+        $("#product-modal").close();
+        renderCatalogAdmin();
+        await renderAvailability();
+      } catch (err) {
+        alert("Erro ao salvar produto: " + err.message);
+      } finally {
+        saveBtn.disabled = false;
+        saveBtn.innerHTML = origText;
+      }
+    };
+  }
   function itemSummary(o) {
     return o.items?.length
       ? o.items
@@ -338,6 +610,7 @@
         money.format(
           paid.filter((o) => o.date === today).reduce((n, o) => n + o.total, 0),
         ),
+        "fa-circle-check"
       ) +
       card(
         "Pendente",
@@ -346,6 +619,7 @@
             .filter((o) => o.paymentStatus !== "Pago")
             .reduce((n, o) => n + o.total, 0),
         ),
+        "fa-clock"
       ) +
       card(
         "Recebido no mês",
@@ -354,6 +628,7 @@
             .filter((o) => o.date?.startsWith(month))
             .reduce((n, o) => n + o.total, 0),
         ),
+        "fa-calendar-days"
       );
     $("#finance-list").innerHTML = orders.length
       ? `<table><thead><tr><th>Pedido</th><th>Cliente</th><th>Data</th><th>Valor</th><th>Pagamento</th><th>Status</th></tr></thead><tbody>${orders.map((o) => `<tr><td>${esc(o.orderNumber)}</td><td>${esc(o.customerName)}</td><td>${o.date}</td><td>${money.format(o.total)}</td><td>${esc(o.paymentMethod)}</td><td>${esc(o.paymentStatus)}</td></tr>`).join("")}</tbody></table>`
@@ -373,11 +648,12 @@
         counts[n] = (counts[n] || 0) + (Number(i.quantity) || 1);
       });
     $("#report-metrics").innerHTML =
-      card("Pedidos", filtered.length) +
-      card("Faturamento registrado", money.format(revenue)) +
+      card("Pedidos no período", filtered.length, "fa-receipt") +
+      card("Faturamento registrado", money.format(revenue), "fa-chart-pie") +
       card(
         "Ticket médio registrado",
         money.format(filtered.length ? revenue / filtered.length : 0),
+        "fa-basket-shopping"
       );
     const productsReport = Object.keys(counts).length
       ? `<section><h3>Produtos mais pedidos</h3>${Object.entries(counts)
@@ -437,23 +713,28 @@
     await refresh();
   };
   async function refresh() {
+    await loadCustomCatalog();
+    renderCatalogAdmin();
     orders = await D.orders.list();
     await loadAvailability(today);
     const todays = orders.filter((o) => o.date === today);
     $("#dashboard-metrics").innerHTML =
-      card("Pedidos hoje", todays.length) +
+      card("Pedidos hoje", todays.length, "fa-receipt") +
       card(
         "Em produção",
         todays.filter((o) => ["CONFIRMADO", "EM PREPARO"].includes(o.status))
           .length,
+        "fa-fire-burner"
       ) +
       card(
         "Entregas",
         todays.filter((o) => o.deliveryType === "Entrega").length,
+        "fa-truck"
       ) +
       card(
         "Retiradas",
         todays.filter((o) => o.deliveryType === "Retirada").length,
+        "fa-store"
       );
     $("#today-orders").innerHTML = todays.length
       ? todays

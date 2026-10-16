@@ -6,6 +6,7 @@
     availability: "mms-ready-availability-v1",
     orders: "mms-admin-orders-v1",
     settings: "mms-settings-v1",
+    catalog: "mms-catalog-products-v1",
   };
   const read = (key, fallback = []) => {
     try {
@@ -354,6 +355,45 @@
   const settings = remote
     ? new SupabaseSettingsRepository()
     : new LocalSettingsRepository();
+  const catalog = {
+    async getProducts() {
+      let localData = read(KEYS.catalog, null);
+      if (remote) {
+        try {
+          const res = await fetch(
+            `${config.SUPABASE_URL}/rest/v1/settings?select=*&id=eq.catalog_products`,
+            {
+              headers: {
+                apikey: config.SUPABASE_ANON_KEY,
+                Authorization: `Bearer ${config.SUPABASE_ANON_KEY}`,
+              },
+            },
+          );
+          if (res.ok) {
+            const rows = await res.json();
+            if (rows && rows[0]?.value) {
+              localData = rows[0].value;
+              write(KEYS.catalog, localData);
+            }
+          }
+        } catch (e) {
+          console.warn("Catalog fetch fallback:", e);
+        }
+      }
+      return localData || {};
+    },
+    async saveProducts(productsMap) {
+      write(KEYS.catalog, productsMap);
+      if (remote && getSession()?.access_token) {
+        try {
+          await settings.saveValue("catalog_products", productsMap);
+        } catch (e) {
+          console.warn("Supabase catalog sync warning:", e);
+        }
+      }
+      return productsMap;
+    },
+  };
   const cache = new Map();
   window.MMSData = {
     remote,
@@ -361,6 +401,7 @@
     availability,
     orders,
     settings,
+    catalog,
     keys: KEYS,
     nextOrderNumber(list) {
       const max = list.reduce(

@@ -434,6 +434,34 @@ const PRODUCTS = {
 // Fonte única compartilhada com busca, pronta entrega e painel local.
 window.MMS_PRODUCTS = PRODUCTS;
 
+function applyCustomCatalog(customMap) {
+    if (!customMap || typeof customMap !== 'object') return;
+    for (const [id, item] of Object.entries(customMap)) {
+        if (!item) continue;
+        if (item.deleted) {
+            delete PRODUCTS[id];
+        } else {
+            PRODUCTS[id] = { ...(PRODUCTS[id] || {}), ...item };
+        }
+    }
+    window.MMS_PRODUCTS = PRODUCTS;
+    if (typeof syncProductCards === 'function') {
+        syncProductCards();
+    }
+    if (typeof renderDynamicCategoryCards === 'function') {
+        renderDynamicCategoryCards();
+    }
+}
+
+try {
+    const localCatalog = localStorage.getItem('mms-catalog-products-v1');
+    if (localCatalog) {
+        applyCustomCatalog(JSON.parse(localCatalog));
+    }
+} catch (e) {
+    console.warn('Erro ao carregar catálogo local:', e);
+}
+
 const scriptBaseUrl = document.currentScript?.src
     ? new URL('.', document.currentScript.src).href
     : document.baseURI;
@@ -612,6 +640,58 @@ function syncProductCards(container = document) {
     });
 
     enhanceImages(container);
+}
+
+function renderDynamicCategoryCards() {
+    const categoryTargets = [
+        { category: 'highlights', selector: '#nossos-destaques .products-grid, body.highlights-page .page-products-grid' },
+        { category: 'house', selector: '#bolos-caseiros .products-grid, body.house-page .page-products-grid' },
+        { category: 'sweets', selector: '#doces .products-grid, body.sweets-page .page-products-grid' },
+        { category: 'specials', selector: '#bolos-especiais .products-grid, body.specials-page .page-products-grid' },
+    ];
+
+    categoryTargets.forEach(({ category, selector }) => {
+        const containers = document.querySelectorAll(selector);
+        if (!containers.length) return;
+
+        const products = Object.entries(PRODUCTS).filter(([, p]) => p.category === category && !p.deleted && !p.hiddenFromCatalog);
+
+        containers.forEach((grid) => {
+            // Remove deleted products
+            grid.querySelectorAll('[data-product-id]').forEach((card) => {
+                const id = card.dataset.productId;
+                if (!PRODUCTS[id] || PRODUCTS[id].deleted || PRODUCTS[id].category !== category) {
+                    card.remove();
+                }
+            });
+
+            // Add missing products
+            products.forEach(([id, p]) => {
+                if (!grid.querySelector(`[data-product-id="${id}"]`)) {
+                    const priceLabel = getCatalogPriceLabel(p);
+                    const cardArticle = document.createElement('article');
+                    cardArticle.className = 'product-card';
+                    cardArticle.dataset.productId = id;
+                    cardArticle.innerHTML = `
+                        <div class="product-img">
+                            <img src="${resolveAssetUrl(p.image)}" alt="${p.name}" loading="lazy" decoding="async">
+                            <button class="btn-add" type="button" aria-label="Escolher ${p.name}">
+                                <i class="fa-solid fa-plus" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div class="product-info">
+                            <h3>${p.name}</h3>
+                            <div class="product-price">${priceLabel}</div>
+                        </div>
+                    `;
+                    grid.append(cardArticle);
+                }
+            });
+        });
+    });
+
+    enhanceImages(document);
+    updateCardSelectionControls();
 }
 
 function renderCatalog(category) {
@@ -1864,6 +1944,18 @@ document.querySelectorAll('.btn-fav').forEach((button) => {
 });
 
 syncProductCards();
+renderDynamicCategoryCards();
+
+// Sincronização automática do catálogo com Supabase
+if (window.MMSData?.catalog) {
+    window.MMSData.catalog.getProducts().then((remoteCatalog) => {
+        if (remoteCatalog && Object.keys(remoteCatalog).length) {
+            applyCustomCatalog(remoteCatalog);
+        }
+    }).catch((e) => {
+        console.warn('Erro ao sincronizar catálogo remoto:', e);
+    });
+}
 
 document.querySelectorAll('.contact-list li').forEach((item) => {
     const text = item.querySelector('span');
