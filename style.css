@@ -2965,3 +2965,18 @@ a:focus-visible {
 .cake-guide-grid article > span { font-size: .58rem; }
 .cake-guide-grid article strong { margin: .18rem 0; font-size: .95rem; }
 .cake-guide-grid article p,.cake-size-guide > small { font-size: .68rem; }
+
+/* Prevenção definitiva de zoom automático no iOS/Android em campos de formulário e carrinho */
+@media screen and (max-width: 768px) {
+  input,
+  select,
+  textarea,
+  .cart-order-details input,
+  .cart-order-details textarea,
+  .cart-order-details select,
+  .global-search-input {
+    font-size: 16px !important;
+    touch-action: manipulation;
+  }
+}
+

@@ -1481,3 +1481,43 @@ body {
   background: var(--adm-brand-hover);
   transform: translateY(-1px);
 }
+
+/* ==========================================================================
+   ANTI-ZOOM & REGRAS DEFINITIVAS DE RESPONSIVIDADE PARA DISPOSITIVOS MÓVEIS (iOS/Android)
+   Garante que nenhum input dê zoom automático no iOS Safari ou Chrome Mobile
+   ========================================================================== */
+@media screen and (max-width: 768px) {
+  input,
+  select,
+  textarea,
+  .login-card input,
+  .order-form input,
+  .order-form select,
+  .order-form textarea,
+  .section-head input,
+  .product-dialog-card input,
+  .product-dialog-card select,
+  .product-dialog-card textarea {
+    font-size: 16px !important; /* Mínimo exigido pela Apple/iOS para desativar o zoom ao focar */
+    touch-action: manipulation;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+}
+
+html, body {
+  overflow-x: hidden !important;
+  width: 100% !important;
+  max-width: 100vw !important;
+  -webkit-text-size-adjust: 100%;
+}
+
+.login-card {
+  max-width: calc(100vw - 32px) !important;
+  box-sizing: border-box !important;
+}
+
+.login-card input {
+  font-size: 16px !important;
+}
+
