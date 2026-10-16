@@ -2980,3 +2980,9 @@ a:focus-visible {
   }
 }
 
+/* Vitrines da página inicial (preview de categorias): exibir exatamente 4 cards */
+.category-preview .products-grid > .product-card:nth-child(n+5) {
+  display: none !important;
+}
+
+

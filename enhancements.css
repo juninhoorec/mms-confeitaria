@@ -1080,6 +1080,11 @@ html::-webkit-scrollbar-thumb:hover {
         gap: clamp(.55rem, 2.4vw, .75rem);
     }
 
+    .category-preview .products-grid > .product-card:nth-child(n+5) {
+        display: none !important;
+    }
+
+
     .category-preview .product-img {
         aspect-ratio: 1.42 / 1;
     }
